@@ -27,14 +27,16 @@ export default {
 	},
 
 	async addProduct(db, payload) {
+		console.log("addProduct ~ payload:", payload);
 		try {
 			let docRef;
 			if (payload.id) {
 				docRef = await setDoc(doc(db, COLLECTION_NAME, payload.id), payload);
+				console.log("Document written with ID: ", payload.id);
 			} else {
 				docRef = await addDoc(collection(db, COLLECTION_NAME), payload);
+				console.log("Document written with ID: ", docRef.id);
 			}
-			console.log("Document written with ID: ", docRef.id);
 		} catch (e) {
 			console.error("Error adding document: ", e);
 		}
