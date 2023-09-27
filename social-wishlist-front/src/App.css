@@ -1,0 +1,112 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%
+}
+
+.logo {
+  width: 350px;
+  height: 350px;
+  margin: auto;
+  display: block;
+}
+
+.container {
+  overflow: hidden;
+  width: 1000px;
+}
+
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+body {
+  background: #ED213A;
+  background: -webkit-linear-gradient(to right, #93291E, #ED213A);
+  background: linear-gradient(to right, #93291E, #ED213A);
+}
+
+.boton {
+  width: 100% !important;
+  background-color: transparent;
+  border-color: aliceblue;
+  outline: none;
+  font-size: 20px;
+  width: 80vw;
+  border-radius: 30px;
+  color: white;
+}
+
+.formulario {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(254, 75, 75, 0.5);
+  border-radius: 5px;
+}
+
+.formulario label {
+  display: block;
+  font-weight: bold;
+}
+
+.formulario input[type="text"],
+.formulario input[type="email"],
+.formulario input[type="number"],
+.formulario input[type="tel"],
+.formulario input[type="datetime-local"],
+.formulario textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+form{
+  display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .container {
+    width: 700px;
+    height: 700px;
+  }
+ 
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    width: 500px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
