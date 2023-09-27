@@ -1,12 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getAllProducts } from "../firebase/queries/products.js";
 
 const initialState = {
   products: [],
   loading: false,
-};
-
-const fetchProducts = () => {
-  return [{}, {}, {}];
 };
 
 // reducers
@@ -14,14 +11,14 @@ export const productsReducer = createSlice({
   name: "products",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.pending, (state, action) => {
+    builder.addCase(actions.fetchProducts.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+    builder.addCase(actions.fetchProducts.fulfilled, (state, action) => {
       state.loading = false;
       state.products.push(action.payload);
     });
-    builder.addCase(fetchProducts.rejected, (state, action) => {
+    builder.addCase(actions.fetchProducts.rejected, (state, action) => {
       state.error = true;
       state.loading = false;
     });
@@ -30,8 +27,8 @@ export const productsReducer = createSlice({
 
 export const actions = {
   fetchProducts: createAsyncThunk("fetchProducts", async () => {
-    // codigo david
-}),
+    getAllProducts();
+  }),
 };
 
 // Thunk functions/actions
@@ -42,6 +39,6 @@ export const actions = {
 
 // Selectors
 export const selectors = {
-    productsList: (state) => state.products,
-}
+  productsList: (state) => state.products,
+};
 export default productsReducer.reducer;
