@@ -48,7 +48,7 @@ function Register() {
 					</form>  
 				</div>
 				<div class="container">
-					<a href="https://w3meat.w3itexpert.com/xhtml/index.html" class="btn mb-3 btn-primary w-100">Registrate</a>
+					<a href="/SocialWishlist/Profile" class="btn mb-3 btn-primary w-100">Registrate</a>
 				</div>
 			</div>
         </div>

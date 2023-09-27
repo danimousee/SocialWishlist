@@ -19,7 +19,7 @@ function Login() {
 						<div class="account-area">
 
 							<div class="mb-3 input-group input-group-icon">
-								<a href="javascript:void(0);" class="btn btn-google-plus mb-3 w-100">Google +&nbsp;
+								<a href="/SocialWishlist/Register" class="btn btn-google-plus mb-3 w-100">Google +&nbsp;
 									<span class="btn-icon-end">
 										<i class="fa fa-google"></i>
 									</span>
@@ -27,7 +27,7 @@ function Login() {
 							</div>
 
 							<div class="mb-3 input-group input-group-icon">
-								<a href="javascript:void(0);" class="btn btn-facebook mb-3 w-100">Facebook&nbsp;
+								<a href="/SocialWishlist/Register" class="btn btn-facebook mb-3 w-100">Facebook&nbsp;
 									<span class="btn-icon-end">
 										<i class="fa fa-facebook"></i>
 									</span>
