@@ -7,6 +7,8 @@ import ProductDetail from '../views/products/ProductDetail'
 import Profile from '../views/profile/Profile'
 import Error404 from '../views/Error404/Error404'
 import App from '../App'
+import Search from '../views/Search/Search'
+import Add from '../views/Add/Add'
 
 const router = createBrowserRouter([
     {
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
             {
                 path: "/detail",
                 element: <ProductDetail />,
+            },
+            {
+                path: "/search",
+                element: <Search />,
+            },
+            {
+                path: "/add",
+                element: <Add />,
             },
             {
                 path: "/profile",

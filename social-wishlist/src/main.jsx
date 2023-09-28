@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
+// MUI
+import { StyledEngineProvider } from "@mui/material/styles";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 // Redux
 import { Provider } from "react-redux";
 import store from "./store/store.js";
 // Styles
 import "./index.css";
-import "./template/css/style.css";
 // Routes
 import { RouterProvider } from "react-router-dom";
 import router from "./router/router.jsx";
@@ -23,11 +28,13 @@ import { db } from "./firebase";
 // });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<Provider store={store}>
-		<RouterProvider router={router}>
-			<React.StrictMode>
-				<App />
-			</React.StrictMode>
-		</RouterProvider>
-	</Provider>
+	<StyledEngineProvider injectFirst>
+		<Provider store={store}>
+			<RouterProvider router={router}>
+				<React.StrictMode>
+					<App />
+				</React.StrictMode>
+			</RouterProvider>
+		</Provider>
+	</StyledEngineProvider>
 );

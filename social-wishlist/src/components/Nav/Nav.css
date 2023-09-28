@@ -1,0 +1,11 @@
+.bottom-navigation {
+    background-color: var(--accent-color);
+}
+
+.bottom-navigation-action .Mui-selected {
+    color: white;
+}
+
+.Mui-selected svg {
+    color: white;
+}
