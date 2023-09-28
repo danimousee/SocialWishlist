@@ -11,28 +11,23 @@ import "./template/css/style.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./router/router.jsx";
 // Firebase
-import initializeFirebase from "./firebase";
-import product_queries from "./firebase/queries/products.js";
+import { db } from "./firebase";
 
+// EJEMPLO FIREBASE
+// import * as product_queries from "./firebase/queries/products.js"
 
-// PROVISORIO: Ejemplo de uso de Firestore
-const product = {
-  id: "AAA-001",
-  name: "Pulsera",
-  description: "Alta pulsera papu",
-  provider: "Mercadolibre",
-};
-
-const { app, db } = initializeFirebase();
+// product_queries.addProduct(db, {
+//   id: "BBB-001",
+//   name: "Apple Watch",
+//   provider: "Facebook Market"
+// });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>
+	<Provider store={store}>
+		<RouterProvider router={router}>
+			<React.StrictMode>
+				<App />
+			</React.StrictMode>
+		</RouterProvider>
+	</Provider>
 );
-
-product_queries.addProduct(db, product);
-
-ReactDOM.createRoot(document.getElementById("root")).render(<RouterProvider router={router} />);

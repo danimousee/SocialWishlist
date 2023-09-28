@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllProducts } from "../firebase/queries/products.js";
+import { getAllProducts } from "../firebase/queries/products";
 
 const initialState = {
   products: [],
@@ -27,7 +27,7 @@ export const productsReducer = createSlice({
 
 export const actions = {
   fetchProducts: createAsyncThunk("fetchProducts", async () => {
-    getAllProducts();
+    getAllProducts(db);
   }),
 };
 

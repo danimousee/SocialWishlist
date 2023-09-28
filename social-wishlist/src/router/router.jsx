@@ -1,37 +1,45 @@
 import { createBrowserRouter, redirect } from 'react-router-dom'
+import Home from "../views/Home/Home"
+import Login from '../views/register/Login'
+import Register from '../views/register/Register'
+import ProductList from '../views/products/ProductList'
+import ProductDetail from '../views/products/ProductDetail'
+import Profile from '../views/profile/Profile'
+import Error404 from '../views/Error404/Error404'
 import App from '../App'
-import Login from '../components/register/Login'
-import Register from '../components/register/Register'
-import ProductList from '../components/products/ProductList'
-import ProductDetail from '../components/products/ProductDetail'
-import Profile from '../components/profile/Profile'
 
 const router = createBrowserRouter([
     {
-        path: "/SocialWishlist",
-        element: <App />
+        path: "/",
+        element: <App />,
+        errorElement: <Error404/>,
+        children: [
+            {
+                path: '/',
+                element: <Home />
+            },
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/register",
+                element: <Register />,
+            },
+            {
+                path: "/product-list",
+                element: <ProductList />,
+            },
+            {
+                path: "/detail",
+                element: <ProductDetail />,
+            },
+            {
+                path: "/profile",
+                element: <Profile />,
+            }
+        ]
     },
-    {
-        path: "/SocialWishlist/Login",
-        element: <Login />,
-    },
-    {
-        path: "/SocialWishlist/Register",
-        element: <Register />,
-    },
-    {
-        path: "/SocialWishlist/List",
-        element: <ProductList />,
-    },
-    {
-        path: "/SocialWishlist/Detail",
-        element: <ProductDetail />,
-    },
-    {
-        path: "/SocialWishlist/Profile",
-        element: <Profile />,
-    }
-
 ])
 
 export default router
