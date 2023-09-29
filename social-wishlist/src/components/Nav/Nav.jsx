@@ -25,29 +25,6 @@ function Nav() {
 				<BottomNavigationAction component={Link} to="/profile" label="" value="profile" icon={<PersonIcon />} className={`bottom-navigation-action`} />
 			</BottomNavigation>
 		</Paper>
-		// <div className="menubar-area style-7 footer-fixed rounded-0">
-		// 	<div className="toolbar-inner menubar-nav">
-		// 		<Link className="nav-link active" to="/login">
-		// 			<i className="fa-solid fa-house"></i>
-		// 			<span>Home</span>
-		// 		</Link>
-
-		// 		<Link className="nav-link" to="/product-list">
-		// 			<i className="fa-solid fa-plus-square"></i>
-		// 			<span>Productos</span>
-		// 		</Link>
-
-		// 		<Link className="nav-link" to="/detail">
-		// 			<i className="fa-solid fa-users"></i>
-		// 			<span>Amigos</span>
-		// 		</Link>
-
-		// 		<Link className="nav-link" to="/profile">
-		// 			<i className="fa-solid fa-user"></i>
-		// 			<span>Cuenta</span>
-		// 		</Link>
-		// 	</div>
-		// </div>
 	);
 }
 
