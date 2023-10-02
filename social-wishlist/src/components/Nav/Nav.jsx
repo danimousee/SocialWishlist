@@ -10,7 +10,7 @@ import Paper from "@mui/material/Paper"
 import "./Nav.css"
 
 function Nav() {
-	const [value, setValue] = useState("recents");
+	const [value, setValue] = useState("home");
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);

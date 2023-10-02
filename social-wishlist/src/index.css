@@ -15,6 +15,12 @@
 
   --primary: #296896;
   --accent-color: #6AB9DB;
+  --text-color: #FFF;
+  --text-color-dark: #333;
+}
+
+input {
+  color: var(--text-color);
 }
 
 a {
@@ -28,8 +34,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -69,4 +73,67 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* Common classes */
+
+/* BOXES */
+.main-box {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 20px 0px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-box {
+  height: 100%;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-bottom: 56px;
+}
+
+.hide {
+  display: none;
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin: 20px;
+}
+
+.btn {
+  font-weight: bold;
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: var(--text-color-dark);
+}
+
+.btn-secondary {
+}
+
+.home-action-btn {
+  aspect-ratio: 1;
+  border-radius: 50px;
+  height: 80px;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color-dark);
+}
+
+.home-action-svg {
+  width: 50%;
+  height: 50%;
 }

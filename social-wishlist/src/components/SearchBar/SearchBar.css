@@ -1,0 +1,13 @@
+.search-bar-text-field input {
+    color: white;
+}
+
+.search-bar-text-field fieldset {
+    border-color: white !important;
+    border-radius: 14px;
+}
+
+.search-bar-text-field label {
+    color: white;
+}
+

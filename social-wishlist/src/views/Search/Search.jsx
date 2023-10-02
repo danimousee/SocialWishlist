@@ -1,8 +1,11 @@
 import React from 'react'
+import SearchBar from '../../components/SearchBar/SearchBar'
 
 function Search() {
   return (
-    <div>Search</div>
+    <div className='main-box'>
+        <SearchBar />
+    </div>
   )
 }
 
