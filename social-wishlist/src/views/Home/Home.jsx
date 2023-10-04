@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import SearchBar from "/src/components/SearchBar/SearchBar";
 import "./Home.css";
 import ProductsCarrousel from "../products/ProductsCarrousel";

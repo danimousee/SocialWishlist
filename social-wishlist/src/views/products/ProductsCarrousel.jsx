@@ -3,6 +3,8 @@ import AddToWishlistButton from "../../components/AddToWishlistButton/AddToWishl
 import SkipProductButton from "../../components/SkipProductButton/SkipProductButton";
 import { Carousel } from "react-responsive-carousel";
 import { useSelector } from "react-redux";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { H2 } from "../../components/Styles.css";
 
 
 const ProductsCarrousel = () => {
@@ -19,7 +21,7 @@ const ProductsCarrousel = () => {
 
   return (
     <>
-      <div className="product-box">
+      <div className="carousel-slider">
         <Carousel showThumbs={false} showStatus={false}>
           {products[page]?.images.map((img, i) => (
             <>
@@ -35,7 +37,7 @@ const ProductsCarrousel = () => {
             </>
           ))}
         </Carousel>
-        <h2>Juego de Ajedrez</h2>
+        <H2>Juego de Ajedrez</H2>
       </div>
       <div className="button-group" style={{ justifyContent: "space-evenly" }}>
         <AddToWishlistButton onClick={nextPage} />

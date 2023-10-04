@@ -65,7 +65,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: var(--text-color-dark);
   }
   a:hover {
     color: #747bff;
@@ -105,7 +105,7 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 40px;
-  margin: 20px;
+  margin: 10px;
 }
 
 .btn {
@@ -125,7 +125,7 @@ button:focus-visible {
 .home-action-btn {
   aspect-ratio: 1;
   border-radius: 50px;
-  height: 80px;
+  height: 50px;
   display: flex;
   padding: 0;
   align-items: center;
