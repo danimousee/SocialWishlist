@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../firebase/queries/products";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { Container } from "../../components/Styles.css";
 
 const Home = () => {
   const [tab, setTab] = useState("forYou");
@@ -25,7 +26,7 @@ const Home = () => {
   }
 
   return (
-    <div className="main-box">
+    <Container>
       <SearchBar />
 
       <div className="content-box">
@@ -50,7 +51,7 @@ const Home = () => {
 
         <ProductsCarrousel />
       </div>
-    </div>
+    </Container>
   );
 };
 

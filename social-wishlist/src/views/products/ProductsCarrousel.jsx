@@ -37,7 +37,7 @@ const ProductsCarrousel = () => {
             </>
           ))}
         </Carousel>
-        <H2>Juego de Ajedrez</H2>
+        <H2>{products[page]?.description}</H2>
       </div>
       <div className="button-group" style={{ justifyContent: "space-evenly" }}>
         <AddToWishlistButton onClick={nextPage} />
