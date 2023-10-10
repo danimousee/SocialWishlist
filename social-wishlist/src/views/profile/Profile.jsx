@@ -19,7 +19,12 @@ const Profile = () => {
 					</div>
 				</div>
 				<div className="mid-top-box">
+					<div className='profilePicSection'>
+						<img src="Images/Dani.png" alt="IMAGEN"></img>
+					</div>
+					<div className='profileInfoSection'>
 
+					</div>
 				</div>
 				<div className='mid-mid-box'>
 					<div className='editProfileSection'>

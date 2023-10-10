@@ -41,6 +41,20 @@
     border-bottom: 1px solid #343a40;
 }
 
+
+.main-box .mid-top-box .profilePicSection {
+    background-color: white;
+    height: 100%;
+    width: 38%;
+}
+
+.main-box .mid-top-box .profilePicSection img {
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+
 .main-box .mid-mid-box {
     display: flex;
     height: 30px;
