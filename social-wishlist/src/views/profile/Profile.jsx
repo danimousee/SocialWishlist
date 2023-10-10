@@ -14,15 +14,28 @@ const Profile = () => {
 					<div className="username">
 						<h1>Username Here</h1>
 					</div>
+					<div className="configIcon">
+
+					</div>
 				</div>
 				<div className="mid-top-box">
 
 				</div>
 				<div className='mid-mid-box'>
-
+					<div className='editProfileSection'>
+						<button type="button">Edit Profile</button>
+					</div>
+					<div className='shareProfileSection'>
+						<button type="button">Share Profile</button>
+					</div>
 				</div>
 				<div className='mid-bottom-box'>
-
+					<div className='wishes'>
+						<button type='button'>Wishes</button>
+					</div>
+					<div className='cart'>
+						<button type='Cart'>Cart</button>
+					</div>
 				</div>
 				<div className='photos-box'>
 

@@ -21,6 +21,7 @@
     height: 100%;
     display: flex;
     margin-left: 0px;
+    color: white;
 }
 
 .main-box .top-box .username h1 {
@@ -46,7 +47,6 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid #343a40;
 }
 
 .main-box .mid-bottom-box {
@@ -55,7 +55,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid #343a40;
+    border-bottom: 1px solid #5b5c5e;
 }
 
 .main-box .photos-box {
@@ -65,4 +65,101 @@
     margin: 0;
     padding: 0;
     border-bottom: 1px solid #343a40;
+}
+
+.main-box .mid-mid-box .editProfileSection {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.main-box .mid-mid-box .shareProfileSection {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.main-box .mid-mid-box .editProfileSection button {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 90%;
+    width: 90%;
+    padding-left: 4px;
+    background-color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.main-box .mid-mid-box .shareProfileSection button {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 90%;
+    padding-right: 4px;
+    background-color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.main-box .mid-bottom-box .wishes {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding-right: 0;
+}
+
+.main-box .mid-bottom-box .cart {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding-left: 0;
+}
+
+.main-box .mid-bottom-box .wishes button{
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 90%;
+    width: 90%;
+    padding-left: 4px;
+    border-radius: 8px;
+    padding-right: 0;
+    font-size: 14px;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.main-box .mid-bottom-box .cart button{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    vertical-align: text-bottom;
+    padding-right: 0;
+    line-height: 1.5;
+    height: 90%;
+    width: 90%;
+    padding-right: 4px;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
