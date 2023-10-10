@@ -20,7 +20,7 @@
 }
 
 input {
-  color: var(--text-color);
+  color: var(--text-color-dark);
 }
 
 a {
@@ -96,6 +96,10 @@ button:focus-visible {
   padding-bottom: 56px;
 }
 
+form {
+  padding: 1rem;
+}
+
 .hide {
   display: none;
 }
@@ -136,4 +140,11 @@ button:focus-visible {
 .home-action-svg {
   width: 50%;
   height: 50%;
+}
+
+.text-field {
+  border: none;
+  padding: 0.2rem;
+  margin: 0.2rem;
+  border-radius: 5px;
 }

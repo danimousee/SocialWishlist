@@ -24,8 +24,22 @@ const products = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    addProductsStart(state) {
+      console.log("start", state);
+      state.loading = true;
+    },
+    addProductsSuccess(state, action) {
+      console.log("success", action);
+      state.loading = false;
+      state.error = null;
+    },
+    addProductsFailure(state, action) {
+      console.log("failure");
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
-export const { fetchProductsStart, fetchProductsSuccess, fetchProductsFailure } = products.actions;
+export const { fetchProductsStart, fetchProductsSuccess, fetchProductsFailure ,addProductsStart, addProductsSuccess, addProductsFailure } = products.actions;
 export default products.reducer;

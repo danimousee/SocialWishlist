@@ -5,6 +5,7 @@ export const H2 = styled('h2')(({ theme }) => ({
     color: theme.palette.primary.main,
   }));
 
-export const Container = styled("div")(({theme}) => ({
+export const Container = styled("div")(({
   padding: "1rem",
+  justifyContent: "center",
 }))

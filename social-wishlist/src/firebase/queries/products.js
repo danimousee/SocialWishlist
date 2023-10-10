@@ -13,6 +13,9 @@ import {
   fetchProductsStart,
   fetchProductsSuccess,
   fetchProductsFailure,
+  addProductsStart,
+  addProductsSuccess,
+  addProductsFailure,
 } from "../../actions/products";
 const COLLECTION_NAME = "products";
 
@@ -42,19 +45,21 @@ export async function getProduct(db, id) {
   }
 }
 
-export async function addProduct(db, payload) {
+export const addProduct = (payload) => async (dispatch) => {
+   dispatch(addProductsStart);
+
   try {
     let docRef;
     if (payload.id) {
       docRef = await setDoc(doc(db, COLLECTION_NAME, payload.id), payload);
-      console.log("Document written with ID: ", payload.id);
     } else {
       docRef = await addDoc(collection(db, COLLECTION_NAME), payload);
-      console.log("Document written with ID: ", docRef.id);
     }
+    console.log("docRef", docRef);
+    dispatch(addProductsSuccess());
   } catch (e) {
-    console.error("Error adding document: ", e);
-  }
+    dispatch(addProductsFailure(e));
+  } 
 }
 
 export async function editProduct(db, id, payload) {
