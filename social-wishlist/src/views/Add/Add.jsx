@@ -24,7 +24,7 @@ const Add = () => {
       <Container>
         <Field className="text-field" id="title" name="title" placeholder="Titulo"  />
 
-        <Field className="text-field" id="description" name="description" placeholder="Descripcion"  />
+        <Field className="text-field" as="textarea" id="description" name="description" placeholder="Descripcion"  />
 
     {/*     <Field
           id="images"
