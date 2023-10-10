@@ -1,5 +1,5 @@
 import React from "react";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
+import ClearIcon from '@mui/icons-material/Clear';
 
 const styles = {
     backgroundColor: "#F8927C",
@@ -10,7 +10,7 @@ const styles = {
 function SkipProductButton({onClick}) {
 	return (
 		<button className="home-action-btn" style={styles} onClick={onClick}>
-			<SkipNextIcon className="home-action-svg"/>
+			<ClearIcon className="home-action-svg"/>
 		</button>
 	);
 }

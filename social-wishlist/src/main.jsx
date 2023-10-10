@@ -20,13 +20,13 @@ import router from "./router/router.jsx";
 import { db } from "./firebase";
 
 // EJEMPLO FIREBASE
-// import * as product_queries from "./firebase/queries/products.js"
+import * as productQueries from "./firebase/queries/products.js"
+import meliProducts from "../mock/meliProducts.js"
 
-// product_queries.addProduct(db, {
-//   id: "BBB-001",
-//   name: "Apple Watch",
-//   provider: "Facebook Market"
-// });
+const compressedProducts = productQueries.compressProductsMELI(meliProducts);
+// console.log("compressedProducts:", compressedProducts);
+
+// productQueries.uploadProductsToDB(db, compressedProducts);
 
 // MUI custom theme
 const theme = createTheme({

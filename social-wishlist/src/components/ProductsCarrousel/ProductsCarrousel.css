@@ -1,0 +1,8 @@
+.slider {
+    max-height: 50vh;
+    aspect-ratio: 1;
+}
+
+.product-name {
+    height: 105px;
+}

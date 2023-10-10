@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SearchBar from "/src/components/SearchBar/SearchBar";
 import "./Home.css";
-import ProductsCarrousel from "../products/ProductsCarrousel";
+import ProductsCarrousel from "../../components/ProductsCarrousel/ProductsCarrousel";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../firebase/queries/products";
 import CircularProgress from "@mui/material/CircularProgress";
