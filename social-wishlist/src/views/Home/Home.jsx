@@ -10,24 +10,16 @@ import { Container } from "../../components/Styles.css";
 
 const Home = () => {
   const [tab, setTab] = useState("forYou");
-  const { loading } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
 
-  if (loading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", margin: "auto" }}>
-        <CircularProgress color="secondary" />
-      </Box>
-    );
-  }
 
   return (
     <Container>
-      <SearchBar />
+      <SearchBar search={(input) => dispatch(getAllProducts(input))} />
 
       <div className="content-box">
         <div className="button-group">
