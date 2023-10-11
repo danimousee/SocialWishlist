@@ -8,18 +8,30 @@ import {
   addProductsSuccess,
   addProductsFailure,
 } from "../../actions/products";
+import { search } from "../../utils/global";
 const COLLECTION_NAME = "products";
 
-export const getAllProducts = () => async (dispatch) => {
+export const getAllProducts = (input = null) => async (dispatch) => {
+  console.log("input", input);
 	dispatch(fetchProductsStart());
 
 	try {
 		const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
-		const data = querySnapshot.docs.map((doc) => ({
+		const response = querySnapshot.docs.map((doc) => ({
 			id: doc.id,
 			...doc.data(),
 		}));
-		dispatch(fetchProductsSuccess(data));
+
+    let data;
+
+    if(input !== null) {
+      data = search(response, input);
+      console.log("data", data);
+    } else {
+      data = response;
+    }
+    dispatch(fetchProductsSuccess(data));
+
 	} catch (error) {
 		dispatch(fetchProductsFailure(error.message));
 	}

@@ -6,10 +6,12 @@ import { useSelector } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { H2 } from "../Styles.css";
 import "./ProductsCarrousel.css";
+import { Box, CircularProgress } from "@mui/material";
 
 const ProductsCarrousel = () => {
 	const [page, setPage] = useState(0);
-	const { products } = useSelector((state) => state.products);
+	const { products, loading } = useSelector((state) => state.products);
+	
 
 	const nextPage = () => {
 		if (page === products.length - 1) {
@@ -24,6 +26,14 @@ const ProductsCarrousel = () => {
       return string.slice(0,max) + "..."
     }
     return string;
+  }
+
+  if (loading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", margin: "auto" }}>
+        <CircularProgress color="secondary" />
+      </Box>
+    );
   }
 
 	return (
