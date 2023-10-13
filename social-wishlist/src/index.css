@@ -98,6 +98,13 @@ button:focus-visible {
 	margin-top: 20px;
 }
 
+.center-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 form {
   padding: 1rem;
 }

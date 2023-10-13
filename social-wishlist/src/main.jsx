@@ -20,10 +20,10 @@ import router from "./router/router.jsx";
 import { db } from "./firebase";
 
 // EJEMPLO FIREBASE
-import * as productQueries from "./firebase/queries/products.js"
-import meliProducts from "../mock/meliProducts.js"
+// import * as productQueries from "./firebase/queries/products.js"
+// import meliProducts from "../mock/meliProducts.js"
 
-const compressedProducts = productQueries.compressProductsMELI(meliProducts);
+// const compressedProducts = productQueries.compressProductsMELI(meliProducts);
 // console.log("compressedProducts:", compressedProducts);
 
 // productQueries.uploadProductsToDB(db, compressedProducts);
