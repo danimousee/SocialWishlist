@@ -12,7 +12,14 @@ export function googleSignIn() {
 			const credential = GoogleAuthProvider.credentialFromResult(result);
 			const token = credential.accessToken;
 			// The signed-in user info.
-			const user = result.user.providerData[0];
+			const user = {
+				uid: result.user.uid,
+				displayName: result.user.displayName,
+				email: result.user.email,
+				emailVerified: result.user.emailVerified,
+				phoneNumber: result.user.phoneNumber,
+				photoURL: result.user.photoURL,
+			};
 			return user;
 			// IdP data available using getAdditionalUserInfo(result)
 			// ...

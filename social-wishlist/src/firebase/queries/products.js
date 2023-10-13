@@ -43,6 +43,7 @@ export async function getProduct(db, id) {
 
 	if (docSnap.exists()) {
 		console.log("Document data:", docSnap.data());
+    return docSnap.data();
 	} else {
 		console.log("No such document!");
 	}

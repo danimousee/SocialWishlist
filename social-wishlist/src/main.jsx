@@ -20,13 +20,29 @@ import router from "./router/router.jsx";
 import { db } from "./firebase";
 
 // EJEMPLO FIREBASE
-// import * as productQueries from "./firebase/queries/products.js"
+// import * as userQueries from "./firebase/queries/users.js"
 // import meliProducts from "../mock/meliProducts.js"
 
-// const compressedProducts = productQueries.compressProductsMELI(meliProducts);
-// console.log("compressedProducts:", compressedProducts);
+// const allUsers = userQueries.getAllUsers(db);
+// console.log("allUsers:", allUsers);
 
-// productQueries.uploadProductsToDB(db, compressedProducts);
+// userQueries.addUser(db, {
+// 	id: "aaa001",
+// 	displayName: "David Choi",
+// 	email: "david.choi@mail.com"
+// });
+
+// userQueries.addUser(db, {
+// 	id: "aaa002",
+// 	displayName: "Carina Shin",
+// 	email: "carina.shin@mail.com"
+// });
+
+// userQueries.editUser(db, 'aaa001', {
+// 	email: "the_monster@email.com"
+// })
+
+// userQueries.deleteUser(db, "aaa002");
 
 // MUI custom theme
 const theme = createTheme({

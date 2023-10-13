@@ -7,6 +7,8 @@ import { googleSignIn } from "../../firebase/auth/googleAuth";
 import { useDispatch } from "react-redux";
 import { userLogIn } from "../../actions/user";
 import { useNavigate } from "react-router-dom";
+import { addUser } from "../../firebase/queries/users";
+import { db } from "../../firebase";
 
 function Login() {
 	const [loginPressed, setLoginPressed] = useState(false);
@@ -18,6 +20,13 @@ function Login() {
 		setLoginPressed(true);
 		googleSignIn().then((res) => {
 			setLoginPressed(false);
+			try {
+				addUser(db, res);
+				console.log("User saved to DB with id", res.uid);
+			} catch (error) {
+				// Maybe show an error in the client and prompt retry here?
+				console.error("Error saving user:", error.message);
+			}
 			dispatch(userLogIn(res));
 			// redirect to profile
 			navigate('/profile');
