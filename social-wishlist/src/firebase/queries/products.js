@@ -102,3 +102,13 @@ export function compressProductsMELI(meliProducts) {
   });
   return compressedProductsMELI;
 }
+
+export async function addProductToUser(db, payload, userId) {
+  let docRef;
+  const path = `users/${userId}/products`
+    if (payload.id) {
+      docRef = await setDoc(doc(db, path, payload.id), payload);
+    } else {
+      docRef = await addDoc(collection(db, path), payload);
+    }
+}
