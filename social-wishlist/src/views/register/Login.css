@@ -1,0 +1,9 @@
+.login-logo {
+    display: block;
+    width: 100%;
+}
+
+.login-box {
+    align-items: center;
+    gap: 50px;
+}

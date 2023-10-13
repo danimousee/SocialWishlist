@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import HomeIcon from "@mui/icons-material/Home";
@@ -14,23 +14,19 @@ import Avatar from "../../components/Avatar/Avatar";
 function Nav() {
 	// Este truquito devuelve la primer parte de la URL actual, luego del dominio
 	// Ejemplo, si la URL es localhost:5173/login/hola. currentLocation vale 'login'
-	const currentLocation = window.location.pathname.slice(1).split("/").shift();
-	const [value, setValue] = useState(currentLocation || "home");
+	const location = useLocation();
+	const currentLocation = location.pathname.slice(1).split("/").shift();
 
 	const { user, loggedIn } = useSelector((state) => state.user);
 
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
-
 	return (
 		<Paper sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }} elevation={3}>
-			<BottomNavigation value={value} onChange={handleChange} className="bottom-navigation">
+			<BottomNavigation value={currentLocation} className="bottom-navigation">
 				<BottomNavigationAction
 					component={Link}
 					to="/"
 					label=""
-					value="home"
+					value=""
 					icon={<HomeIcon />}
 					className={`bottom-navigation-action `}
 				/>

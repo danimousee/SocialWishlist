@@ -12,7 +12,7 @@ import { search } from "../../utils/global";
 const COLLECTION_NAME = "products";
 
 export const getAllProducts = (input = null) => async (dispatch) => {
-  console.log("input", input);
+  // console.log("input", input);
 	dispatch(fetchProductsStart());
 
 	try {
@@ -58,7 +58,7 @@ export const addProduct = (payload) => async (dispatch) => {
     } else {
       docRef = await addDoc(collection(db, COLLECTION_NAME), payload);
     }
-    console.log("docRef", docRef);
+    // console.log("docRef", docRef);
     dispatch(addProductsSuccess());
   } catch (e) {
     dispatch(addProductsFailure(e));
