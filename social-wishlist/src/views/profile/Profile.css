@@ -21,12 +21,14 @@
     padding: 30px
 }
 
-.profile-main .p-card .wishes {
+.profile-main .p-card .wishes-counter {
     font-size: 10px;
+    flex-direction: column;
 }
 
-.profile-main .p-card .friends{
+.profile-main .p-card .friends-counter{
     font-size: 10px;
+    flex-direction: column;
 }
 
 .prof-picture-avatar .custom-avatar .Avatar {
@@ -38,4 +40,34 @@
     width: 100px;
     height: 100px; 
 
-  }
+}
+
+.profile-main .p-photos {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+    background-color: transparent;
+}
+
+.profile-main .p-photos .tab-selector {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 5vh;
+    border-bottom: 1px solid #28B0CE;
+}
+
+.profile-main .p-photos .tab-selector .wishes {
+    display: flex;
+    width: 50%;
+    height: 100%;
+    border: 1px solid #28B0CE;
+}
+
+.profile-main .p-photos .tab-selector .cart {
+    display: flex;
+    width: 50%;
+    height: 100%;
+    border: 1px solid #28B0CE;
+}

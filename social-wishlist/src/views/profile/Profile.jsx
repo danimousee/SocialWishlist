@@ -17,18 +17,26 @@ const Profile = () => {
 			<div className='profile-main'>
 				{/* Profile Card Section*/}
 				<div className='p-card'>
-					<div className='friends'>
+					<div className='friends-counter'>
 						<h2>Friends</h2>
 					</div>
 					<div className='prof-picture'>
 						{<Avatar img={user.photoURL} />}
 					</div>
-					<div className='wishes'>
+					<div className='wishes-counter'>
 						<h2>Wishes</h2>
 					</div>
 				</div>
 				{/* Photos Section */}
 				<div className='p-photos'>
+					<div className='tab-selector'>
+						<div className='wishes'>
+
+						</div>
+						<div className='cart'>
+
+						</div>
+					</div>
 					<h1>Fotitos</h1>
 				</div>
 			</div>
