@@ -11,7 +11,31 @@ body {
     width: 100%;
     background-color: transparent;
     
-  }
+}
+
+.profile-main .log-out-user {
+    width: 100%;
+    height: 5%;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-main .log-out-user .log-out-icon {
+    margin-top: 5px;
+    padding: 5px;
+    height: 40%;
+    width: 40%;
+}
+
+.profile-main .top-of-everything .username-div {
+    width: 92%;
+    display: flex;
+}
+.profile-main .top-of-everything .config-icon-div {
+    width: 8%;
+    display: flex;
+}
 
 .profile-main .p-card{
     display: flex;
