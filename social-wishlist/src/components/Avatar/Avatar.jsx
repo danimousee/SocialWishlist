@@ -10,9 +10,9 @@ function Avatar({ img }) {
 		backgroundPosition: "center center",
 		backgroundSize: "cover",
 		backgroundColor: "var(--primary)",
-		height: "23px",
+		// height: "23px", LO SACO DE ACA, LO PONGO EN EL NAV, Sino no puedo modificar imagen de mi perfil.
 		aspectRatio: "1",
-		borderRadius: "24px",
+		borderRadius: '50%',
 		border: "1px solid grey",
 	};
 

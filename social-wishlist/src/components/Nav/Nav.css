@@ -9,3 +9,7 @@
 .Mui-selected svg {
     color: white;
 }
+
+.bottom-navigation-action .avatar {
+    height: 23px;
+}

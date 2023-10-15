@@ -55,7 +55,7 @@ function Nav() {
 						to="/profile"
 						label=""
 						value="profile"
-						icon={<Avatar img={user.photoURL} />}
+						icon={<Avatar img={user.photoURL}/>}
 						className={`bottom-navigation-action`}
 					/>
 				) : (

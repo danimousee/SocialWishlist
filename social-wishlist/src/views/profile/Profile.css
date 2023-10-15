@@ -1,179 +1,41 @@
-.main-box {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+.profile-main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     width: 100%;
-    display: flex;
-}
-
-.main-box .top-box {
-    width: 100%;
-    height: 30px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    border-bottom: 1px solid #343a40;
-    z-index: 1;
-}
-
-.main-box .top-box .username {
-    width: 90%;
-    height: 100%;
-    display: flex;
-    margin-left: 0px;
-    color: white;
-}
-
-.main-box .top-box .username h1 {
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 20px;
-}
-
-.main-box .mid-top-box {
-    display: flex;
-    height: 85px;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid #343a40;
-}
-
-
-.main-box .mid-top-box .profilePicSection {
-    background-color: white;
-    height: 100%;
-    width: 38%;
-}
-
-.main-box .mid-top-box .profilePicSection img {
-    max-height: 100%;
-    max-width: 100%;
-    overflow: hidden;
-}
-
-
-.main-box .mid-mid-box {
-    display: flex;
-    height: 30px;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.main-box .mid-bottom-box {
-    display: flex;
-    height: 40px;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid #5b5c5e;
-}
-
-.main-box .photos-box {
-    display: flex;
-    flex-grow: 1;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid #343a40;
-}
-
-.main-box .mid-mid-box .editProfileSection {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-}
-
-.main-box .mid-mid-box .shareProfileSection {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-}
-
-.main-box .mid-mid-box .editProfileSection button {
-    text-align: center;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    height: 90%;
-    width: 90%;
-    padding-left: 4px;
-    background-color: white;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.main-box .mid-mid-box .shareProfileSection button {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90%;
-    width: 90%;
-    padding-right: 4px;
-    background-color: white;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.main-box .mid-bottom-box .wishes {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    padding-right: 0;
-}
-
-.main-box .mid-bottom-box .cart {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    padding-left: 0;
-}
-
-.main-box .mid-bottom-box .wishes button{
-    text-align: center;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    height: 90%;
-    width: 90%;
-    padding-left: 4px;
-    border-radius: 8px;
-    padding-right: 0;
-    font-size: 14px;
     background-color: transparent;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+    
+  }
+
+.profile-main .p-card{
+    display: flex;
+    flex-direction: row;
+    height: 25vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #28B0CE;
 }
 
-.main-box .mid-bottom-box .cart button{
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    vertical-align: text-bottom;
-    padding-right: 0;
-    line-height: 1.5;
-    height: 90%;
-    width: 90%;
-    padding-right: 4px;
-    border-radius: 8px;
-    font-size: 14px;
-    background-color: transparent;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+.profile-main .p-card .prof-picture {
+    padding: 30px
 }
+
+.profile-main .p-card .wishes {
+    font-size: 10px;
+}
+
+.profile-main .p-card .friends{
+    font-size: 10px;
+}
+
+.prof-picture-avatar .custom-avatar .Avatar {
+    height: 100px;
+    width: 100px;
+}
+
+.prof-picture .avatar {
+    width: 100px;
+    height: 100px; 
+
+  }

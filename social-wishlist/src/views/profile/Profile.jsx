@@ -1,51 +1,36 @@
 import { useState } from 'react'
-import avatar from './../../img/avatar.jpg'
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Avatar from '../../components/Avatar/Avatar';
 import "./Profile.css"
-
+import PersonIcon from "@mui/icons-material/Person";
 
 
 const Profile = () => {
-	const [tab, setTab] = useState("profile");
+	const location = useLocation();
+	const currentLocation = location.pathname.slice(1).split("/").shift();
+
+	const { user, loggedIn } = useSelector((state) => state.user);
 	
 	return (
 		<>
-			<div className="main-box">
-				<div className="top-box">
-					<div className="username">
-						<h1>Username Here</h1>
+			<div className='profile-main'>
+				{/* Profile Card Section*/}
+				<div className='p-card'>
+					<div className='friends'>
+						<h2>Friends</h2>
 					</div>
-					<div className="configIcon">
-
+					<div className='prof-picture'>
+						{<Avatar img={user.photoURL} />}
 					</div>
-				</div>
-				<div className="mid-top-box">
-					<div className='profilePicSection'>
-						<img src="Images/Dani.png" alt="IMAGEN"></img>
-					</div>
-					<div className='profileInfoSection'>
-
-					</div>
-				</div>
-				<div className='mid-mid-box'>
-					<div className='editProfileSection'>
-						<button type="button">Edit Profile</button>
-					</div>
-					<div className='shareProfileSection'>
-						<button type="button">Share Profile</button>
-					</div>
-				</div>
-				<div className='mid-bottom-box'>
 					<div className='wishes'>
-						<button type='button'>Wishes</button>
-					</div>
-					<div className='cart'>
-						<button type='Cart'>Cart</button>
+						<h2>Wishes</h2>
 					</div>
 				</div>
-				<div className='photos-box'>
-
+				{/* Photos Section */}
+				<div className='p-photos'>
+					<h1>Fotitos</h1>
 				</div>
-
 			</div>
 		</>
 	)
