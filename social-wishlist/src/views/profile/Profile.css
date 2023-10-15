@@ -1,3 +1,9 @@
+body {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+}
+
 .profile-main {
     display: flex;
     flex-direction: column;
@@ -14,7 +20,7 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #28B0CE;
+    border-bottom: 1px solid darkgray;
 }
 
 .profile-main .p-card .prof-picture {
@@ -22,13 +28,19 @@
 }
 
 .profile-main .p-card .wishes-counter {
-    font-size: 10px;
+    font-size: 9px;
     flex-direction: column;
+    letter-spacing: 0.5px;
+	font-weight: 500;
+	font-family: inherit;
 }
 
 .profile-main .p-card .friends-counter{
-    font-size: 10px;
+    font-size: 9px;
     flex-direction: column;
+    letter-spacing: 0.5px;
+	font-weight: 500;
+	font-family: inherit;
 }
 
 .prof-picture-avatar .custom-avatar .Avatar {
@@ -55,19 +67,83 @@
     flex-direction: row;
     width: 100%;
     height: 5vh;
-    border-bottom: 1px solid #28B0CE;
 }
 
 .profile-main .p-photos .tab-selector .wishes {
     display: flex;
     width: 50%;
     height: 100%;
-    border: 1px solid #28B0CE;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile-main .p-photos .tab-selector .cart {
     display: flex;
     width: 50%;
     height: 100%;
-    border: 1px solid #28B0CE;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-main .p-photos .tab-selector .wishes h2{
+    display: flex;
+    font-size: 18px;
+    color: darkgray;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1em;
+	font-weight: 500;
+	font-family: inherit;
+    letter-spacing: 0.5px;
+    /* border-bottom: 3px solid #28B0CE; */
+}
+
+.profile-main .p-photos .tab-selector .cart h2 {
+    display: flex;
+    font-size: 18px;
+    color: darkgray;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1em;
+	font-weight: 500;
+	font-family: inherit;
+    letter-spacing: 0.5px;
+    /* border-bottom: 3px solid #28B0CE; */
+    
+}
+
+.profile-main .p-photos .tab-selector .cart h2::after {
+    content: "";
+    position: relative;
+    background-color: #28B0CE 10%;
+    height: 3px;
+    width: 150%;
+    left: 0;
+    bottom: -10px;
+    border-radius: 11px;
+    transition: 0.3s;
+}
+
+.profile-main .p-photos .tab-selector .wishes h2::after {
+    content: "";
+    position: relative;
+    background-color: #28B0CE 10%;
+    height: 3px;
+    width: 100%;
+    left: 0;
+    bottom: -10px;
+    border-radius: 11px;
+    transition: 0.3s;
+}
+
+.profile-main .p-photos .tab-selector .cart h2:hover::after {
+    background-color: #28B0CE;
+}
+
+.profile-main .p-photos .tab-selector .wishes h2:hover::after {
+    background-color: #28B0CE;
 }

@@ -31,10 +31,10 @@ const Profile = () => {
 				<div className='p-photos'>
 					<div className='tab-selector'>
 						<div className='wishes'>
-
+							<h2>Wishes</h2>
 						</div>
 						<div className='cart'>
-
+							<h2>Cart</h2>
 						</div>
 					</div>
 					<h1>Fotitos</h1>
