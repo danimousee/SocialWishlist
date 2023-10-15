@@ -15,17 +15,24 @@ body {
 
 .profile-main .log-out-user {
     width: 100%;
-    height: 5%;
+    height: 10%;
     position: absolute;
     align-items: center;
     justify-content: center;
 }
 
-.profile-main .log-out-user .log-out-icon {
+.profile-main .log-out-user .log-out-button {
     margin-top: 5px;
     padding: 5px;
-    height: 40%;
-    width: 40%;
+    height: 35%;
+    width: 10%;
+    background-color: transparent;
+}
+
+
+.profile-main .log-out-user .log-out-button .log-out-icon{
+    height: 100%;
+    width: 100%;
 }
 
 .profile-main .top-of-everything .username-div {

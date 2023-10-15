@@ -1,23 +1,39 @@
 import { useState } from 'react'
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Avatar from '../../components/Avatar/Avatar';
 import "./Profile.css"
 import LogoutIcon from '@mui/icons-material/Logout';
 
+import { googleSignOut } from "../../firebase/auth/googleAuth";
+import { userLogOut } from "../../actions/user";
+import { useNavigate } from "react-router-dom";
+
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 
 const Profile = () => {
+	const dispatch = useDispatch();
+
 	const location = useLocation();
 	const currentLocation = location.pathname.slice(1).split("/").shift();
 
 	const { user, loggedIn } = useSelector((state) => state.user);
 	
+	const navigate = useNavigate();
+	const handleSignOut = function () {
+		googleSignOut().then((res) => {
+			dispatch(userLogOut());
+			navigate("/login");
+		});
+	};
+
 	return (
 		<>
 			<div className='profile-main'>
 				<div className='log-out-user'>
-					<LogoutIcon className='log-out-icon'/>
+					<button className='log-out-button' onClick={handleSignOut}><LogoutIcon className='log-out-icon'/></button>
 				</div>
 				{/* Profile Card Section*/}
 				<div className='p-card'>
