@@ -77,6 +77,7 @@ const ProductsCarrousel = () => {
 										objectFit: "cover",
 										height: "100%",
 										objectPosition: "center center",
+										borderRadius: "14px"
 									}}
 								/>
 							))}

@@ -1,3 +1,25 @@
+.search-bar-box {
+    border: 2px solid white;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.search-bar-box label {
+    line-height: 0;
+}
+
+.search-input{ 
+    border: 0;
+    background-color: transparent;
+    width: 100%;
+    font-size: 1em;
+    outline: none;
+}
+
 .search-bar-text-field input {
     color: white;
 }
@@ -11,6 +33,7 @@
     color: white;
 }
 
+
 .css-1pnmrwp-MuiTypography-root{
     color: white;
-}
+} 
