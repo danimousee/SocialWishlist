@@ -8,7 +8,7 @@ import {
   addProductsSuccess,
   addProductsFailure,
 } from "../../actions/products";
-import { search } from "../../utils/global";
+import { searchProducts } from "../../utils/products";
 const COLLECTION_NAME = "products";
 
 export const getAllProducts = (input = null) => async (dispatch) => {
@@ -22,14 +22,8 @@ export const getAllProducts = (input = null) => async (dispatch) => {
 			...doc.data(),
 		}));
 
-    let data;
+    const data = searchProducts(input, response);
 
-    if(input !== null) {
-      data = search(response, input);
-      console.log("data", data);
-    } else {
-      data = response;
-    }
     dispatch(fetchProductsSuccess(data));
 
 	} catch (error) {
