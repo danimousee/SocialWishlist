@@ -23,7 +23,8 @@ const initialValues = {
   name: '',
   images: '',
   url: '',
-  provider: { name: 'Mercado Libre', id: 'MELI' }
+  provider: { name: 'Mercado Libre', id: 'MELI' },
+  category: { name: 'Arte', id: 'Arte' }
 };
 
 const optionsProvider = [
@@ -33,6 +34,28 @@ const optionsProvider = [
   { name: 'Otros', id: 'OTHER' },
 ];
 
+const optionsCategory = [
+  { name: 'Arte', id: 'Arte' },
+  { name: 'Autos', id: 'Autos' },
+  { name: 'Bazar', id: 'Bazar' },
+  { name: 'Bebes', id: 'Bebes' },
+  { name: 'Belleza', id: 'Belleza' },
+  { name: 'Cocina', id: 'Cocina' },
+  { name: 'Decoracion', id: 'Decoracion' },
+  { name: 'Deportes', id: 'Deportes' },
+  { name: 'Educacion', id: 'Educacion' },
+  { name: 'Electronica', id: 'Electronica' },
+  { name: 'Familia', id: 'Familia' },
+  { name: 'Fotografia', id: 'Fotografia' },
+  { name: 'Lectura', id: 'Lectura' },
+  { name: 'Moda', id: 'Moda' },
+  { name: 'Musica', id: 'Musica' },
+  { name: 'Naturaleza', id: 'Naturaleza' },
+  { name: 'Salud', id: 'Salud' },
+  { name: 'Viajes', id: 'Viajes' },
+  { name: 'Videojuegos', id: 'Videojuegos' },
+  { name: 'Otros', id: 'Otros' },
+];
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -45,6 +68,7 @@ const Add = () => {
     values.images = arrayimages
 
     values.provider = values.provider.id
+    values.category = values.category.id
     //alert(JSON.stringify(values, null, 2));
     dispatch(addProduct(values))
   };
@@ -68,18 +92,34 @@ const Add = () => {
               />
 
               <Autocomplete color="primary" className='search-bar-text-field' fullWidth
+                id="category"
+                name="category"
+                options={optionsCategory}
+                onChange={(e, value) => {
+                  setFieldValue(
+                    "category",
+                    value !== null ? value : initialValues.category
+                  );
+                }}
+                renderInput={(params) => <TextField {...params} label="Categoria" name="category" />}
+                value={values.category}
+                //onBlur={handleBlur}
+                //error={touched.category && Boolean(errors.category)}   
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={option => option.name}
+              />
+
+              <Autocomplete color="primary" className='search-bar-text-field' fullWidth
                 id="provider"
                 name="provider"
                 options={optionsProvider}
                 onChange={(e, value) => {
-                  console.log(value);
                   setFieldValue(
                     "provider",
                     value !== null ? value : initialValues.provider
                   );
                 }}
                 renderInput={(params) => <TextField {...params} label="Sitio" name="provider" />}
-
                 value={values.provider}
                 //onBlur={handleBlur}
                 //error={touched.provider && Boolean(errors.provider)}   
