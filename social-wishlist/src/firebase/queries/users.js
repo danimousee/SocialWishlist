@@ -38,3 +38,4 @@ export async function editUser(db, id, payload) {
 export async function deleteUser(db, id) {
 	await deleteDoc(doc(db, COLLECTION_NAME, id));
 }
+

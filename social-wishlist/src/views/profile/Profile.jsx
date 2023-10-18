@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from '../../components/Avatar/Avatar';
@@ -10,6 +10,10 @@ import { userLogOut } from "../../actions/user";
 import { useNavigate } from "react-router-dom";
 
 import CircularProgress from "@mui/material/CircularProgress";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import Box from "@mui/material/Box";
+import { getProductsOfUser } from '../../firebase/queries/products';
 
 
 
@@ -28,6 +32,67 @@ const Profile = () => {
 			navigate("/login");
 		});
 	};
+
+	//----------------------------
+
+	const [userProducts, setUserProducts] = useState([]);
+	const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+		if (user && user.uid) {
+			setLoading(true); // Iniciar la carga antes de llamar a la API
+	
+			getProductsOfUser(user.uid)
+				.then(products => {
+					setUserProducts(products);
+					setLoading(false); // Finalizar la carga después de obtener los productos
+				})
+				.catch(error => {
+					console.error("Error fetching user products:", error);
+					setLoading(false); // Asegurarse de finalizar la carga incluso si hay un error
+				});
+		}
+	}, [user]);
+
+
+    const renderUserProducts = () => {
+		if (loading) {
+			return (
+			  <Box
+				sx={{
+				  display: "flex",
+				  justifyContent: "center",
+				  margin: "auto",
+				}}
+			  >
+				<CircularProgress color="secondary" />
+			  </Box>
+			) 
+		} else if (userProducts.length > 0) {
+            return (
+                <ImageList cols={3} rowHeight={164}>
+                    {userProducts.map((product, i) => (
+                        <ImageListItem key={i}>
+                            <img
+                                srcSet={`${product?.images[0]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                src={`${product?.images[0]}?w=164&h=164&fit=crop&auto=format`}
+                                alt={product.name}
+                                loading="lazy"
+                            />
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+            );
+        } else {
+            return <h2>Empty Wishlist :(</h2>;
+        }
+    };
+
+	//------
+
+	const [activeTab, setActiveTab] = useState("wishes");
+	const selectWishesTab = () => setActiveTab("wishes");
+    const selectCartTab = () => setActiveTab("cart");
 
 	return (
 		<>
@@ -50,14 +115,16 @@ const Profile = () => {
 				{/* Photos Section */}
 				<div className='p-photos'>
 					<div className='tab-selector'>
-						<div className='wishes'>
+						<div className={activeTab === "wishes" ? 'wishes active' : 'wishes'} onClick={() => setActiveTab("wishes")}>
 							<h2>Wishes</h2>
 						</div>
-						<div className='cart'>
+						<div className={activeTab === "cart" ? 'cart active' : 'cart'} onClick={() => setActiveTab("cart")}>
 							<h2>Cart</h2>
 						</div>
 					</div>
-					<h1>Fotitos</h1>
+					<div className='p-photos-show'>
+					{renderUserProducts()}
+					</div>
 				</div>
 			</div>
 		</>

@@ -55,7 +55,7 @@ body {
     width: 100%;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid darkgray;
+    border-bottom: 1px solid #242424;
 }
 
 .profile-main .p-card .prof-picture {
@@ -181,4 +181,22 @@ body {
 
 .profile-main .p-photos .tab-selector .wishes h2:hover::after {
     background-color: #28B0CE;
+}
+
+.profile-main .p-photos .tab-selector .wishes.active h2:hover {
+    /* Aquí estilos cuando el tab está activo */
+    color: rgb(201, 199, 199);; /* Por ejemplo, cambiar el color del texto cuando está activo */
+}
+
+.profile-main .p-photos .tab-selector .wishes.active h2:hover::after {
+    background-color: #28B0CE; /* El color de fondo del pseudo-elemento cuando el tab está activo */
+}
+
+.profile-main .p-photos .tab-selector .cart.active h2:hover {
+    /* Aquí estilos cuando el tab está activo */
+    color: rgb(201, 199, 199);; /* Por ejemplo, cambiar el color del texto cuando está activo */
+}
+
+.profile-main .p-photos .tab-selector .cart.active h2:hover::after {
+    background-color: #28B0CE; /* El color de fondo del pseudo-elemento cuando el tab está activo */
 }

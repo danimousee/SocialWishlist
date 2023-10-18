@@ -112,3 +112,16 @@ export async function addProductToUser(db, payload, userId) {
       docRef = await addDoc(collection(db, path), payload);
     }
 }
+
+export async function getProductsOfUser(userId) {
+  const productsRef = collection(db, `users/${userId}/products`);
+  const querySnapshot = await getDocs(productsRef);
+  
+  const userProducts = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+  }));
+
+  return userProducts;
+}
+
