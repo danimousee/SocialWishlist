@@ -50,12 +50,69 @@ body {
 
 .profile-main .p-card{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 25vh;
     width: 100%;
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid #242424;
+}
+
+.profile-main .p-card .p-info{
+    display: flex;
+    flex-direction: row;
+    height: 20vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-main .p-card .p-options{
+    display: flex;
+    flex-direction: row;
+    height: 5vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.profile-main .p-card .p-options .edit-option{
+    display: flex;
+    flex-direction: row;
+    height: 2vh;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-main .p-card .p-options .share-option{
+    display: flex;
+    flex-direction: row;
+    height: 2vh;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-main .p-card .p-options .edit-option .button-edit-profile{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    border-radius: 0;
+}
+
+.profile-main .p-card .p-options .share-option .button-share-profile{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    border-radius: 0;
 }
 
 .profile-main .p-card .prof-picture {
@@ -92,7 +149,7 @@ body {
 .profile-main .p-photos {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    height: 25vh;
     width: 100%;
     background-color: transparent;
 }
@@ -102,6 +159,11 @@ body {
     flex-direction: row;
     width: 100%;
     height: 5vh;
+}
+
+.profile-main .p-photos .p-photos-show {
+    width: 100%;
+    height: 100%;
 }
 
 .profile-main .p-photos .tab-selector .wishes {
@@ -184,19 +246,22 @@ body {
 }
 
 .profile-main .p-photos .tab-selector .wishes.active h2:hover {
-    /* Aquí estilos cuando el tab está activo */
-    color: rgb(201, 199, 199);; /* Por ejemplo, cambiar el color del texto cuando está activo */
+    color: rgb(201, 199, 199);
 }
 
 .profile-main .p-photos .tab-selector .wishes.active h2:hover::after {
-    background-color: #28B0CE; /* El color de fondo del pseudo-elemento cuando el tab está activo */
+    background-color: #28B0CE; 
 }
 
 .profile-main .p-photos .tab-selector .cart.active h2:hover {
-    /* Aquí estilos cuando el tab está activo */
-    color: rgb(201, 199, 199);; /* Por ejemplo, cambiar el color del texto cuando está activo */
+    color: rgb(201, 199, 199);
 }
 
 .profile-main .p-photos .tab-selector .cart.active h2:hover::after {
-    background-color: #28B0CE; /* El color de fondo del pseudo-elemento cuando el tab está activo */
+    background-color: #28B0CE; 
+}
+
+.profile-main .p-photos .tab-selector .wishes.active h2::after {
+    color: rgb(201, 199, 199);
+    background-color: #28B0CE;
 }

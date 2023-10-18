@@ -84,7 +84,7 @@ const Profile = () => {
                 </ImageList>
             );
         } else {
-            return <h2>Empty Wishlist :(</h2>;
+            return <h2>Empty Wishlist</h2>;
         }
     };
 
@@ -102,29 +102,42 @@ const Profile = () => {
 				</div>
 				{/* Profile Card Section*/}
 				<div className='p-card'>
-						<div className='friends-counter'>
-							<h2>Friends</h2>
+						<div className='p-info'>
+							<div className='friends-counter'>
+								<h2>Friends</h2>
+							</div>
+							<div className='prof-picture'>
+								{<Avatar img={user.photoURL} />}
+							</div>
+							<div className='wishes-counter'>
+								<h2>Wishes</h2>
+							</div>
 						</div>
-						<div className='prof-picture'>
-							{<Avatar img={user.photoURL} />}
+
+						<div className='p-options'>
+							<div className='edit-option'>
+								<button className='button-edit-profile'>Edit profile</button>
+							</div>
+							<div className='share-option'>
+								<button className='button-share-profile'>Share profile</button>
+							</div>
 						</div>
-						<div className='wishes-counter'>
-							<h2>Wishes</h2>
-						</div>	
 				</div>
+				
 				{/* Photos Section */}
 				<div className='p-photos'>
 					<div className='tab-selector'>
-						<div className={activeTab === "wishes" ? 'wishes active' : 'wishes'} onClick={() => setActiveTab("wishes")}>
+						<div className={activeTab === "wishes" ? 'wishes active' : 'wishes'} onClick={selectWishesTab}>
 							<h2>Wishes</h2>
 						</div>
-						<div className={activeTab === "cart" ? 'cart active' : 'cart'} onClick={() => setActiveTab("cart")}>
+						<div className={activeTab === "cart" ? 'cart active' : 'cart'} onClick={selectCartTab}>
 							<h2>Cart</h2>
 						</div>
 					</div>
 					<div className='p-photos-show'>
-					{renderUserProducts()}
+						{activeTab === "wishes" ? renderUserProducts() : <h1>There nothing here yet</h1>}
 					</div>
+					
 				</div>
 			</div>
 		</>
