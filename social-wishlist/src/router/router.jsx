@@ -2,8 +2,8 @@ import { createBrowserRouter, redirect } from 'react-router-dom'
 import Home from "../views/Home/Home"
 import Login from '../views/register/Login'
 import Register from '../views/register/Register'
-import ProductList from '../views/products/ProductList'
-import ProductDetail from '../views/products/ProductDetail'
+import ProductList from '../views/ProductList/ProductList'
+import ProductDetail from '../views/ProductDetail/ProductDetail'
 import Profile from '../views/profile/Profile'
 import Error404 from '../views/Error404/Error404'
 import App from '../App'
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
                 element: <ProductList />,
             },
             {
-                path: "/detail",
+                path: "/product/:id",
                 element: <ProductDetail />,
             },
             {

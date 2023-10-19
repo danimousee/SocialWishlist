@@ -1,35 +1,36 @@
 import { collection, doc, addDoc, getDoc, getDocs, deleteDoc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../index";
 import {
-  fetchProductsStart,
-  fetchProductsSuccess,
-  fetchProductsFailure,
-  addProductsStart,
-  addProductsSuccess,
-  addProductsFailure,
+	fetchProductsStart,
+	fetchProductsSuccess,
+	fetchProductsFailure,
+	addProductsStart,
+	addProductsSuccess,
+	addProductsFailure,
 } from "../../actions/products";
 import { searchProducts } from "../../utils/products";
 const COLLECTION_NAME = "products";
 
-export const getAllProducts = (input = null) => async (dispatch) => {
-  // console.log("input", input);
-	dispatch(fetchProductsStart());
+export const getAllProducts =
+	(input = null) =>
+	async (dispatch) => {
+		// console.log("input", input);
+		dispatch(fetchProductsStart());
 
-	try {
-		const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
-		const response = querySnapshot.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data(),
-		}));
+		try {
+			const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
+			const response = querySnapshot.docs.map((doc) => ({
+				id: doc.id,
+				...doc.data(),
+			}));
 
-    const data = searchProducts(input, response);
+			const data = searchProducts(input, response);
 
-    dispatch(fetchProductsSuccess(data));
-
-	} catch (error) {
-		dispatch(fetchProductsFailure(error.message));
-	}
-};
+			dispatch(fetchProductsSuccess(data));
+		} catch (error) {
+			dispatch(fetchProductsFailure(error.message));
+		}
+	};
 
 export async function getProduct(db, id) {
 	const docRef = doc(db, COLLECTION_NAME, id);
@@ -37,28 +38,28 @@ export async function getProduct(db, id) {
 
 	if (docSnap.exists()) {
 		console.log("Document data:", docSnap.data());
-    return docSnap.data();
+		return docSnap.data();
 	} else {
 		console.log("No such document!");
 	}
 }
 
 export const addProduct = (payload) => async (dispatch) => {
-   dispatch(addProductsStart);
+	dispatch(addProductsStart);
 
-  try {
-    let docRef;
-    if (payload.id) {
-      docRef = await setDoc(doc(db, COLLECTION_NAME, payload.id), payload);
-    } else {
-      docRef = await addDoc(collection(db, COLLECTION_NAME), payload);
-    }
-    // console.log("docRef", docRef);
-    dispatch(addProductsSuccess());
-  } catch (e) {
-    dispatch(addProductsFailure(e));
-  } 
-}
+	try {
+		let docRef;
+		if (payload.id) {
+			docRef = await setDoc(doc(db, COLLECTION_NAME, payload.id), payload);
+		} else {
+			docRef = await addDoc(collection(db, COLLECTION_NAME), payload);
+		}
+		// console.log("docRef", docRef);
+		dispatch(addProductsSuccess());
+	} catch (e) {
+		dispatch(addProductsFailure(e));
+	}
+};
 
 export async function editProduct(db, id, payload) {
 	try {
@@ -79,43 +80,44 @@ export async function deleteProduct(db, id) {
 }
 
 export async function uploadProductsToDB(db, products) {
-  products.forEach(product => {
-    addProduct(db, product);
-  });
+	products.forEach((product) => {
+		addProduct(db, product);
+	});
 }
 
 export function compressProductsMELI(meliProducts) {
-  const compressedProductsMELI = meliProducts.map(meliProduct => {
-    return {
-      id: meliProduct.id,
-      name: meliProduct.title,
-      images: [meliProduct.thumbnail],
-      provider: "MELI",
-      url: meliProduct.permalink
-    }
-  });
-  return compressedProductsMELI;
+	const compressedProductsMELI = meliProducts.map((meliProduct) => {
+		return {
+			id: meliProduct.id,
+			name: meliProduct.title,
+			images: [meliProduct.thumbnail],
+			provider: "MELI",
+			url: meliProduct.permalink,
+		};
+	});
+	return compressedProductsMELI;
 }
 
 export async function addProductToUser(db, payload, userId) {
-  let docRef;
-  const path = `users/${userId}/products`
-    if (payload.id) {
-      docRef = await setDoc(doc(db, path, payload.id), payload);
-    } else {
-      docRef = await addDoc(collection(db, path), payload);
-    }
+	let docRef;
+	const path = `users/${userId}/products`;
+	if (payload.id) {
+		docRef = await setDoc(doc(db, path, payload.id), payload);
+	} else {
+		docRef = await addDoc(collection(db, path), payload);
+	}
 }
 
 export async function getProductsOfUser(userId) {
-  const productsRef = collection(db, `users/${userId}/products`);
-  const querySnapshot = await getDocs(productsRef);
-  
-  const userProducts = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-  }));
+	const productsRef = collection(db, `users/${userId}/products`);
+	const querySnapshot = await getDocs(productsRef);
 
-  return userProducts;
+	const userProducts = querySnapshot.docs.map((doc) => {
+		return {
+			id: doc.id,
+			...doc.data(),
+		};
+	});
+
+	return userProducts;
 }
-

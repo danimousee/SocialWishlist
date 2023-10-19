@@ -9,7 +9,6 @@ const user = createSlice({
   },
   reducers: {
     userLogIn(state, action){
-      // consider writing the user here to the database.
       state.loggedIn = true;
       state.user = action.payload;
     },

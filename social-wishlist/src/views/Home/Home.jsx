@@ -30,9 +30,6 @@ const Home = () => {
 	return (
 		<Container>
 
-      {/* Mostrar solo si el usuario esta logeado leyendo el estado de loggedIn del store. Ver ejemplo en Nav.jsx */}
-			<button className="signOut-btn" onClick={handleSignOut}>Sign Out</button>
-
 			<SearchBar search={(input) => dispatch(getAllProducts(input))} />
 
 			<div className="content-box">

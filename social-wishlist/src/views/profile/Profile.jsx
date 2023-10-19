@@ -14,6 +14,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Box from "@mui/material/Box";
 import { getProductsOfUser } from '../../firebase/queries/products';
+import ProductThumbnail from '../../components/ProductThumbnail/ProductThumbnail';
 
 
 
@@ -70,18 +71,13 @@ const Profile = () => {
 			) 
 		} else if (userProducts.length > 0) {
             return (
-                <ImageList cols={3} rowHeight={164}>
-                    {userProducts.map((product, i) => (
-                        <ImageListItem key={i}>
-                            <img
-                                srcSet={`${product?.images[0]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                src={`${product?.images[0]}?w=164&h=164&fit=crop&auto=format`}
-                                alt={product.name}
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    ))}
-                </ImageList>
+				<div className='product-thumbnail-grid'>
+					{userProducts.map((product, i) => {
+						return (
+							<ProductThumbnail key={i} product={product} /> 
+						)
+					})}
+				</div>
             );
         } else {
             return <h2>Empty Wishlist</h2>;
@@ -105,12 +101,14 @@ const Profile = () => {
 						<div className='p-info'>
 							<div className='friends-counter'>
 								<h2>Friends</h2>
+								<h2>0</h2>
 							</div>
 							<div className='prof-picture'>
 								{<Avatar img={user.photoURL} />}
 							</div>
 							<div className='wishes-counter'>
 								<h2>Wishes</h2>
+								<h2>{ userProducts.length }</h2>
 							</div>
 						</div>
 
