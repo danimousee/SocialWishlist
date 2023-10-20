@@ -1,15 +1,22 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../index";
+import { searchUsers } from "../../utils/users";
 
 const COLLECTION_NAME = "users";
 
-export async function getAllUsers(db) {
+export async function getAllUsers(input = undefined) {
 	// No trycatch because we want the parent to handle the error
 	const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
 	const response = querySnapshot.docs.map((doc) => ({
 		id: doc.id,
 		...doc.data(),
 	}));
-	return response;
+
+	const data = searchUsers(input, response);
+
+	console.log("users data", data);
+
+	return data;
 }
 
 export async function getUser(db, id) {

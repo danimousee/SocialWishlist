@@ -1,0 +1,38 @@
+.search-tab {
+    display: flex;
+    gap: 1rem;
+    color: rgb(201, 199, 199);
+   /*  
+   position: fixed;
+   */
+    top: 0;
+    z-index: 1;
+    justify-content: center;
+}
+
+/* .search-tab.scroll {
+    background-color: #165e6edf;
+    height: 50px;
+    overflow: scroll;
+    position: fixed;
+    top: 100;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0;
+} */
+
+.users.active {
+    border-bottom: 1px solid #28B0CE; 
+}
+
+.products.active {
+    border-bottom: 1px solid #28B0CE; 
+}
+
+.search-tab h2 {
+    font-size: 1rem;
+    font-weight: 100;
+    margin-bottom: 0;
+}

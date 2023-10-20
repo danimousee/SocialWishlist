@@ -1,15 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Box from "@mui/material/Box";
-import SearchBar from "/src/components/SearchBar/SearchBar";
 import { CircularProgress } from "@mui/material";
-import { getAllProducts } from "../../firebase/queries/products";
 import { H2 } from "../../components/Styles.css";
 
 function ProductList() {
   const { products, loading } = useSelector((state) => state.products);
-  const dispatch = useDispatch();
 
   const renderProducts = () => {
     if (loading) {
@@ -40,29 +37,22 @@ function ProductList() {
         </ImageList>
       );
     } else {
-      return (
-          <H2>No se encontraron productos para tu busqueda</H2>
-      );
+      return <H2>No se encontraron productos para tu busqueda</H2>;
     }
   };
 
   return (
     <>
-      <SearchBar search={(input) => dispatch(getAllProducts(input))} />
-      <div className="main-box">
-        <div className="content-box">
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1 },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            {renderProducts()}
-          </Box>
-        </div>
-      </div>
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1 },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        {renderProducts()}
+      </Box>
     </>
   );
 }

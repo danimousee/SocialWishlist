@@ -12,7 +12,6 @@ import { searchProducts } from "../../utils/products";
 const COLLECTION_NAME = "products";
 
 export const getAllProducts = (input = null) => async (dispatch) => {
-  // console.log("input", input);
 	dispatch(fetchProductsStart());
 
 	try {
