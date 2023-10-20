@@ -3,7 +3,8 @@ import StarIcon from "@mui/icons-material/Star";
 
 const styles = {
     backgroundColor: "#92C789",
-    boxShadow: "0px 0px 20px #81F26F"
+	boxShadow: "rgba(0,0,0,0.4) 2px 2px 5px",
+    border: "2px solid #518153"
 }
 
 function AddToWishlistButton({onClick}) {

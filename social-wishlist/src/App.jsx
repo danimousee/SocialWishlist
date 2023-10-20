@@ -13,7 +13,15 @@ function App() {
 	useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
-				dispatch(userLogIn(user.providerData[0]));
+				const reducedUser = {
+					uid: user.uid,
+					displayName: user.displayName,
+					email: user.email,
+					emailVerified: user.emailVerified,
+					phoneNumber: user.phoneNumber,
+					photoURL: user.photoURL,
+				};
+				dispatch(userLogIn(reducedUser));
 			}
 		});
 	}, []);

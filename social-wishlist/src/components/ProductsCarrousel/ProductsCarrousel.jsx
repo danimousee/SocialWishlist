@@ -9,7 +9,7 @@ import "./ProductsCarrousel.css";
 import { Box, CircularProgress } from "@mui/material";
 import { addProductToUser } from "../../firebase/queries/products";
 import { db } from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const ProductsCarrousel = () => {
 	const [page, setPage] = useState(0);
@@ -68,25 +68,28 @@ const ProductsCarrousel = () => {
 			{products.length > 0 ? (
 				<>
 					<div className="carousel-slider">
-						<Carousel showThumbs={false} showStatus={false}>
-							{products[page]?.images.map((img, i) => (
-								<img
-									key={i}
-									src={img}
-									style={{
-										objectFit: "cover",
-										height: "100%",
-										objectPosition: "center center",
-										borderRadius: "14px"
-									}}
-								/>
-							))}
-						</Carousel>
+						<Link to={`/product/${products[page].id}`}>
+
+							<Carousel showThumbs={false} showStatus={false}>
+								{products[page]?.images.map((img, i) => (
+									<img
+										key={i}
+										src={img}
+										style={{
+											objectFit: "cover",
+											height: "100%",
+											objectPosition: "center center",
+											borderRadius: "14px"
+										}}
+									/>
+								))}
+							</Carousel>
+						</Link>
 						<H2 className="product-name">{compressString(products[page]?.name, 80)}</H2>
 					</div>
 					<div className="button-group" style={{ justifyContent: "space-evenly" }}>
-						<AddToWishlistButton onClick={handleAddToWishlist} />
 						<SkipProductButton onClick={handleSkipProduct} />
+						<AddToWishlistButton onClick={handleAddToWishlist} />
 					</div>
 				</>
 			) : (

@@ -265,3 +265,11 @@ body {
     color: rgb(201, 199, 199);
     background-color: #28B0CE;
 }
+
+.product-thumbnail-grid {
+    margin: 10px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}

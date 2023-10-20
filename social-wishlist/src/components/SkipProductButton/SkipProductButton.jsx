@@ -3,7 +3,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 const styles = {
     backgroundColor: "#F8927C",
-    boxShadow: "0px 0px 20px #F37272"
+	boxShadow: "rgba(0,0,0,0.4) 2px 2px 5px",
+    border: "2px solid #954a48"
 }
 
 

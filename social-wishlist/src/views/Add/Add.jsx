@@ -157,7 +157,7 @@ const Add = () => {
                 }}
               />
 
-              <Button variant="contained" color="success" startIcon={<SaveIcon />} type="submit" style={{ backgroundColor: '#28B0CE', color: 'white' }}>GUARDAR</Button>
+              <Button variant="contained" color="success" startIcon={<SaveIcon />} type="submit" style={{ backgroundColor: '#28B0CE', color: 'white' }}>SAVE</Button>
             </div>
           </div>
         </Form>
