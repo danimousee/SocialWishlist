@@ -1,11 +1,11 @@
 import SearchBar from "/src/components/SearchBar/SearchBar";
-import ProductList from "/src/views/products/ProductList";
 import { useDispatch } from "react-redux";
 import { getAllProducts } from "../../firebase/queries/products";
 import { useEffect, useState } from "react";
 import "./Search.css";
 import { getUsers } from "../../utils/users";
 import UsersList from "../users/UsersList";
+import ProductList from "../ProductList/ProductList";
 
 function Search() {
   const dispatch = useDispatch();
