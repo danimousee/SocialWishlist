@@ -52,7 +52,7 @@ function Nav() {
 				{loggedIn ? (
 					<BottomNavigationAction
 						component={Link}
-						to="/profile"
+						to={`/profile/${user.uid}`}
 						label=""
 						value="profile"
 						icon={<Avatar img={user.photoURL}/>}

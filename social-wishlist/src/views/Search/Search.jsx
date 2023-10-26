@@ -4,7 +4,7 @@ import { getAllProducts } from "../../firebase/queries/products";
 import { useEffect, useState } from "react";
 import "./Search.css";
 import { getUsers } from "../../utils/users";
-import UsersList from "../users/UsersList";
+import UsersList from "../../components/users/UsersList";
 import ProductList from "../ProductList/ProductList";
 
 function Search() {
