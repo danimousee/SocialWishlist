@@ -21,28 +21,18 @@ import { db } from "./firebase";
 
 // EJEMPLO FIREBASE
 // import * as userQueries from "./firebase/queries/users.js"
-// import meliProducts from "../mock/meliProducts.js"
 
-// const allUsers = userQueries.getAllUsers(db);
-// console.log("allUsers:", allUsers);
-
-// userQueries.addUser(db, {
-// 	id: "aaa001",
-// 	displayName: "David Choi",
-// 	email: "david.choi@mail.com"
-// });
-
-// userQueries.addUser(db, {
-// 	id: "aaa002",
-// 	displayName: "Carina Shin",
-// 	email: "carina.shin@mail.com"
-// });
-
-// userQueries.editUser(db, 'aaa001', {
-// 	email: "the_monster@email.com"
-// })
-
-// userQueries.deleteUser(db, "aaa002");
+// const myId = "LNNGa7GTnMPTHVCKN68dm9KoJmb2"
+// await userQueries.sendFriendRequest("requester", myId)
+// await userQueries.sendFriendRequest("requester2", myId)
+// await userQueries.sendFriendRequest("requester3", myId)
+// await userQueries.sendFriendRequest("requester4", myId)
+// await userQueries.removeFriendRequest("requester4", myId)
+// await userQueries.acceptFriendRequest("requester", myId)
+// await userQueries.acceptFriendRequest("requester2", myId)
+// await userQueries.removeFriend("requester2", myId)
+// console.log(await userQueries.getFriendRequests(myId))
+// console.log(await userQueries.getFriends(myId))
 
 // MUI custom theme
 const theme = createTheme({

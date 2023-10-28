@@ -13,6 +13,10 @@ body {
     
 }
 
+.profile-main h3{
+ margin: 0;
+}
+
 .profile-main .log-out-user {
     display: flex;
     width: 100%;
@@ -54,7 +58,12 @@ body {
     width: 100%;
     justify-content: center;
     align-items: center;
+    gap: 10px;
     border-bottom: 1px solid #242424;
+}
+
+.profile-main .btn {
+    font-size: 0.8em;
 }
 
 .profile-main .p-card .p-info{

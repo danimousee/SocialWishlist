@@ -35,6 +35,8 @@ const Profile = () => {
 	const [loading, setLoading] = useState(false);
 	const [itsMyProfile, setItsMyProfile] = useState(false);
 	const [userInfo, setUserInfo] = useState({});
+	const [friendAdded, setFriendAdded] = useState(false);
+	const [isFriend, setIsFriend] = useState(false);
 
 	useEffect(() => {
 		setItsMyProfile(false); // Reset value on route change
@@ -121,6 +123,7 @@ const Profile = () => {
 					<div className="p-name">
 						<h3>{userInfo.displayName}</h3>
 					</div>
+					<button className="btn btn-primary">Add Friend</button>
 
 					{itsMyProfile && (
 						<div className="p-options">
