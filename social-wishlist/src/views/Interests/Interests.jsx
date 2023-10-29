@@ -71,6 +71,9 @@ const Interests = () => {
                         <button className="interests-button" onClick={selectButton}>Home</button>
                     </div>
                 </div>
+                <div className="div-bottom-section">
+                    <button className="save-info-button">Next</button>
+                </div>
             </div>
 		</>
 	);
