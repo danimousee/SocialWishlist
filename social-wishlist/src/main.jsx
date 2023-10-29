@@ -16,23 +16,7 @@ import "./index.css";
 // Routes
 import { RouterProvider } from "react-router-dom";
 import router from "./router/router.jsx";
-// Firebase
-import { db } from "./firebase";
-
-// EJEMPLO FIREBASE
-// import * as userQueries from "./firebase/queries/users.js"
-
-// const myId = "LNNGa7GTnMPTHVCKN68dm9KoJmb2"
-// await userQueries.sendFriendRequest("requester", myId)
-// await userQueries.sendFriendRequest("requester2", myId)
-// await userQueries.sendFriendRequest("requester3", myId)
-// await userQueries.sendFriendRequest("requester4", myId)
-// await userQueries.removeFriendRequest("requester4", myId)
-// await userQueries.acceptFriendRequest("requester", myId)
-// await userQueries.acceptFriendRequest("requester2", myId)
-// await userQueries.removeFriend("requester2", myId)
-// console.log(await userQueries.getFriendRequests(myId))
-// console.log(await userQueries.getFriends(myId))
+import "./firebase/operations/operations.js"
 
 // MUI custom theme
 const theme = createTheme({

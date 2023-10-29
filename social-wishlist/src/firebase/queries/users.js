@@ -1,4 +1,16 @@
-import { addDoc, collection, deleteDoc, deleteField, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	deleteField,
+	doc,
+	getDoc,
+	getDocs,
+	query,
+	setDoc,
+	updateDoc,
+	where,
+} from "firebase/firestore";
 import { db } from "../index";
 import { searchUsers } from "../../utils/users";
 
@@ -46,6 +58,7 @@ export async function deleteUser(db, id) {
 	await deleteDoc(doc(db, COLLECTION_NAME, id));
 }
 
+// --- FRIENDS ---
 export async function sendFriendRequest(requesterId, receiverId) {
 	const receiverRef = doc(db, COLLECTION_NAME, receiverId);
 	const updatePayload = {};
@@ -61,32 +74,74 @@ export async function removeFriendRequest(requesterId, receiverId) {
 	await updateDoc(receiverRef, deletePayload);
 }
 export async function acceptFriendRequest(requesterId, receiverId) {
-	await removeFriendRequest(requesterId, receiverId);
+	// We call the operations asynchronously since they do not depend on one another
+	removeFriendRequest(requesterId, receiverId);
+
+	// Adding friend to receiverId
 	const receiverRef = doc(db, COLLECTION_NAME, receiverId);
 	const updatePayload = {};
 	updatePayload["friends." + requesterId] = requesterId;
-	await updateDoc(receiverRef, updatePayload);
+	updateDoc(receiverRef, updatePayload);
+
+	// Also add the friend in the requesterId document!
+	const requesterRef = doc(db, COLLECTION_NAME, requesterId);
+	const updatePayload2 = {};
+	updatePayload2["friends." + receiverId] = receiverId;
+	updateDoc(requesterRef, updatePayload2);
 }
-export async function removeFriend(friendId, myId) {
+export async function removeFriend(myId, friendId) {
+	// Removing friend
 	const myRef = doc(db, COLLECTION_NAME, myId);
 	const deletePayload = {};
 	deletePayload["friends." + friendId] = deleteField();
-	await updateDoc(myRef, deletePayload);
+	updateDoc(myRef, deletePayload);
+
+	// Also remove from friend document
+	const friendRef = doc(db, COLLECTION_NAME, friendId);
+	const deletePayload2 = {};
+	deletePayload2["friends." + myId] = deleteField();
+	updateDoc(friendRef, deletePayload2);
 }
 export async function getFriendRequests(myId) {
+	// Returns the friend requests user documents (ONLY uid, displayName and photoURL)
 	const myRef = doc(db, COLLECTION_NAME, myId);
 	const docSnap = await getDoc(myRef);
 	if (docSnap.exists()) {
-		return docSnap.data().friendRequests;
+		const friendRequestsIds = docSnap.data().friendRequests;
+		const friendRequestsIdsArray = friendRequestsIds ? Object.keys(friendRequestsIds) : [];
+		if (friendRequestsIdsArray.length > 0) {
+			const usersRef = collection(db, COLLECTION_NAME);
+			const q = query(usersRef, where("uid", "in", friendRequestsIdsArray));
+			const querySnapshot = await getDocs(q);
+			const friendRequestsData = querySnapshot.docs.map((docSnap) => {
+				const docData = docSnap.data();
+				return { uid: docData.uid, displayName: docData.displayName, photoURL: docData.photoURL };
+			});
+			return friendRequestsData;
+		}
+		return [];
 	} else {
 		throw new Error("Document with id " + id + " does not exist.");
 	}
 }
 export async function getFriends(myId) {
+	// Returns the friends user documents (ONLY uid, displayName and photoURL)
 	const myRef = doc(db, COLLECTION_NAME, myId);
 	const docSnap = await getDoc(myRef);
 	if (docSnap.exists()) {
-		return docSnap.data().friends;
+		const friendsIds = docSnap.data().friends;
+		const friendsIdsArr = friendsIds ? Object.keys(friendsIds) : [];
+		if (friendsIdsArr.length > 0) {
+			const usersRef = collection(db, COLLECTION_NAME);
+			const q = query(usersRef, where("uid", "in", friendsIdsArr));
+			const querySnapshot = await getDocs(q);
+			const friendsData = querySnapshot.docs.map(docSnap => {
+				const docData = docSnap.data();
+				return { uid: docData.uid, displayName: docData.displayName, photoURL: docData.photoURL };
+			});
+			return friendsData;
+		}
+		return [];
 	} else {
 		throw new Error("Document with id " + id + " does not exist.");
 	}

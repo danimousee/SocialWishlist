@@ -58,7 +58,7 @@ const ProductsCarrousel = () => {
 	if (loading) {
 		return (
 			<Box sx={{ display: "flex", justifyContent: "center", margin: "auto" }}>
-				<CircularProgress color="secondary" />
+				<CircularProgress color="primary" />
 			</Box>
 		);
 	}

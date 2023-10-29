@@ -1,0 +1,17 @@
+.icon-btn {
+    border-radius: 50%;
+    aspect-ratio: 1;
+    background-color: var(--primary);
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+}
+
+.icon-btn svg {
+    width: 60%;
+    height: 60%;
+}
