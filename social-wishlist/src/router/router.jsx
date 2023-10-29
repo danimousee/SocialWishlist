@@ -9,6 +9,7 @@ import Error404 from '../views/Error404/Error404'
 import App from '../App'
 import Search from '../views/Search/Search'
 import Add from '../views/Add/Add'
+import Interests from '../views/Interests/Interests'
 
 const router = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
             {
                 path: "/profile/:user_id",
                 element: <Profile />,
+            },
+            {
+                path: "/interests",
+                element: <Interests />
             },
         ]
     },
