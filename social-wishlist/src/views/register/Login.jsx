@@ -29,7 +29,7 @@ function Login() {
 			}
 			dispatch(userLogIn(res));
 			// redirect to profile
-			navigate('/profile');
+			navigate('/profile/' + res.uid);
 		});
 	};
 

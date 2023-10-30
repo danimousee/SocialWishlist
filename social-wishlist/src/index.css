@@ -19,6 +19,7 @@
 	--text-color-dark: #333;
 	--bg-color: #1e1e1e;
 	--success-color: #5cb85c;
+	--disabled-color: #969696;
 }
 
 input {

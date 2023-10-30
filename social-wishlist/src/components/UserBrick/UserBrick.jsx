@@ -11,7 +11,7 @@ action = {
 }
 */
 
-function UserBrick({ user = {}, actions = [] }) {
+function UserBrick({ user = {}, actions = [], disableActions }) {
 	return (
 		<div className="user-preview">
 			<Link to={`/profile/${user.uid}`}>
@@ -22,7 +22,7 @@ function UserBrick({ user = {}, actions = [] }) {
 			</Link>
 			<div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 				{actions.map((action, i) => (
-					<IconButton key={i} customSize={"30px"} bgColor={action.bgColor} onClick={(e) => action.onClick(e, user)}>
+					<IconButton key={i} customSize={"30px"} bgColor={action.bgColor} onClick={(e) => action.onClick(e, user)} disabled={disableActions}>
 						{action.icon}
 					</IconButton>
 				))}

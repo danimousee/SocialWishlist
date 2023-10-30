@@ -4,14 +4,15 @@ import "./App.css";
 import Nav from "./components/Nav/Nav";
 import { userLogIn } from "./actions/user";
 import { useDispatch } from "react-redux";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { getUser } from "./firebase/queries/users";
 
 function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		onAuthStateChanged(auth, (user) => {
+		onAuthStateChanged(auth, async (user) => {
 			if (user) {
 				const reducedUser = {
 					uid: user.uid,
@@ -21,7 +22,8 @@ function App() {
 					phoneNumber: user.phoneNumber,
 					photoURL: user.photoURL,
 				};
-				dispatch(userLogIn(reducedUser));
+				const userDocument = await getUser(db, user.uid);
+				dispatch(userLogIn({...reducedUser, ...userDocument}));
 			}
 		});
 	}, []);

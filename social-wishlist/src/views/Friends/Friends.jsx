@@ -8,15 +8,11 @@ import UserBrick from "../../components/UserBrick/UserBrick";
 import "./Friends.css";
 import { CircularProgress } from "@mui/material";
 
-function Friends({ user }) {
+function Friends({ user, increaseFriendCount, decreaseFriendCount }) {
 	const [friendRequests, setFriendRequests] = useState([]);
 	const [friends, setFriends] = useState([]);
 	const [loadingFriends, setLoadingFriends] = useState(false);
-	const [refresh, setRefresh] = useState(false);
-
-	const refreshView = () => {
-		setRefresh(!refresh);
-	}
+	const [disableActions, setDisableActions] = useState(false);
 
 	useEffect(() => {
 		// get user information for requests and friends
@@ -27,31 +23,42 @@ function Friends({ user }) {
 			promises.push(getFriends(user.uid).then((res) => setFriends(res)));
 			Promise.all(promises).then((res) => setLoadingFriends(false));
 		}
-	}, [user, refresh]);
+	}, [user]);
 
 	const handleAcceptFriendRequest = async (e, userBrick) => {
 		try {
-			acceptFriendRequest(userBrick.uid, user.uid);
+			setDisableActions(true);
+			await acceptFriendRequest(userBrick.uid, user.uid);
+			increaseFriendCount();
 			setFriends([userBrick, ...friends]);
 			setFriendRequests(friendRequests.filter(fr => fr.uid !== userBrick.uid));
 		} catch (error) {
 			console.error("Error accepting request. Try again later" );
+		} finally {
+			setDisableActions(false);
 		}
 	};
-	const handleRemoveFriendRequest = (e, userBrick) => {
+	const handleRemoveFriendRequest = async (e, userBrick) => {
 		try {
-			removeFriendRequest(userBrick.uid, user.uid);
+			setDisableActions(true);
+			await removeFriendRequest(userBrick.uid, user.uid);
 			setFriendRequests(friendRequests.filter(fr => fr.uid !== userBrick.uid));
 		} catch (error) {
 			console.error("Error removing request. Try again later" );
+		} finally {
+			setDisableActions(false);
 		}
 	};
-	const handleRemoveFriend = (e, userBrick) => {
+	const handleRemoveFriend = async (e, userBrick) => {
 		try {
-			removeFriend(user.uid, userBrick.uid);
+			setDisableActions(true);
+			await removeFriend(user.uid, userBrick.uid);
+			decreaseFriendCount();
 			setFriends(friends.filter(fr => fr.uid !== userBrick.uid));
 		} catch (error) {
 			console.error("Error removing friend. Try again later" );
+		} finally {
+			setDisableActions(false);
 		}
 	};
 
@@ -91,13 +98,13 @@ function Friends({ user }) {
 					<section>
 						<h3>Requests</h3>
 						{friendRequests.map((friendRequest, i) => (
-							<UserBrick key={i} user={friendRequest} actions={friendRequestActions} />
+							<UserBrick key={i} user={friendRequest} actions={friendRequestActions} disableActions={disableActions}/>
 						))}
 					</section>
 					<section>
 						<h3>Friends</h3>
 						{friends.map((friend, i) => (
-							<UserBrick key={i} user={friend} actions={friendActions} />
+							<UserBrick key={i} user={friend} actions={friendActions} disableActions={disableActions} />
 						))}
 					</section>
 				</>
