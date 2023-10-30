@@ -16,33 +16,7 @@ import "./index.css";
 // Routes
 import { RouterProvider } from "react-router-dom";
 import router from "./router/router.jsx";
-// Firebase
-import { db } from "./firebase";
-
-// EJEMPLO FIREBASE
-// import * as userQueries from "./firebase/queries/users.js"
-// import meliProducts from "../mock/meliProducts.js"
-
-// const allUsers = userQueries.getAllUsers(db);
-// console.log("allUsers:", allUsers);
-
-// userQueries.addUser(db, {
-// 	id: "aaa001",
-// 	displayName: "David Choi",
-// 	email: "david.choi@mail.com"
-// });
-
-// userQueries.addUser(db, {
-// 	id: "aaa002",
-// 	displayName: "Carina Shin",
-// 	email: "carina.shin@mail.com"
-// });
-
-// userQueries.editUser(db, 'aaa001', {
-// 	email: "the_monster@email.com"
-// })
-
-// userQueries.deleteUser(db, "aaa002");
+import "./firebase/operations/operations.js"
 
 // MUI custom theme
 const theme = createTheme({

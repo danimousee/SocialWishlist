@@ -1,0 +1,171 @@
+body {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+}
+
+.interests-main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    background-color: transparent;
+    
+}
+
+.interests-main .div-nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    height: 3vh;
+    width: 100%;
+    border-bottom: 1px solid #242424;
+    
+}
+
+.interests-main .div-nav .div-back-icon{
+  height: 100%;
+  display: flex;
+  width: 50%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.interests-main .div-nav .div-search-icon{
+    height: 100%;
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+    
+    align-items: center;
+}
+
+.interests-main .div-nav .div-back-icon .icon{
+    height: 100%;
+    display: flex;
+    padding: 3%;
+}
+
+.interests-main .div-nav .div-search-icon .icon{
+    height: 100%;
+    display: flex;
+    padding: 3%;
+}
+
+.interests-main .title-topbox {
+   display: flex;
+   flex-direction: column;
+   height: 12vh;
+   width: 100%;
+   background-color: transparent;
+   /* border-bottom: 1px solid #242424; */
+   justify-content: center;
+   align-items: center;
+}
+
+.interests-main .title-topbox .div-title {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+    /* border: 1px solid red; */
+ }
+
+ .interests-main .title-topbox .div-description {   
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    height: 30%;
+    /* border: 1px solid red; */
+    
+ }
+
+
+.interests-main .title-topbox .div-title .title-topbox-title{
+    font-size: 1.7em;
+    display: flex;
+    letter-spacing: 0.5px;
+	font-weight: 500;
+	font-family: inherit;
+    color: white;
+
+ }
+
+ .interests-main .title-topbox .div-description .title-topbox-description{
+    font-size: 1.4em;
+    display: flex;
+    margin-top: 0;
+    letter-spacing: 0.5px;
+	font-weight: 500;
+	font-family: inherit;
+    color: darkgray;
+ }
+
+ .interests-main .div-interests {
+    display: flex;
+    width: 100%;
+    height: 60vh;
+    margin-top: 3dvh;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+ }
+
+ .interests-main .div-interests .div-interest-column{
+    display: flex;
+    width: 100%;
+    height: 5vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin: 1vh;
+ }
+ 
+ .interests-main .div-interests .div-interest-column .interests-button {
+    display: flex;
+    margin: 3%;
+	font-weight: bold;
+	border-radius: 20px;
+ }
+
+ .interests-main .div-interests .div-interest-column .interests-button-selected{
+    background-color: var(--accent-color);
+	color: var(--text-color-dark);
+ }
+
+ 
+ .interests-main .div-bottom-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 25%;
+
+ }
+
+.interests-main .div-bottom-section .save-info-button {
+    display: flex;
+    font-weight: bold;
+    margin-bottom: 30%;
+    border-radius: 20px;
+    height: 30%;
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid grey;
+    transition: 0.5s;
+    background-color: transparent;
+}
+
+.interests-main .div-bottom-section .save-info-button:hover {
+    background-color: var(--success-color);
+    color: var(--text-color-dark);
+    border-color: green;
+}

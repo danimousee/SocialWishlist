@@ -1,0 +1,13 @@
+.side-panel {
+    position: absolute;
+    min-height: 90vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-color);
+}
+
+.side-panel .close-btn {
+    margin: 12px 0px 0px 12px;
+    box-shadow: none;
+}

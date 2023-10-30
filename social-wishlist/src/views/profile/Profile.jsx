@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../../components/Avatar/Avatar";
 import "./Profile.css";
 import LogoutIcon from "@mui/icons-material/Logout";
+import EditIcon from "@mui/icons-material/Edit";
+import ShareIcon from "@mui/icons-material/Share";
+import AddIcon from "@mui/icons-material/Add";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import DoneIcon from "@mui/icons-material/Done";
 
 import { googleSignOut } from "../../firebase/auth/googleAuth";
 import { userLogOut } from "../../actions/user";
@@ -12,8 +17,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { getProductsOfUser } from "../../firebase/queries/products";
 import ProductThumbnail from "../../components/ProductThumbnail/ProductThumbnail";
-import { getUser } from "../../firebase/queries/users";
+import * as userQueries from "../../firebase/queries/users";
 import { db } from "../../firebase";
+import IconButton from "../../components/IconButton/IconButton";
+import Friends from "../Friends/Friends";
+import SidePanel from "../../components/SidePanel/SidePanel";
 
 const Profile = () => {
 	let { user_id } = useParams();
@@ -35,9 +43,21 @@ const Profile = () => {
 	const [loading, setLoading] = useState(false);
 	const [itsMyProfile, setItsMyProfile] = useState(false);
 	const [userInfo, setUserInfo] = useState({});
+	const [activeTab, setActiveTab] = useState("wishes");
+	// VALUES: "NOT_FRIENDS", "PENDING", "FRIENDS"
+	const [isFriend, setIsFriend] = useState("");
+	const [showFriends, setShowFriends] = useState(false);
+	const [friendCount, setFriendCount] = useState(0);
+	const [waitingAction, setWaitingAction] = useState(false);
 
 	useEffect(() => {
-		setItsMyProfile(false); // Reset value on route change
+		// Reset default state values on route change
+		setItsMyProfile(false);
+		setIsFriend("");
+		setShowFriends(false);
+		setUserInfo({});
+		setFriendCount(0);
+		setWaitingAction(false);
 		setLoading(true); // Iniciar la carga antes de llamar a la API
 
 		const loadUserProducts = (user) => {
@@ -56,14 +76,79 @@ const Profile = () => {
 		if (user.uid === user_id) {
 			setItsMyProfile(true);
 			setUserInfo(user);
+			setFriendCount(Object.values(user.friends).length)
 			loadUserProducts(user);
 		} else {
-			getUser(db, user_id).then((user) => {
-				setUserInfo(user);
-				loadUserProducts(user);
+			// This profile is from someone else
+			userQueries.getUser(db, user_id).then((person) => {
+				// Determine if it's my friend
+				if (person.friends && person.friends[user.uid]) {
+					setIsFriend("FRIENDS");
+				} else if (person.friendRequests && person.friendRequests[user.uid]) {
+					setIsFriend("PENDING");
+				} else {
+					setIsFriend("NOT_FRIENDS");
+				}
+				setUserInfo(person);
+				if (person.friends) {
+					setFriendCount(Object.keys(person.friends).length);
+				}
+				loadUserProducts(person);
 			});
 		}
 	}, [user, user_id]);
+
+	const handleAddFriend = async (e) => {
+		try {
+			setWaitingAction(true);
+			setIsFriend("PENDING");
+			await userQueries.sendFriendRequest(user.uid, user_id);
+		} catch (error) {
+			setIsFriend("NOT_FRIENDS");
+			// Use error snackbar to show error here
+			console.error("Error adding friend. Try again later.");
+		} finally {
+			setWaitingAction(false);
+		}
+	};
+
+	const handleCancelRequest = async (e) => {
+		try {
+			setWaitingAction(true);
+			setIsFriend("NOT_FRIENDS");
+			await userQueries.removeFriendRequest(user.uid, user_id);
+		} catch (error) {
+			setIsFriend("PENDING");
+			// Use error snackbar to show error here
+			console.error("Error removing friend request. Try again later");
+		} finally {
+			setWaitingAction(false);
+		}
+	};
+
+	const handleRemoveFriend = async (e) => {
+		try {
+			setWaitingAction(true);
+			setIsFriend("NOT_FRIENDS");
+			await userQueries.removeFriend(user.uid, user_id);
+		} catch (error) {
+			setIsFriend("FRIENDS");
+			// Use error snackbar to show error here
+			console.error("Error removing friend. Try again later");
+		} finally {
+			setWaitingAction(false);
+		}
+	};
+
+	const friendCountPlus = () => {
+		console.log("increasing friend count");
+		setFriendCount(friendCount + 1);
+	};
+
+	const friendCountMinus = () => {
+		console.log("decreasing friend count");
+		setFriendCount(friendCount - 1);
+	};
 
 	const renderUserProducts = () => {
 		if (loading) {
@@ -75,7 +160,7 @@ const Profile = () => {
 						margin: "auto",
 					}}
 				>
-					<CircularProgress color="secondary" />
+					<CircularProgress color="primary" />
 				</Box>
 			);
 		} else if (userProducts.length > 0) {
@@ -93,9 +178,13 @@ const Profile = () => {
 
 	//------
 
-	const [activeTab, setActiveTab] = useState("wishes");
 	const selectWishesTab = () => setActiveTab("wishes");
 	const selectCartTab = () => setActiveTab("cart");
+	const handleFriendsClick = (e) => {
+		if (itsMyProfile) {
+			setShowFriends(true);
+		}
+	};
 
 	return (
 		<>
@@ -108,9 +197,9 @@ const Profile = () => {
 				{/* Profile Card Section*/}
 				<div className="p-card">
 					<div className="p-info">
-						<div className="friends-counter">
+						<div className="friends-counter" onClick={handleFriendsClick}>
 							<h2>Friends</h2>
-							<h2>0</h2>
+							<h2>{friendCount}</h2>
 						</div>
 						<div className="prof-picture">{<Avatar img={userInfo.photoURL} />}</div>
 						<div className="wishes-counter">
@@ -122,15 +211,34 @@ const Profile = () => {
 						<h3>{userInfo.displayName}</h3>
 					</div>
 
-					{itsMyProfile && (
-						<div className="p-options">
-							<div className="edit-option">
-								<button className="button-edit-profile">Edit profile</button>
-							</div>
-							<div className="share-option">
-								<button className="button-share-profile">Share profile</button>
-							</div>
+					{itsMyProfile ? (
+						/* OCULTADO HASTA DESARROLLAR FUNCIONALIDAD */
+						<div className="p-options" style={{ display: "none" }}>
+							<IconButton onClick={(e) => console.log("You clicked an icon")}>
+								<EditIcon />
+							</IconButton>
+							<IconButton onClick={(e) => console.log("You clicked an icon")}>
+								<ShareIcon />
+							</IconButton>
 						</div>
+					) : (
+						<>
+							{isFriend === "NOT_FRIENDS" && (
+								<IconButton onClick={handleAddFriend} disabled={waitingAction}>
+									<AddIcon />
+								</IconButton>
+							)}
+							{isFriend === "PENDING" && (
+								<IconButton onClick={handleCancelRequest} disabled={waitingAction}>
+									<AccessTimeIcon />
+								</IconButton>
+							)}
+							{isFriend === "FRIENDS" && (
+								<IconButton onClick={handleRemoveFriend} disabled={waitingAction}>
+									<DoneIcon />
+								</IconButton>
+							)}
+						</>
 					)}
 				</div>
 
@@ -140,15 +248,21 @@ const Profile = () => {
 						<div className={activeTab === "wishes" ? "wishes active" : "wishes"} onClick={selectWishesTab}>
 							<h2>Wishes</h2>
 						</div>
-						<div className={activeTab === "cart" ? "cart active" : "cart"} onClick={selectCartTab}>
-							<h2>Cart</h2>
-						</div>
+
+						{itsMyProfile && (
+							<div className={activeTab === "cart" ? "cart active" : "cart"} onClick={selectCartTab}>
+								<h2>Cart</h2>
+							</div>
+						)}
 					</div>
 					<div className="p-photos-show">
 						{activeTab === "wishes" ? renderUserProducts() : <h1>There nothing here yet</h1>}
 					</div>
 				</div>
 			</div>
+			<SidePanel active={showFriends} handleActive={setShowFriends}>
+				<Friends user={userInfo} increaseFriendCount={friendCountPlus} decreaseFriendCount={friendCountMinus} />
+			</SidePanel>
 		</>
 	);
 };

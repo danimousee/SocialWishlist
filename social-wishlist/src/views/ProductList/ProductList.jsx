@@ -19,7 +19,7 @@ function ProductList() {
             margin: "auto",
           }}
         >
-          <CircularProgress color="secondary" />
+          <CircularProgress color="primary" />
         </Box>
       );
     } else if (products.length > 0) {

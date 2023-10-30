@@ -2,7 +2,7 @@ import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-function FullScreenLoader() {
+function FullScreenLoader({color = "secondary"}) {
 	return (
 		<Box
 			sx={{
@@ -12,7 +12,7 @@ function FullScreenLoader() {
 				justifyContent: "center",
 			}}
 		>
-			<CircularProgress color="secondary" />
+			<CircularProgress color={color} />
 		</Box>
 	);
 }
