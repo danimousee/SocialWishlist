@@ -147,18 +147,6 @@ const Profile = () => {
 		}
 	};
 
-	const friendCountPlus = () => {
-		setFriendCount(friendCount + 1);
-	};
-
-	const friendCountMinus = () => {
-		setFriendCount(friendCount - 1);
-	};
-
-	const friendRequestCountMinus = () => {
-		setFriendRequestCount(friendRequestCount - 1);
-	};
-
 	const renderUserProducts = () => {
 		if (loading) {
 			return (
@@ -198,11 +186,6 @@ const Profile = () => {
 
 	const selectWishesTab = () => setActiveTab("wishes");
 	const selectCartTab = () => setActiveTab("cart");
-	const handleFriendsClick = (e) => {
-		if (itsMyProfile) {
-			setShowFriends(true);
-		}
-	};
 
 	return (
 		<>
@@ -215,7 +198,7 @@ const Profile = () => {
 				{/* Profile Card Section*/}
 				<div className="p-card">
 					<div className="p-info">
-						<div className="friends-counter" onClick={handleFriendsClick}>
+						<div className="friends-counter" onClick={(e) => setShowFriends(true)}>
 							<h2>Friends</h2>
 							<h2>{friendCount}</h2>
 							{itsMyProfile && friendRequestCount > 0 && <div className="notification-badge">{friendRequestCount}</div>}
@@ -282,9 +265,7 @@ const Profile = () => {
 			<SidePanel active={showFriends} handleClose={handleCloseFriendsPanel}>
 				<Friends
 					user={userInfo}
-					increaseFriendCount={friendCountPlus}
-					decreaseFriendCount={friendCountMinus}
-					decreaseFriendRequestCount={friendRequestCountMinus}
+					showRequests={user.uid === user_id}
 				/>
 			</SidePanel>
 		</>

@@ -14,8 +14,7 @@ import UserBrick from "../../components/UserBrick/UserBrick";
 import "./Friends.css";
 import { CircularProgress } from "@mui/material";
 
-function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFriendRequestCount }) {
-	
+function Friends({ user, showRequests = true }) {
 	const [friendRequests, setFriendRequests] = useState([]);
 	const [friends, setFriends] = useState([]);
 	const [loadingFriends, setLoadingFriends] = useState(false);
@@ -36,10 +35,8 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFrien
 		try {
 			setDisableActions(true);
 			await acceptFriendRequest(userBrick.uid, user.uid);
-			increaseFriendCount();
 			setFriends([userBrick, ...friends]);
 			setFriendRequests(friendRequests.filter((fr) => fr.uid !== userBrick.uid));
-			decreaseFriendRequestCount();
 		} catch (error) {
 			console.error("Error accepting request. Try again later", error.message);
 		} finally {
@@ -51,7 +48,6 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFrien
 			setDisableActions(true);
 			await removeFriendRequest(userBrick.uid, user.uid);
 			setFriendRequests(friendRequests.filter((fr) => fr.uid !== userBrick.uid));
-			decreaseFriendRequestCount()
 		} catch (error) {
 			console.error("Error removing request. Try again later", error.message);
 		} finally {
@@ -62,7 +58,6 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFrien
 		try {
 			setDisableActions(true);
 			await removeFriend(user.uid, userBrick.uid);
-			decreaseFriendCount();
 			setFriends(friends.filter((fr) => fr.uid !== userBrick.uid));
 		} catch (error) {
 			console.error("Error removing friend. Try again later", error.message);
@@ -104,12 +99,19 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFrien
 				</div>
 			) : (
 				<>
-					<section>
-						<h3>Requests</h3>
-						{friendRequests.map((friendRequest, i) => (
-							<UserBrick key={i} user={friendRequest} actions={friendRequestActions} disableActions={disableActions} />
-						))}
-					</section>
+					{showRequests && (
+						<section>
+							<h3>Requests</h3>
+							{friendRequests.map((friendRequest, i) => (
+								<UserBrick
+									key={i}
+									user={friendRequest}
+									actions={friendRequestActions}
+									disableActions={disableActions}
+								/>
+							))}
+						</section>
+					)}
 					<section>
 						<h3>Friends</h3>
 						{friends.map((friend, i) => (
