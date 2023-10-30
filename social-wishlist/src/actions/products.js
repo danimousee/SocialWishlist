@@ -7,6 +7,7 @@ const products = createSlice({
     products: [],
     loading: false,
     error: null,
+    page: 0,
   },
   reducers: {
     fetchProductsStart(state) {
@@ -24,7 +25,7 @@ const products = createSlice({
     addProductsStart(state) {
       state.loading = true;
     },
-    addProductsSuccess(state, action) {
+    addProductsSuccess(state) {
       state.loading = false;
       state.error = null;
     },
@@ -32,8 +33,14 @@ const products = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    incrementPage(state) {
+      state.page = state.page + 1;
+    },
+    resetPage(state) {
+      state.page = 0;
+    },
   },
 });
 
-export const { fetchProductsStart, fetchProductsSuccess, fetchProductsFailure ,addProductsStart, addProductsSuccess, addProductsFailure } = products.actions;
+export const { fetchProductsStart, fetchProductsSuccess, fetchProductsFailure ,addProductsStart, addProductsSuccess, addProductsFailure, incrementPage, resetPage } = products.actions;
 export default products.reducer;
