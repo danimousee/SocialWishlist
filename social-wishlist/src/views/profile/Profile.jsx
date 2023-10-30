@@ -10,7 +10,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import DoneIcon from "@mui/icons-material/Done";
 
 import { googleSignOut } from "../../firebase/auth/googleAuth";
-import { userLogOut } from "../../actions/user";
+import { userLogOut, userRefresh } from "../../actions/user";
 import { useNavigate, useParams } from "react-router-dom";
 
 import CircularProgress from "@mui/material/CircularProgress";
@@ -48,6 +48,7 @@ const Profile = () => {
 	const [isFriend, setIsFriend] = useState("");
 	const [showFriends, setShowFriends] = useState(false);
 	const [friendCount, setFriendCount] = useState(0);
+	const [friendRequestCount, setFriendRequestCount] = useState(0);
 	const [waitingAction, setWaitingAction] = useState(false);
 
 	useEffect(() => {
@@ -57,6 +58,7 @@ const Profile = () => {
 		setShowFriends(false);
 		setUserInfo({});
 		setFriendCount(0);
+		setFriendRequestCount(0);
 		setWaitingAction(false);
 		setLoading(true); // Iniciar la carga antes de llamar a la API
 
@@ -76,7 +78,12 @@ const Profile = () => {
 		if (user.uid === user_id) {
 			setItsMyProfile(true);
 			setUserInfo(user);
-			setFriendCount(Object.values(user.friends).length)
+			if (user.friends) {
+				setFriendCount(Object.values(user.friends).length);
+			}
+			if (user.friendRequests) {
+				setFriendRequestCount(Object.values(user.friendRequests).length);
+			}
 			loadUserProducts(user);
 		} else {
 			// This profile is from someone else
@@ -140,16 +147,6 @@ const Profile = () => {
 		}
 	};
 
-	const friendCountPlus = () => {
-		console.log("increasing friend count");
-		setFriendCount(friendCount + 1);
-	};
-
-	const friendCountMinus = () => {
-		console.log("decreasing friend count");
-		setFriendCount(friendCount - 1);
-	};
-
 	const renderUserProducts = () => {
 		if (loading) {
 			return (
@@ -176,15 +173,19 @@ const Profile = () => {
 		}
 	};
 
+	const handleCloseFriendsPanel = async (e) => {
+		// Only if we are in our profile
+		if (user.uid === user_id) {
+			const newUser = await userQueries.getUser(db, user.uid)
+			dispatch(userRefresh(newUser));
+		}
+		setShowFriends(false);
+	}
+
 	//------
 
 	const selectWishesTab = () => setActiveTab("wishes");
 	const selectCartTab = () => setActiveTab("cart");
-	const handleFriendsClick = (e) => {
-		if (itsMyProfile) {
-			setShowFriends(true);
-		}
-	};
 
 	return (
 		<>
@@ -197,9 +198,10 @@ const Profile = () => {
 				{/* Profile Card Section*/}
 				<div className="p-card">
 					<div className="p-info">
-						<div className="friends-counter" onClick={handleFriendsClick}>
+						<div className="friends-counter" onClick={(e) => setShowFriends(true)}>
 							<h2>Friends</h2>
 							<h2>{friendCount}</h2>
+							{itsMyProfile && friendRequestCount > 0 && <div className="notification-badge">{friendRequestCount}</div>}
 						</div>
 						<div className="prof-picture">{<Avatar img={userInfo.photoURL} />}</div>
 						<div className="wishes-counter">
@@ -259,9 +261,12 @@ const Profile = () => {
 						{activeTab === "wishes" ? renderUserProducts() : <h1>There nothing here yet</h1>}
 					</div>
 				</div>
-			</div>
-			<SidePanel active={showFriends} handleActive={setShowFriends}>
-				<Friends user={userInfo} increaseFriendCount={friendCountPlus} decreaseFriendCount={friendCountMinus} />
+			</div> 
+			<SidePanel active={showFriends} handleClose={handleCloseFriendsPanel}>
+				<Friends
+					user={userInfo}
+					showRequests={user.uid === user_id}
+				/>
 			</SidePanel>
 		</>
 	);

@@ -58,6 +58,7 @@ function ProductList() {
         }}
         noValidate
         autoComplete="off"
+        style={{padding: '0px'}}
       >
         {renderProducts()}
       </Box>

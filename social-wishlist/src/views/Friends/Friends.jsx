@@ -2,13 +2,19 @@ import React, { useEffect } from "react";
 import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
-import { acceptFriendRequest, getFriendRequests, getFriends, removeFriend, removeFriendRequest } from "../../firebase/queries/users";
+import {
+	acceptFriendRequest,
+	getFriendRequests,
+	getFriends,
+	removeFriend,
+	removeFriendRequest,
+} from "../../firebase/queries/users";
 import { useState } from "react";
 import UserBrick from "../../components/UserBrick/UserBrick";
 import "./Friends.css";
 import { CircularProgress } from "@mui/material";
 
-function Friends({ user, increaseFriendCount, decreaseFriendCount }) {
+function Friends({ user, showRequests = true }) {
 	const [friendRequests, setFriendRequests] = useState([]);
 	const [friends, setFriends] = useState([]);
 	const [loadingFriends, setLoadingFriends] = useState(false);
@@ -29,11 +35,10 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount }) {
 		try {
 			setDisableActions(true);
 			await acceptFriendRequest(userBrick.uid, user.uid);
-			increaseFriendCount();
 			setFriends([userBrick, ...friends]);
-			setFriendRequests(friendRequests.filter(fr => fr.uid !== userBrick.uid));
+			setFriendRequests(friendRequests.filter((fr) => fr.uid !== userBrick.uid));
 		} catch (error) {
-			console.error("Error accepting request. Try again later" );
+			console.error("Error accepting request. Try again later", error.message);
 		} finally {
 			setDisableActions(false);
 		}
@@ -42,9 +47,9 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount }) {
 		try {
 			setDisableActions(true);
 			await removeFriendRequest(userBrick.uid, user.uid);
-			setFriendRequests(friendRequests.filter(fr => fr.uid !== userBrick.uid));
+			setFriendRequests(friendRequests.filter((fr) => fr.uid !== userBrick.uid));
 		} catch (error) {
-			console.error("Error removing request. Try again later" );
+			console.error("Error removing request. Try again later", error.message);
 		} finally {
 			setDisableActions(false);
 		}
@@ -53,10 +58,9 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount }) {
 		try {
 			setDisableActions(true);
 			await removeFriend(user.uid, userBrick.uid);
-			decreaseFriendCount();
-			setFriends(friends.filter(fr => fr.uid !== userBrick.uid));
+			setFriends(friends.filter((fr) => fr.uid !== userBrick.uid));
 		} catch (error) {
-			console.error("Error removing friend. Try again later" );
+			console.error("Error removing friend. Try again later", error.message);
 		} finally {
 			setDisableActions(false);
 		}
@@ -90,17 +94,24 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount }) {
 	return (
 		<div className="main-box friends-box">
 			{loadingFriends ? (
-				<div style={{height:'90vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+				<div style={{ height: "90vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
 					<CircularProgress color="primary" />
 				</div>
 			) : (
 				<>
-					<section>
-						<h3>Requests</h3>
-						{friendRequests.map((friendRequest, i) => (
-							<UserBrick key={i} user={friendRequest} actions={friendRequestActions} disableActions={disableActions}/>
-						))}
-					</section>
+					{showRequests && (
+						<section>
+							<h3>Requests</h3>
+							{friendRequests.map((friendRequest, i) => (
+								<UserBrick
+									key={i}
+									user={friendRequest}
+									actions={friendRequestActions}
+									disableActions={disableActions}
+								/>
+							))}
+						</section>
+					)}
 					<section>
 						<h3>Friends</h3>
 						{friends.map((friend, i) => (
