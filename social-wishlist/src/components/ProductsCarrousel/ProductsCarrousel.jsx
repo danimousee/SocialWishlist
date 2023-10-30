@@ -43,12 +43,31 @@ const ProductsCarrousel = () => {
   const handleAddToWishlist = async () => {
     if (loggedIn) {
       try {
-        await addProductToUser(db, products[page], user.uid);
-        console.log("product," + products[page].id + "added to user");
+        addProductToUser(db, products[page], user.uid);
       } catch (error) {
         // show error dialog? and prompt retry?
       }
 
+      const hiddenSlide = document.getElementsByClassName("hidden-product");
+      const currentSlide = document.getElementsByClassName("carousel-slider");
+      currentSlide[0].style.transform = "translate(500px,500px)";
+      hiddenSlide[0].style.transform = "translate(-700px,-700px)";
+
+      setTimeout(() => {
+        currentSlide[0].style.transform = "translate(0)";
+        hiddenSlide[0].style.transform = "translate(-700px,-700px)";
+        nextPage();
+      }, 300);
+
+    } else {
+      // show dialog to user to login.
+      navigate("/login");
+    }
+  };
+
+  const handleSkipProduct = () => {
+    if (loggedIn) {
+      
       const hiddenSlide = document.getElementsByClassName("hidden-product");
       const currentSlide = document.getElementsByClassName("carousel-slider");
       currentSlide[0].style.transform = "translate(-500px,500px)";
@@ -61,25 +80,6 @@ const ProductsCarrousel = () => {
         nextPage();
       }, 300);
 
-
-    } else {
-      // show dialog to user to login.
-      navigate("/login");
-    }
-  };
-
-  const handleSkipProduct = () => {
-    if (loggedIn) {
-      const hiddenSlide = document.getElementsByClassName("hidden-product");
-      const currentSlide = document.getElementsByClassName("carousel-slider");
-      currentSlide[0].style.transform = "translate(500px,500px)";
-      hiddenSlide[0].style.transform = "translate(-700px,-700px)";
-
-      setTimeout(() => {
-        currentSlide[0].style.transform = "translate(0)";
-        hiddenSlide[0].style.transform = "translate(-700px,-700px)";
-        nextPage();
-      }, 300);
     } else {
       navigate("/login");
     }
