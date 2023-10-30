@@ -9,6 +9,8 @@ import { userLogIn } from "../../actions/user";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../../firebase/queries/users";
 import { db } from "../../firebase";
+import { existsUser } from "../../firebase/queries/users";
+import { bool, boolean } from "yup";
 
 function Login() {
 	const [loginPressed, setLoginPressed] = useState(false);
@@ -20,16 +22,37 @@ function Login() {
 		setLoginPressed(true);
 		googleSignIn().then((res) => {
 			setLoginPressed(false);
-			try {
-				addUser(db, res);
-				console.log("User saved to DB with id", res.uid);
+			var idUser = res.uid;
+
+			try { //Valido si no existia el usuario antes cde crear
+				existsUser(db, res.uid)
+				.then((userExists) => {
+					console.log('userExists:', idUser)
+					if (!userExists) {
+						addUser(db, res);
+						console.log("User saved to DB with id", idUser);
+					} 
+				})
 			} catch (error) {
 				// Maybe show an error in the client and prompt retry here?
 				console.error("Error saving user:", error.message);
 			}
 			dispatch(userLogIn(res));
+
 			// redirect to profile
-			navigate('/profile/' + res.uid);
+		    existsUser(db, res.uid)
+            .then((userExists) => {
+				console.log('userExists:', idUser)
+                if (userExists) {
+                    navigate('/');
+                } else {
+                    navigate('/interests');
+                }
+            })
+            .catch((error) => {
+                console.error("Error checking user exists:", error.message);
+            });
+			
 		});
 	};
 

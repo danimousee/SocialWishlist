@@ -7,16 +7,15 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { getUser } from "../../firebase/queries/users";
 import { db } from "../../firebase";
+import Profile from "../profile/Profile";
 
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SearchIcon from '@mui/icons-material/Search';
 
 const Interests = () => {
 	let { user_id } = useParams();
-
 	const dispatch = useDispatch();
-	// const { user, loggedIn } = useSelector((state) => state.user);
-
+	const { user, loggedIn } = useSelector((state) => state.user);
 	const navigate = useNavigate();
 	
     const selectButton = (event) => {
@@ -32,12 +31,20 @@ const Interests = () => {
         
     }
 
+    const onClickNext = () => {
+        navigate('/')
+    }
+
+    const onClickBack = () => {
+        navigate('/login')
+    }
+
 	return (
 		<>
             <div className="interests-main">
                 <div className="div-nav">
                     <div className="div-back-icon">
-                        <ArrowBackIosNewIcon className="icon"/>
+                        <ArrowBackIosNewIcon className="icon" onClick={onClickBack}/>
                     </div>
                     <div className="div-search-icon">
                         <SearchIcon className="icon"/>
@@ -72,7 +79,7 @@ const Interests = () => {
                     </div>
                 </div>
                 <div className="div-bottom-section">
-                    <button className="save-info-button">Next</button>
+                    <button className="save-info-button" onClick={onClickNext}>Next</button>
                 </div>
             </div>
 		</>

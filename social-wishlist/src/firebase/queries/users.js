@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../index";
 import { searchUsers } from "../../utils/users";
+import { boolean } from "yup";
 
 const COLLECTION_NAME = "users";
 
@@ -38,6 +39,15 @@ export async function getUser(db, id) {
 	} else {
 		throw new Error("Document with id " + id + " does not exist.");
 	}
+}
+
+export async function existsUser(db, id) {
+	const docSnap = await getDoc(doc(db, COLLECTION_NAME, id));
+	var userExists = false;
+	if (docSnap.exists()) {
+		userExists = true;
+	} 
+	return userExists;
 }
 
 export async function addUser(db, payload) {

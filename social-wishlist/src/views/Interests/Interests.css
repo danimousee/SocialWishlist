@@ -21,6 +21,7 @@ body {
     height: 3vh;
     width: 100%;
     border-bottom: 1px solid #242424;
+    margin-top: 2px;
     
 }
 
@@ -37,7 +38,6 @@ body {
     display: flex;
     width: 50%;
     justify-content: flex-end;
-    
     align-items: center;
 }
 
@@ -51,6 +51,7 @@ body {
     height: 100%;
     display: flex;
     padding: 3%;
+    visibility: hidden;
 }
 
 .interests-main .title-topbox {
