@@ -1,10 +1,11 @@
-import { Box, CircularProgress, ImageList } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
-import "./Users.css"
+import "./Users.css";
 import UserBrick from "../UserBrick/UserBrick";
 
 const UsersList = () => {
   const { users, loading } = useSelector((state) => state.users);
+  const { user } = useSelector((state) => state.user);
 
   const renderUsers = () => {
     if (loading) {
@@ -20,9 +21,11 @@ const UsersList = () => {
         </Box>
       );
     } else if (users.length > 0) {
-      return users.map((user, i) => (
-          <UserBrick key={i} user={user} />
-      ));
+      return users.map((u, i) => {
+        if (u.uid !== user.uid) {
+          return <UserBrick key={i} user={u} />;
+        }
+      });
     }
   };
 
