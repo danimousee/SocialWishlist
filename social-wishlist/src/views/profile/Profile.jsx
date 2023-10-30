@@ -48,6 +48,7 @@ const Profile = () => {
 	const [isFriend, setIsFriend] = useState("");
 	const [showFriends, setShowFriends] = useState(false);
 	const [friendCount, setFriendCount] = useState(0);
+	const [friendRequestCount, setFriendRequestCount] = useState(0);
 	const [waitingAction, setWaitingAction] = useState(false);
 
 	useEffect(() => {
@@ -57,6 +58,7 @@ const Profile = () => {
 		setShowFriends(false);
 		setUserInfo({});
 		setFriendCount(0);
+		setFriendRequestCount(0);
 		setWaitingAction(false);
 		setLoading(true); // Iniciar la carga antes de llamar a la API
 
@@ -76,7 +78,12 @@ const Profile = () => {
 		if (user.uid === user_id) {
 			setItsMyProfile(true);
 			setUserInfo(user);
-			setFriendCount(Object.values(user.friends).length)
+			if (user.friends) {
+				setFriendCount(Object.values(user.friends).length);
+			}
+			if (user.friendRequests) {
+				setFriendRequestCount(Object.values(user.friendRequests).length);
+			}
 			loadUserProducts(user);
 		} else {
 			// This profile is from someone else
@@ -150,6 +157,11 @@ const Profile = () => {
 		setFriendCount(friendCount - 1);
 	};
 
+	const friendRequestCountMinus = () => {
+		console.log("decreasing friend request count");
+		setFriendRequestCount(friendRequestCount - 1);
+	};
+
 	const renderUserProducts = () => {
 		if (loading) {
 			return (
@@ -200,6 +212,7 @@ const Profile = () => {
 						<div className="friends-counter" onClick={handleFriendsClick}>
 							<h2>Friends</h2>
 							<h2>{friendCount}</h2>
+							{itsMyProfile && friendRequestCount > 0 && <div className="notification-badge">{friendRequestCount}</div>}
 						</div>
 						<div className="prof-picture">{<Avatar img={userInfo.photoURL} />}</div>
 						<div className="wishes-counter">
@@ -259,9 +272,14 @@ const Profile = () => {
 						{activeTab === "wishes" ? renderUserProducts() : <h1>There nothing here yet</h1>}
 					</div>
 				</div>
-			</div>
+			</div> 
 			<SidePanel active={showFriends} handleActive={setShowFriends}>
-				<Friends user={userInfo} increaseFriendCount={friendCountPlus} decreaseFriendCount={friendCountMinus} />
+				<Friends
+					user={userInfo}
+					increaseFriendCount={friendCountPlus}
+					decreaseFriendCount={friendCountMinus}
+					decreaseFriendRequestCount={friendRequestCountMinus}
+				/>
 			</SidePanel>
 		</>
 	);

@@ -139,6 +139,12 @@ body {
     letter-spacing: 0.5px;
 	font-weight: 500;
 	font-family: inherit;
+    position: relative;
+}
+
+.p-card .notification-badge {
+    top: 4px;
+    right: -12px;
 }
 
 .prof-picture-avatar .custom-avatar .Avatar {
