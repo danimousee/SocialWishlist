@@ -10,7 +10,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import DoneIcon from "@mui/icons-material/Done";
 
 import { googleSignOut } from "../../firebase/auth/googleAuth";
-import { userLogOut } from "../../actions/user";
+import { userLogOut, userRefresh } from "../../actions/user";
 import { useNavigate, useParams } from "react-router-dom";
 
 import CircularProgress from "@mui/material/CircularProgress";
@@ -148,17 +148,14 @@ const Profile = () => {
 	};
 
 	const friendCountPlus = () => {
-		console.log("increasing friend count");
 		setFriendCount(friendCount + 1);
 	};
 
 	const friendCountMinus = () => {
-		console.log("decreasing friend count");
 		setFriendCount(friendCount - 1);
 	};
 
 	const friendRequestCountMinus = () => {
-		console.log("decreasing friend request count");
 		setFriendRequestCount(friendRequestCount - 1);
 	};
 
@@ -187,6 +184,15 @@ const Profile = () => {
 			return <h2>Empty Wishlist</h2>;
 		}
 	};
+
+	const handleCloseFriendsPanel = async (e) => {
+		// Only if we are in our profile
+		if (user.uid === user_id) {
+			const newUser = await userQueries.getUser(db, user.uid)
+			dispatch(userRefresh(newUser));
+		}
+		setShowFriends(false);
+	}
 
 	//------
 
@@ -273,7 +279,7 @@ const Profile = () => {
 					</div>
 				</div>
 			</div> 
-			<SidePanel active={showFriends} handleActive={setShowFriends}>
+			<SidePanel active={showFriends} handleClose={handleCloseFriendsPanel}>
 				<Friends
 					user={userInfo}
 					increaseFriendCount={friendCountPlus}

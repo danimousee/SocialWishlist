@@ -16,14 +16,11 @@ const user = createSlice({
       state.user = {};
       state.loggedIn = false;
     },
-    userUpdate(state, action) {
-      state.user = {
-        ...state.user,
-        ...action.payload
-      }
+    userRefresh(state, action) {
+      state.user = action.payload
     }
   },
 });
 
-export const { userLogIn, userLogOut, userUpdate } = user.actions;
+export const { userLogIn, userLogOut, userRefresh } = user.actions;
 export default user.reducer;

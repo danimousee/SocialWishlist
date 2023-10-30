@@ -13,12 +13,8 @@ import { useState } from "react";
 import UserBrick from "../../components/UserBrick/UserBrick";
 import "./Friends.css";
 import { CircularProgress } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { userUpdate } from "../../actions/user";
 
 function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFriendRequestCount }) {
-	const dispatch = useDispatch();
-	const userMe = useSelector(state => state.user).user;
 	
 	const [friendRequests, setFriendRequests] = useState([]);
 	const [friends, setFriends] = useState([]);
@@ -42,9 +38,6 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFrien
 			await acceptFriendRequest(userBrick.uid, user.uid);
 			increaseFriendCount();
 			setFriends([userBrick, ...friends]);
-			// const newFriendRequests = userMe.friendRequests;
-			// delete newFriendRequests[userBrick.uid]
-			// dispatch(userUpdate({friendRequests: newFriendRequests}))
 			setFriendRequests(friendRequests.filter((fr) => fr.uid !== userBrick.uid));
 			decreaseFriendRequestCount();
 		} catch (error) {
@@ -57,9 +50,6 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFrien
 		try {
 			setDisableActions(true);
 			await removeFriendRequest(userBrick.uid, user.uid);
-			// const newFriendRequests = userMe.friendRequests;
-			// delete newFriendRequests[userBrick.uid]
-			// dispatch(userUpdate({friendRequests: newFriendRequests}))
 			setFriendRequests(friendRequests.filter((fr) => fr.uid !== userBrick.uid));
 			decreaseFriendRequestCount()
 		} catch (error) {
@@ -74,9 +64,6 @@ function Friends({ user, increaseFriendCount, decreaseFriendCount, decreaseFrien
 			await removeFriend(user.uid, userBrick.uid);
 			decreaseFriendCount();
 			setFriends(friends.filter((fr) => fr.uid !== userBrick.uid));
-			// const newFriends = userMe.friends;
-			// delete newFriends[userBrick.uid];
-			// dispatch(userUpdate({friends: newFriends}));
 		} catch (error) {
 			console.error("Error removing friend. Try again later", error.message);
 		} finally {
