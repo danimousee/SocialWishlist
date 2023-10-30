@@ -7,3 +7,21 @@
     margin-top: 20px;
     height: 105px;
 }
+
+ .hidden-product {
+   position: absolute;
+   transform: translate(700px,-700px);
+   transition: all 0.6s ease-in;
+
+}
+ 
+.carousel-slider {
+    transition: all 0.3s ease-out;
+}
+
+
+
+.slider-container {
+    display: flex;
+    overflow: hidden;
+}
