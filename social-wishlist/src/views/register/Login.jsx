@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { addUser } from "../../firebase/queries/users";
 import { db } from "../../firebase";
 import { existsUser } from "../../firebase/queries/users";
-import { bool, boolean } from "yup";
 
 function Login() {
 	const [loginPressed, setLoginPressed] = useState(false);

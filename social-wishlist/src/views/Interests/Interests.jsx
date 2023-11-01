@@ -14,6 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const Interests = () => {
 	let { user_id } = useParams();
+    const [count, setCount] = useState(0);
 	const dispatch = useDispatch();
 	const { user, loggedIn } = useSelector((state) => state.user);
 	const navigate = useNavigate();
@@ -23,16 +24,29 @@ const Interests = () => {
         // Si el botón ya tiene la clase 'selected', remuévela
         if (clickedButton.classList.contains('interests-button-selected')) {
             clickedButton.classList.remove('interests-button-selected');
+            setCount(count - 1);
         }
         // Si el botón no tiene la clase 'selected', añádela
         else {
             clickedButton.classList.add('interests-button-selected');
+            setCount(count + 1);
         }
         
     }
 
-    const onClickNext = () => {
-        navigate('/')
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isVisible, setIsVisible] = useState(false);
+    const onClickNext = (event) => {
+        if (count >= 3) {
+            navigate('/');
+        } else {
+            setErrorMessage("You must choose at least 3 Interests.");
+            setIsVisible(true);
+            setTimeout(() => {
+                setIsVisible(false);
+            }, 2000);
+        }
+        
     }
 
     const onClickBack = () => {
@@ -79,6 +93,7 @@ const Interests = () => {
                     </div>
                 </div>
                 <div className="div-bottom-section">
+                    <p className={`error-message-next ${isVisible ? 'visible' : ''}`}>{errorMessage}</p>
                     <button className="save-info-button" onClick={onClickNext}>Next</button>
                 </div>
             </div>
