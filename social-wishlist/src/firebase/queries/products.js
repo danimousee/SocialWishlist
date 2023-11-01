@@ -11,6 +11,16 @@ import {
 import { searchProducts } from "../../utils/products";
 const COLLECTION_NAME = "products";
 
+//Funcion de mezclado
+function shuffleArray(array) {
+	let shuffledArray = array.slice();
+	for (let i = shuffledArray.length - 1; i > 0; i--) {
+	  const j = Math.floor(Math.random() * (i + 1));
+	  [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+	}
+	return shuffledArray;
+}
+
 export const getAllProducts = (input = null) => async (dispatch) => {
 	dispatch(fetchProductsStart());
 
@@ -22,8 +32,9 @@ export const getAllProducts = (input = null) => async (dispatch) => {
 			}));
 
 			const data = searchProducts(input, response);
+			const shuffledData = shuffleArray(data);
 
-			dispatch(fetchProductsSuccess(data));
+			dispatch(fetchProductsSuccess(shuffledData));
 		} catch (error) {
 			dispatch(fetchProductsFailure(error.message));
 		}

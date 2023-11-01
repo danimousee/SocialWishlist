@@ -133,11 +133,14 @@ body {
     margin: 3%;
 	font-weight: bold;
 	border-radius: 20px;
+    transition: transform 0.3s;
  }
 
  .interests-main .div-interests .div-interest-column .interests-button-selected{
     background-color: var(--accent-color);
 	color: var(--text-color-dark);
+    transform: scale(1.05,1.05);
+    transition: transform 0.3s;
  }
 
  

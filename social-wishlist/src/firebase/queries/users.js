@@ -13,7 +13,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../index";
 import { searchUsers } from "../../utils/users";
-import { boolean } from "yup";
 
 const COLLECTION_NAME = "users";
 
