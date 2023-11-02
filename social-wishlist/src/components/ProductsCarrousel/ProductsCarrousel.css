@@ -25,3 +25,16 @@
     display: flex;
     overflow: hidden;
 }
+
+.user_img_container {
+    position: absolute;
+    top: 0.5rem;
+    left: 16rem;
+    border-radius: 100%;
+    border: 2px solid var(--accent-color);
+}
+
+.user_img {
+    border-radius: 100%;
+    height: 4rem;
+}

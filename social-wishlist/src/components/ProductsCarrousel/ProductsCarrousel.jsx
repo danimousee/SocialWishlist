@@ -16,47 +16,47 @@ import { useNavigate, Link } from "react-router-dom";
 import { incrementPage, resetPage } from "../../actions/products";
 import { useEffect, useState } from "react";
 import { bool } from "prop-types";
+import { getFriends } from "../../firebase/queries/users";
 
 const ProductsCarrousel = ({ isFriendsTab }) => {
   const { products, loading, page } = useSelector((state) => state.products);
   const { user, loggedIn } = useSelector((state) => state.user);
   const [productsSlider, setProductsSlider] = useState();
-  const [friendsUids, setFriendsUids] = useState(user.friends);
+  const [loadingFriendsProds, setLoadingFriendsProds] = useState(true);
   const [friendsProducts, setFriendsProducts] = useState([]);
   const finalProducts = isFriendsTab ? friendsProducts : products;
-
+  console.log(finalProducts);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
-  useEffect(() => {
-    if (user.friends) {
-      setFriendsUids(Object.keys(user.friends));
-    }
-  }, [user?.friends]);
-
   useEffect(() => {
     if (isFriendsTab) {
-      friendsUids?.forEach((uid) => {
-        getProductsOfUser(uid)
-          .then((products) => {
-            const mappedProducts = products.map((product) => ({
-              ...product,
-              uid,
-            }));
-            setFriendsProducts((friendsProducts) => [
-              ...friendsProducts,
-              ...mappedProducts,
-            ]);
-          })
-          .catch((error) => {
-            console.error("Error fetching friend products:", error);
-          });
+      getFriends(user.uid).then((friends) => {
+        setLoadingFriendsProds(true);
+        friends?.forEach((friend) => {
+          getProductsOfUser(friend.uid)
+            .then((products) => {
+              const mappedProducts = products.map((product) => ({
+                ...product,
+                photoURL: friend.photoURL,
+              }));
+              setFriendsProducts((friendsProducts) =>
+                [...friendsProducts, ...mappedProducts].sort(function () {
+                  return 0.5 - Math.random();
+                })
+              );
+
+              setLoadingFriendsProds(false);
+            })
+            .catch((error) => {
+              console.error("Error fetching friend products:", error);
+            });
+        });
       });
     } else {
       dispatch(getAllProducts());
     }
-  }, [dispatch, isFriendsTab, friendsUids]);
+  }, [dispatch, isFriendsTab, user?.uid]);
 
   useEffect(() => {
     if (!loading && finalProducts.length > 0) {
@@ -131,16 +131,27 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
           >
             <Carousel showThumbs={false} showStatus={false}>
               {product.images.map((img, i) => (
-                <img
-                  key={i}
-                  src={img}
-                  style={{
-                    objectFit: "cover",
-                    height: "100%",
-                    objectPosition: "center center",
-                    borderRadius: "14px",
-                  }}
-                />
+                <>
+                  {isFriendsTab && (
+                    <div className="user_img_container">
+                      <img
+                        className="user_img"
+                        key={i}
+                        src={product.photoURL}
+                      />
+                    </div>
+                  )}
+                  <img
+                    key={i}
+                    src={img}
+                    style={{
+                      objectFit: "cover",
+                      height: "100%",
+                      objectPosition: "center center",
+                      borderRadius: "14px",
+                    }}
+                  />
+                </>
               ))}
             </Carousel>
             <H2 className="product-name">{compressString(product.name, 80)}</H2>
@@ -150,7 +161,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
     }
   };
 
-  if (loading) {
+  if (loading || (isFriendsTab && loadingFriendsProds)) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", margin: "auto" }}>
         <CircularProgress color="secondary" />
