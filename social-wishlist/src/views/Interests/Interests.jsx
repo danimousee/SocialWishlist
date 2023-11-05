@@ -9,11 +9,13 @@ import { getUser } from "../../firebase/queries/users";
 import { db } from "../../firebase";
 import Profile from "../profile/Profile";
 
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import SearchIcon from '@mui/icons-material/Search';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import { addInterestToUser } from "../../firebase/queries/interests";
 import { deleteInterestOfUser } from "../../firebase/queries/interests";
+
 
 
 const Interests = () => {
@@ -56,6 +58,10 @@ const Interests = () => {
         }
     }
 
+    const onClickSkip = () => {
+        navigate('/');
+    }
+
     const onClickBack = () => {
         navigate('/login');
     }
@@ -87,10 +93,10 @@ const Interests = () => {
             <div className="interests-main">
                 <div className="div-nav">
                     <div className="div-back-icon">
-                        <ArrowBackIosNewIcon className="icon" onClick={onClickBack}/>
+                        <ArrowBackIosNewRoundedIcon className="icon" onClick={onClickBack}/>
                     </div>
-                    <div className="div-search-icon">
-                        <SearchIcon className="icon"/>
+                    <div className="div-skip-icon">
+                       <CloseRoundedIcon className="icon" onClick={onClickSkip}></CloseRoundedIcon>
                     </div>
                 </div>
                 <div className="title-topbox">

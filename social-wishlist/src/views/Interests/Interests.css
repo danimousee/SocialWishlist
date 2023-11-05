@@ -33,25 +33,24 @@ body {
   align-items: center;
 }
 
-.interests-main .div-nav .div-search-icon{
+.interests-main .div-nav .div-skip-icon{
     height: 100%;
     display: flex;
     width: 50%;
     justify-content: flex-end;
-    align-items: center;
+    align-items: center;    
 }
 
 .interests-main .div-nav .div-back-icon .icon{
-    height: 100%;
+    height: 80%;
     display: flex;
     padding: 3%;
 }
 
-.interests-main .div-nav .div-search-icon .icon{
+.interests-main .div-nav .div-skip-icon .icon{
     height: 100%;
     display: flex;
     padding: 3%;
-    visibility: hidden;
 }
 
 .interests-main .title-topbox {
