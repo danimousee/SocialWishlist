@@ -22,7 +22,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
   const { products, loading, page } = useSelector((state) => state.products);
   const { user, loggedIn } = useSelector((state) => state.user);
   const [productsSlider, setProductsSlider] = useState();
-  const [loadingFriendsProds, setLoadingFriendsProds] = useState(true);
+  const [loadingProds, setLoadingProds] = useState(true);
   const [friendsProducts, setFriendsProducts] = useState([]);
   const [finalProducts, setFinalProducts] = useState(
     isFriendsTab ? friendsProducts : products
@@ -32,22 +32,24 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setLoadingProds(true);
     getProductsOfUser(user.uid)
       .then((prods) => {
         const mappedProducts = prods.map((prod) => prod.id);
         setFinalProducts(finalProducts.filter(
           (finalProd) => !mappedProducts.includes(finalProd.id)
         ));
+        setLoadingProds(false)
       })
       .catch((error) => {
         console.error("Error fetching friend products:", error);
       });
-  }, []);
+  }, [finalProducts, user.uid]);
 
   useEffect(() => {
     if (isFriendsTab) {
       getFriends(user.uid).then((friends) => {
-        setLoadingFriendsProds(true);
+        setLoadingProds(true);
         friends?.forEach((friend) => {
           getProductsOfUser(friend.uid)
             .then((products) => {
@@ -61,7 +63,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
                 })
               );
 
-              setLoadingFriendsProds(false);
+              setLoadingProds(false);
             })
             .catch((error) => {
               console.error("Error fetching friend products:", error);
@@ -74,7 +76,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
   }, [dispatch, isFriendsTab, user?.uid]);
 
   useEffect(() => {
-    if (!loading && finalProducts.length > 0) {
+    if (!loading && !loadingProds && finalProducts.length > 0) {
       setProductsSlider([finalProducts[page], finalProducts[page + 1]]);
     }
   }, [page, loading, finalProducts]);
@@ -145,7 +147,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
             key={i}
           >
             <Carousel showThumbs={false} showStatus={false}>
-              {product.images.map((img, i) => (
+              {product.images && product.images.map((img, i) => (
                 <>
                   {isFriendsTab && (
                     <div id={i} className="user_img_container">
@@ -176,7 +178,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
     }
   };
 
-  if (loading || (isFriendsTab && loadingFriendsProds)) {
+  if (loading || loadingProds) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", margin: "auto" }}>
         <CircularProgress color="secondary" />
