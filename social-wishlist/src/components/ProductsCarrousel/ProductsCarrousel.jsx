@@ -24,10 +24,25 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
   const [productsSlider, setProductsSlider] = useState();
   const [loadingFriendsProds, setLoadingFriendsProds] = useState(true);
   const [friendsProducts, setFriendsProducts] = useState([]);
-  const finalProducts = isFriendsTab ? friendsProducts : products;
-  console.log(finalProducts);
+  const [finalProducts, setFinalProducts] = useState(
+    isFriendsTab ? friendsProducts : products
+  );
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getProductsOfUser(user.uid)
+      .then((prods) => {
+        const mappedProducts = prods.map((prod) => prod.id);
+        setFinalProducts(finalProducts.filter(
+          (finalProd) => !mappedProducts.includes(finalProd.id)
+        ));
+      })
+      .catch((error) => {
+        console.error("Error fetching friend products:", error);
+      });
+  }, []);
 
   useEffect(() => {
     if (isFriendsTab) {
@@ -133,7 +148,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
               {product.images.map((img, i) => (
                 <>
                   {isFriendsTab && (
-                    <div className="user_img_container">
+                    <div id={i} className="user_img_container">
                       <img
                         className="user_img"
                         key={i}

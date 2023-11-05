@@ -12,8 +12,6 @@ function Search() {
   const [tab, setTab] = useState("products");
   const [scroll, setScroll] = useState(false);
 
-  console.log("scroll", scroll);
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", () =>
