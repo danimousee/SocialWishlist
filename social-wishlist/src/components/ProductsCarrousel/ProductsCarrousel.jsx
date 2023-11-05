@@ -42,6 +42,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
         setLoadingProds(false)
       })
       .catch((error) => {
+        setLoadingProds(false)
         console.error("Error fetching friend products:", error);
       });
   }, [finalProducts, user.uid]);
