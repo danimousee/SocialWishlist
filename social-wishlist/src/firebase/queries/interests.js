@@ -66,7 +66,7 @@ export async function addInterestToUser(db, payload, userId) {
 }
 
 //deleteInterestOfUser
-export async function deleteInterestOfUser(db, userId, interestId) {
+export async function deleteInterestOfUser(db, interestId, userId) {
     const path = `users/${userId}/interests/${interestId}`;
     
     try {

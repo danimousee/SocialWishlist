@@ -12,6 +12,10 @@ import Profile from "../profile/Profile";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SearchIcon from '@mui/icons-material/Search';
 
+import { addInterestToUser } from "../../firebase/queries/interests";
+import { deleteInterestOfUser } from "../../firebase/queries/interests";
+
+
 const Interests = () => {
 	let { user_id } = useParams();
     const [count, setCount] = useState(0);
@@ -21,15 +25,19 @@ const Interests = () => {
 	
     const selectButton = (event) => {
         const clickedButton = event.target;
+        const interestId = clickedButton.id;
         // Si el botón ya tiene la clase 'selected', remuévela
         if (clickedButton.classList.contains('interests-button-selected')) {
             clickedButton.classList.remove('interests-button-selected');
             setCount(count - 1);
+            handleDeleteInterest(interestId);
         }
         // Si el botón no tiene la clase 'selected', añádela
         else {
             clickedButton.classList.add('interests-button-selected');
             setCount(count + 1);
+            handleAddToInterests(interestId);
+            
         }
         
     }
@@ -46,11 +54,32 @@ const Interests = () => {
                 setIsVisible(false);
             }, 2000);
         }
-        
     }
 
     const onClickBack = () => {
-        navigate('/login')
+        navigate('/login');
+    }
+
+    //const { interests, loading, page } = useSelector((state) => state.interests);
+    const handleAddToInterests = async (interestId) => {
+        if (loggedIn && user?.uid) {
+            try {
+                const payload = { id: interestId }; // Assuming the `id` is the interestName
+                await addInterestToUser(db, payload, user.uid);
+            } catch (error) {
+                console.error('Error adding to interests:', error);
+            }
+        }
+    }
+
+    const handleDeleteInterest = async (interestId) => {
+        if (loggedIn && user?.uid) {
+            try {
+                await deleteInterestOfUser(db, interestId, user.uid);
+            } catch (error) {
+                console.error('Error adding to interests:', error);
+            }
+        }
     }
 
 	return (
@@ -74,22 +103,22 @@ const Interests = () => {
                 </div>
                 <div className="div-interests">
                     <div className="div-interest-column">
-                        <button className="interests-button" onClick={selectButton}>Cars</button>
-                        <button className="interests-button" onClick={selectButton}>Technology</button>
-                        <button className="interests-button" onClick={selectButton}>Travel</button>
+                        <button className="interests-button" onClick={selectButton} id="cars">Cars</button>
+                        <button className="interests-button" onClick={selectButton} id="technology">Technology</button>
+                        <button className="interests-button" onClick={selectButton} id="travel">Travel</button>
                     </div>
                     <div className="div-interest-column">
-                        <button className="interests-button" onClick={selectButton}>Toys</button>
-                        <button className="interests-button" onClick={selectButton}>Sports</button>
+                        <button className="interests-button" onClick={selectButton} id="toys">Toys</button>
+                        <button className="interests-button" onClick={selectButton} id="sports">Sports</button>
                     </div>
                     <div className="div-interest-column">
-                        <button className="interests-button" onClick={selectButton}>Games</button>
-                        <button className="interests-button" onClick={selectButton}>Clothes</button>
-                        <button className="interests-button" onClick={selectButton}>Food</button>
+                        <button className="interests-button" onClick={selectButton} id="games">Games</button>
+                        <button className="interests-button" onClick={selectButton} id="clothes">Clothes</button>
+                        <button className="interests-button" onClick={selectButton} id="food">Food</button>
                     </div>
                     <div className="div-interest-column">
-                        <button className="interests-button" onClick={selectButton}>Beauty</button>
-                        <button className="interests-button" onClick={selectButton}>Home</button>
+                        <button className="interests-button" onClick={selectButton} id="beauty">Beauty</button>
+                        <button className="interests-button" onClick={selectButton} id="home">Home</button>
                     </div>
                 </div>
                 <div className="div-bottom-section">
