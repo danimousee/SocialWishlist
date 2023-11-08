@@ -48,7 +48,9 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
         setLoadingProds(false)
         console.error("Error fetching friend products:", error);
       });
-  }, [finalProducts, user.uid]);
+  // FIX THIS. No se puede hacer un set y despues pasarlo en el array del useEffect
+  // }, [finalProducts, user.uid]);
+  }, [user.uid]);
 
   useEffect(() => {
     if (isFriendsTab) {
