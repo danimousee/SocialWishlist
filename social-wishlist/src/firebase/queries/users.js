@@ -96,7 +96,7 @@ export async function acceptFriendRequest(requesterId, receiverId) {
 	const requesterRef = doc(db, COLLECTION_NAME, requesterId);
 	const updatePayload2 = {};
 	updatePayload2["friends." + receiverId] = receiverId;
-	updateDoc(requesterRef, updatePayload2);
+	await updateDoc(requesterRef, updatePayload2);
 }
 export async function removeFriend(myId, friendId) {
 	// Removing friend
@@ -109,7 +109,7 @@ export async function removeFriend(myId, friendId) {
 	const friendRef = doc(db, COLLECTION_NAME, friendId);
 	const deletePayload2 = {};
 	deletePayload2["friends." + myId] = deleteField();
-	updateDoc(friendRef, deletePayload2);
+	await updateDoc(friendRef, deletePayload2);
 }
 export async function getFriendRequests(myId) {
 	// Returns the friend requests user documents (ONLY uid, displayName and photoURL)

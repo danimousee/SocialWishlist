@@ -61,6 +61,7 @@ export const addProduct = (payload) => async (dispatch) => {
 			docRef = await setDoc(doc(db, COLLECTION_NAME, payload.id), payload);
 		} else {
 			docRef = await addDoc(collection(db, COLLECTION_NAME), payload);
+			await updateDoc(docRef, { id: docRef.id });
 		}
 		// console.log("docRef", docRef);
 		dispatch(addProductsSuccess());
@@ -106,6 +107,16 @@ export function compressProductsMELI(meliProducts) {
 	return compressedProductsMELI;
 }
 
+export async function getProductOfUser(userId, productId) {
+	const docRef = doc(db, `users/${userId}/products/${productId}`);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		throw new Error("Document does not exist");
+	}
+}
+
 export async function addProductToUser(db, payload, userId) {
 	let docRef;
 	const path = `users/${userId}/products`;
@@ -114,6 +125,11 @@ export async function addProductToUser(db, payload, userId) {
 	} else {
 		docRef = await addDoc(collection(db, path), payload);
 	}
+}
+
+export async function removeProductFromUser(db, payload, userId) {
+	const path = `users/${userId}/products/${payload.id}`;
+	await deleteDoc(doc(db, path));
 }
 
 export async function getProductsOfUser(userId) {
@@ -128,4 +144,10 @@ export async function getProductsOfUser(userId) {
 	});
 
 	return userProducts;
+}
+
+export async function productExistsInUser(userId, productId) {
+	const docRef = doc(db, `users/${userId}/products/${productId}`);
+	const docSnap = await getDoc(docRef);
+	return docSnap.exists();
 }

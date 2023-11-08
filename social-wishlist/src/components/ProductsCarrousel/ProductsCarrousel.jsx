@@ -17,6 +17,9 @@ import { incrementPage, resetPage } from "../../actions/products";
 import { useEffect, useState } from "react";
 import { bool } from "prop-types";
 import { getFriends } from "../../firebase/queries/users";
+import AddToCartButton from "../AddToCartButton/AddToCartButton";
+import { markProduct } from "../../firebase/queries/carts";
+import { addToCart } from "../../actions/user";
 
 const ProductsCarrousel = ({ isFriendsTab }) => {
   const { products, loading, page } = useSelector((state) => state.products);
@@ -57,6 +60,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
               const mappedProducts = products.map((product) => ({
                 ...product,
                 photoURL: friend.photoURL,
+                wisherUid: friend.uid
               }));
               setFriendsProducts((friendsProducts) =>
                 [...friendsProducts, ...mappedProducts].sort(function () {
@@ -138,13 +142,40 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
     }
   };
 
+  const handleAddToCart = async () => {
+    if (loggedIn) {
+      try {
+        // Add to cart logic goes here
+        const product = finalProducts[page];
+			  dispatch(addToCart({...product, wisherUid: product.wisherUid}));
+        markProduct(user.uid, product.wisherUid, product);
+      } catch (error) {
+        // show error dialog? and prompt retry?
+      }
+
+      const hiddenSlide = document.getElementsByClassName("hidden-product");
+      const currentSlide = document.getElementsByClassName("carousel-slider");
+      currentSlide[0].style.transform = "translate(500px,500px)";
+      hiddenSlide[0].style.transform = "translate(-700px,-700px)";
+
+      setTimeout(() => {
+        currentSlide[0].style.transform = "translate(0)";
+        hiddenSlide[0].style.transform = "translate(-700px,-700px)";
+        nextPage();
+      }, 300);
+    } else {
+      // show dialog to user to login.
+      navigate("/login");
+    }
+  }
+
   const renderSlider = () => {
     if (productsSlider && productsSlider.length > 0) {
       return productsSlider.map((product, i) => {
         return (
           <Link
             className={`carousel-slider ${i === 1 && "hidden-product"}`}
-            to={`/product/${finalProducts[page].id}`}
+            to={`/product/${finalProducts[page].id}${finalProducts[page].wisherUid ? '?wisherId=' + finalProducts[page].wisherUid : ""}`}
             key={i}
           >
             <Carousel showThumbs={false} showStatus={false}>
@@ -154,7 +185,6 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
                     <div id={i} className="user_img_container">
                       <img
                         className="user_img"
-                        key={i}
                         src={product.photoURL}
                       />
                     </div>
@@ -192,13 +222,20 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
       {finalProducts.length > 0 ? (
         <div>
           <div className="slider-container">{renderSlider()}</div>
+          {isFriendsTab ? <div
+            className="button-group"
+            style={{ justifyContent: "space-evenly" }}
+          >
+            <SkipProductButton id="btn-right" onClick={handleSkipProduct} />
+            <AddToCartButton id="btn-left" onClick={handleAddToCart} />
+          </div> :
           <div
             className="button-group"
             style={{ justifyContent: "space-evenly" }}
           >
             <SkipProductButton id="btn-right" onClick={handleSkipProduct} />
             <AddToWishlistButton id="btn-left" onClick={handleAddToWishlist} />
-          </div>
+          </div>}
         </div>
       ) : (
         <H2>No se encontraron productos para tu busqueda</H2>

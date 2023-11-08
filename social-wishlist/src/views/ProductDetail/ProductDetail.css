@@ -14,3 +14,21 @@
     left: 20px;
     right: 20px;
 }
+
+.product-detail-main-box > button {
+    margin: 20px auto;
+    width: fit-content;
+}
+
+.wisher-box .wisher-info, .wisher-box a{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: center;
+    color: var(--text-color);
+}
+
+.product-detail-main-box .avatar {
+    display: inline-block;
+    width: 2em;
+}

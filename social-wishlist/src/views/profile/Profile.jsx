@@ -27,7 +27,7 @@ const Profile = () => {
 	let { user_id } = useParams();
 
 	const dispatch = useDispatch();
-	const { user, loggedIn } = useSelector((state) => state.user);
+	const { user, loggedIn, cart } = useSelector((state) => state.user);
 
 	const navigate = useNavigate();
 	const handleSignOut = function () {
@@ -164,7 +164,7 @@ const Profile = () => {
 			return (
 				<div className="product-thumbnail-grid">
 					{userProducts.map((product, i) => {
-						return <ProductThumbnail key={i} product={product} />;
+						return <ProductThumbnail wisherId={userInfo.uid} key={i} product={product} />;
 					})}
 				</div>
 			);
@@ -172,6 +172,21 @@ const Profile = () => {
 			return <h2>Empty Wishlist</h2>;
 		}
 	};
+
+	const renderUserCart = () => {
+		// Manejo con redux
+		if (cart.length > 0) {
+			return (
+				<div className="product-thumbnail-grid">
+					{cart.map((product, i) => {
+						return <ProductThumbnail wisherId={product.wisherUid} key={i} product={product} />;
+					})}
+				</div>
+			);
+		} else {
+			return <h2>Cart is empty</h2>;
+		}
+	}
 
 	const handleCloseFriendsPanel = async (e) => {
 		// Only if we are in our profile
@@ -258,7 +273,8 @@ const Profile = () => {
 						)}
 					</div>
 					<div className="p-photos-show">
-						{activeTab === "wishes" ? renderUserProducts() : <h1>There nothing here yet</h1>}
+						{activeTab === "wishes" && renderUserProducts() }
+						{activeTab === "cart" && renderUserCart()}
 					</div>
 				</div>
 			</div> 

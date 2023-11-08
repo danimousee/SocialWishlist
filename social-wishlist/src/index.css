@@ -19,8 +19,10 @@
 	--text-color-dark: #333;
 	--bg-color: #1e1e1e;
 	--success-color: #5cb85c;
+	--cta-color: #8dd68d;
 	--disabled-color: #969696;
 	--alert-color: rgb(241, 83, 83);
+	--cancel-color: #f28c8c;
 }
 
 input {
@@ -131,8 +133,23 @@ form {
 	transition: all 0.3s ease-in-out;
 }
 
+.btn:disabled {
+	background-color: var(--disabled-color);
+	color: var(--text-color-dark);
+}
+
 .btn-primary {
 	background-color: var(--accent-color);
+	color: var(--text-color-dark);
+}
+
+.btn-cta {
+	background-color: var(--cta-color);
+	color: var(--text-color-dark);
+}
+
+.btn-cancel {
+	background-color: var(--cancel-color);
 	color: var(--text-color-dark);
 }
 
@@ -141,6 +158,7 @@ form {
 	aspect-ratio: 1;
 	border-radius: 50%;
 	height: 75px;
+	width: 75px;
 	display: flex;
 	padding: 0;
 	align-items: center;
@@ -171,4 +189,8 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.user-feedback {
+	font-weight: bold;
 }

@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav/Nav";
-import { userLogIn } from "./actions/user";
+import { loadCart, userLogIn } from "./actions/user";
 import { useDispatch } from "react-redux";
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { getUser } from "./firebase/queries/users";
+import { getCart } from "./firebase/queries/carts";
 
 function App() {
 	const dispatch = useDispatch();
@@ -23,7 +24,9 @@ function App() {
 					photoURL: user.photoURL,
 				};
 				const userDocument = await getUser(db, user.uid);
+				const userCart = await getCart(user.uid);
 				dispatch(userLogIn({...reducedUser, ...userDocument}));
+				dispatch(loadCart(userCart));
 			}
 		});
 	}, []);
