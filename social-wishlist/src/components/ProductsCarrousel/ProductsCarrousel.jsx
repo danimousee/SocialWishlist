@@ -25,44 +25,30 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
   const { products, loading, page } = useSelector((state) => state.products);
   const { user, loggedIn } = useSelector((state) => state.user);
   const [productsSlider, setProductsSlider] = useState();
-  const [loadingProds, setLoadingProds] = useState(true);
+  const [loadingForYouProds, setLoadingForYouProds] = useState(true);
+  const [loadingFriendsProds, setLoadingFriendsProds] = useState(false);
   const [friendsProducts, setFriendsProducts] = useState([]);
-  const [finalProducts, setFinalProducts] = useState(
-    isFriendsTab ? friendsProducts : products
-  );
+  const [forYouProducts, setForYouProducts] = useState([]);
+  const [finalProducts, setFinalProducts] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoadingProds(true);
-    getProductsOfUser(user.uid)
-      .then((prods) => {
-        const mappedProducts = prods.map((prod) => prod.id);
-        setFinalProducts(finalProducts.filter(
-          (finalProd) => !mappedProducts.includes(finalProd.id)
-        ));
-        setLoadingProds(false)
-      })
-      .catch((error) => {
-        setLoadingProds(false)
-        console.error("Error fetching friend products:", error);
-      });
-  // FIX THIS. No se puede hacer un set y despues pasarlo en el array del useEffect
-  // }, [finalProducts, user.uid]);
-  }, [user.uid]);
+    dispatch(getAllProducts());
+  }, []);
 
   useEffect(() => {
     if (isFriendsTab) {
+      setLoadingFriendsProds(true);
       getFriends(user.uid).then((friends) => {
-        setLoadingProds(true);
         friends?.forEach((friend) => {
           getProductsOfUser(friend.uid)
             .then((products) => {
               const mappedProducts = products.map((product) => ({
                 ...product,
                 photoURL: friend.photoURL,
-                wisherUid: friend.uid
+                wisherUid: friend.uid,
               }));
               setFriendsProducts((friendsProducts) =>
                 [...friendsProducts, ...mappedProducts].sort(function () {
@@ -70,7 +56,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
                 })
               );
 
-              setLoadingProds(false);
+              setLoadingFriendsProds(false);
             })
             .catch((error) => {
               console.error("Error fetching friend products:", error);
@@ -78,15 +64,28 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
         });
       });
     } else {
-      dispatch(getAllProducts());
+      if (products.length > 0 && Object.keys(user).length > 0) {
+        getProductsOfUser(user.uid)
+          .then((prods) => {
+            const mappedProducts = prods.map((prod) => prod.id);
+            setForYouProducts(
+              products.filter((finalProd) =>
+                mappedProducts.includes(finalProd.id)
+              )
+            );
+            setLoadingForYouProds(false);
+          })
+          .catch((error) => {
+            setLoadingForYouProds(false);
+            console.error("Error fetching friend products:", error);
+          });
+      }
     }
-  }, [dispatch, isFriendsTab, user?.uid]);
+  }, [isFriendsTab, products, user]);
 
   useEffect(() => {
-    if (!loading && !loadingProds && finalProducts.length > 0) {
-      setProductsSlider([finalProducts[page], finalProducts[page + 1]]);
-    }
-  }, [page, loading, finalProducts]);
+    setFinalProducts(isFriendsTab ? friendsProducts : forYouProducts);
+  }, [loading, loadingFriendsProds, loadingForYouProds]);
 
   const nextPage = () => {
     if (page === finalProducts.length - 1) {
@@ -149,7 +148,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
       try {
         // Add to cart logic goes here
         const product = finalProducts[page];
-			  dispatch(addToCart({...product, wisherUid: product.wisherUid}));
+        dispatch(addToCart({ ...product, wisherUid: product.wisherUid }));
         markProduct(user.uid, product.wisherUid, product);
       } catch (error) {
         // show error dialog? and prompt retry?
@@ -169,40 +168,43 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
       // show dialog to user to login.
       navigate("/login");
     }
-  }
+  };
 
   const renderSlider = () => {
+    const productsSlider = [finalProducts[page], finalProducts[page + 1]];
     if (productsSlider && productsSlider.length > 0) {
       return productsSlider.map((product, i) => {
         return (
           <Link
             className={`carousel-slider ${i === 1 && "hidden-product"}`}
-            to={`/product/${finalProducts[page].id}${finalProducts[page].wisherUid ? '?wisherId=' + finalProducts[page].wisherUid : ""}`}
+            to={`/product/${finalProducts[page].id}${
+              finalProducts[page].wisherUid
+                ? "?wisherId=" + finalProducts[page].wisherUid
+                : ""
+            }`}
             key={i}
           >
             <Carousel showThumbs={false} showStatus={false}>
-              {product.images && product.images.map((img, i) => (
-                <>
-                  {isFriendsTab && (
-                    <div id={i} className="user_img_container">
-                      <img
-                        className="user_img"
-                        src={product.photoURL}
-                      />
-                    </div>
-                  )}
-                  <img
-                    key={i}
-                    src={img}
-                    style={{
-                      objectFit: "cover",
-                      height: "100%",
-                      objectPosition: "center center",
-                      borderRadius: "14px",
-                    }}
-                  />
-                </>
-              ))}
+              {product.images &&
+                product.images.map((img, i) => (
+                  <>
+                    {isFriendsTab && (
+                      <div id={i} className="user_img_container">
+                        <img className="user_img" src={product.photoURL} />
+                      </div>
+                    )}
+                    <img
+                      key={i}
+                      src={img}
+                      style={{
+                        objectFit: "cover",
+                        height: "100%",
+                        objectPosition: "center center",
+                        borderRadius: "14px",
+                      }}
+                    />
+                  </>
+                ))}
             </Carousel>
             <H2 className="product-name">{compressString(product.name, 80)}</H2>
           </Link>
@@ -211,7 +213,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
     }
   };
 
-  if (loading || loadingProds) {
+  if (loading || loadingFriendsProds || loadingForYouProds) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", margin: "auto" }}>
         <CircularProgress color="secondary" />
@@ -224,20 +226,26 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
       {finalProducts.length > 0 ? (
         <div>
           <div className="slider-container">{renderSlider()}</div>
-          {isFriendsTab ? <div
-            className="button-group"
-            style={{ justifyContent: "space-evenly" }}
-          >
-            <SkipProductButton id="btn-right" onClick={handleSkipProduct} />
-            <AddToCartButton id="btn-left" onClick={handleAddToCart} />
-          </div> :
-          <div
-            className="button-group"
-            style={{ justifyContent: "space-evenly" }}
-          >
-            <SkipProductButton id="btn-right" onClick={handleSkipProduct} />
-            <AddToWishlistButton id="btn-left" onClick={handleAddToWishlist} />
-          </div>}
+          {isFriendsTab ? (
+            <div
+              className="button-group"
+              style={{ justifyContent: "space-evenly" }}
+            >
+              <SkipProductButton id="btn-right" onClick={handleSkipProduct} />
+              <AddToCartButton id="btn-left" onClick={handleAddToCart} />
+            </div>
+          ) : (
+            <div
+              className="button-group"
+              style={{ justifyContent: "space-evenly" }}
+            >
+              <SkipProductButton id="btn-right" onClick={handleSkipProduct} />
+              <AddToWishlistButton
+                id="btn-left"
+                onClick={handleAddToWishlist}
+              />
+            </div>
+          )}
         </div>
       ) : (
         <H2>No se encontraron productos para tu busqueda</H2>
