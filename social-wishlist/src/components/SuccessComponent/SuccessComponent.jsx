@@ -5,11 +5,13 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { useNavigate, useParams } from "react-router-dom";
 import router from '../../router/router';
 
-const SuccessComponent = () => {
+const SuccessComponent = ({productId = ""}) => {
+  console.log("SuccessComponent ~ productId:", productId);
   const navigate = useNavigate();
 
   const handleGoTo = () => {
     //Aca deberia llevarme al producto agregado
+    navigate(`/product/${productId}`);
   }
 
 

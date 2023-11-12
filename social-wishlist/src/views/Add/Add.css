@@ -1,0 +1,14 @@
+.add-form {
+    padding: 0;
+}
+
+.add-form .content-box {
+    justify-content: flex-start;   
+    gap: 30px;
+}
+
+.add-form img {
+    width: 100%;
+    display: block;
+    border-radius: 0px 0px 10px 10px;
+}

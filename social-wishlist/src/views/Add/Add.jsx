@@ -3,6 +3,7 @@ import { Formik, Form } from "formik";
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
 import { addProduct } from '../../firebase/queries/products';
+import "./Add.css"
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -56,6 +57,9 @@ const Add = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [submitResult, setSubmitResult] = useState(null);
+  const [productId, setProductId] = useState("");
+
+  const placeholderImage = "https://www.ivins.com/wp-content/uploads/2020/09/placeholder-1.png"
 
   const submit = async values => {
     setIsLoading(true);
@@ -71,7 +75,11 @@ const Add = () => {
       values.category = values.category.id;
 
       // Intentar hacer el envío
-      await dispatch(addProduct(values));
+      const productId = await dispatch(addProduct(values));
+      setProductId(productId);
+
+      // TODO: Add to own wishlist here
+
       setSubmitResult('success');
     } catch (error) {
       // Manejar el error
@@ -91,7 +99,7 @@ const Add = () => {
   }
 
   if (submitResult === 'success') {
-    return <SuccessComponent />; // Componente o mensaje de éxito
+    return <SuccessComponent productId={productId}/>; // Componente o mensaje de éxito
   }
 
   if (submitResult === 'fail') {
@@ -101,7 +109,8 @@ const Add = () => {
   return (
     <Formik initialValues={initialValues} onSubmit={submit} validationSchema={validationSchema}>
       {({ handleChange, values, setFieldValue, handleBlur, handleReset, isSubmitting, errors, touched }) => (
-        <Form>
+        <Form className='add-form'>
+          <img src={values.images ? values.images : placeholderImage} />
           <div className="main-box">
             <div className="content-box">
               <TextField color="primary" fullWidth
@@ -182,7 +191,7 @@ const Add = () => {
                 // }}
               />
 
-              <button className='button-save' type="submit">SAVE</button>
+              <button className='btn btn-primary' type="submit" disabled={isLoading}>SAVE</button>
             </div>
           </div>
         </Form>

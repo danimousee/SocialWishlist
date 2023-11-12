@@ -65,6 +65,7 @@ export const addProduct = (payload) => async (dispatch) => {
 		}
 		// console.log("docRef", docRef);
 		dispatch(addProductsSuccess());
+		return docRef.id;
 	} catch (e) {
 		dispatch(addProductsFailure(e));
 	}
