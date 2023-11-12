@@ -1,3 +1,7 @@
+.product-detail-main-box {
+    padding-bottom: 140px;
+}
+
 .product-banner-box {
     width: 100%;
     height: 275px;
@@ -31,4 +35,12 @@
 .product-detail-main-box .avatar {
     display: inline-block;
     width: 2em;
+}
+
+.go-back-btn {
+    box-shadow: none !important;
+    color: var(--accent-color);
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }

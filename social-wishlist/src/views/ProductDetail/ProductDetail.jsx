@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import "./ProductDetail.css";
 import { Carousel } from "react-responsive-carousel";
 import { addProductToUser, getProduct, getProductOfUser, productExistsInUser, removeProductFromUser } from "../../firebase/queries/products";
@@ -10,11 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../../components/Avatar/Avatar";
 import { markProduct, unmarkProduct } from "../../firebase/queries/carts";
 import { addToCart, removeFromCart } from "../../actions/user";
+import IconButton from "../../components/IconButton/IconButton";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 function ProductDetail() {
 	let { id } = useParams();
 	const [searchParams] = useSearchParams();
 	const wisherId = searchParams.get("wisherId");
+
+	const navigate = useNavigate();
 
 	const dispatch = useDispatch();
 	const { user, cart } = useSelector((state) => state.user);
@@ -137,6 +141,18 @@ function ProductDetail() {
 		}
 	}
 
+	function handleGoBack() {
+		navigate(-1);
+	}
+
+	function shortenString(string) {
+		const MAX = 80
+		if (string.length > MAX) {
+			return string.slice(0,MAX) + "...";
+		}
+		return string;
+	}
+
 
 	return (
 		<>
@@ -150,8 +166,9 @@ function ProductDetail() {
 							backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.7), transparent 75%), url(${product.images[0]})`,
 						}}
 					>
-						<h2 className="product-banner-title">{product.name}</h2>
+						<h2 className="product-banner-title">{shortenString(product.name)}</h2>
 					</div>
+					<IconButton bgColor={"transparent"} className={"go-back-btn"} onClick={handleGoBack}><ArrowBackIosNewIcon/></IconButton>
 					<div className="main-box product-detail-main-box">
 						{/* <div className="user-reaction-box">
 					<img className="user-avatar" />
