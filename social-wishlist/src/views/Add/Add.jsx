@@ -80,7 +80,7 @@ const Add = () => {
           <div className="main-box">
             <div className="content-box">
               <TextField color="primary" fullWidth
-                label="Nombre"
+                label="Name"
                 id="name"
                 name="name"
                 className='search-bar-text-field'
@@ -101,7 +101,7 @@ const Add = () => {
                     value !== null ? value : initialValues.category
                   );
                 }}
-                renderInput={(params) => <TextField {...params} label="Categoria" name="category" />}
+                renderInput={(params) => <TextField {...params} label="Category" name="category" />}
                 value={values.category}
                 //onBlur={handleBlur}
                 //error={touched.category && Boolean(errors.category)}   
@@ -119,7 +119,7 @@ const Add = () => {
                     value !== null ? value : initialValues.provider
                   );
                 }}
-                renderInput={(params) => <TextField {...params} label="Sitio" name="provider" />}
+                renderInput={(params) => <TextField {...params} label="Provider" name="provider" />}
                 value={values.provider}
                 //onBlur={handleBlur}
                 //error={touched.provider && Boolean(errors.provider)}   
@@ -128,7 +128,7 @@ const Add = () => {
               />
 
               <TextField color="primary" fullWidth
-                label="Imagen"
+                label="Image URL"
                 id="images"
                 name="images"
                 className='search-bar-text-field'
@@ -137,13 +137,13 @@ const Add = () => {
                 onBlur={handleBlur}
                 error={touched.images && Boolean(errors.images)}
                 helperText={touched.images && errors.images}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">https://</InputAdornment>,
-                }}
+                // InputProps={{
+                //   startAdornment: <InputAdornment position="start">https://</InputAdornment>,
+                // }}
               />
 
               <TextField color="primary" fullWidth
-                label="Link del articulo"
+                label="Store page URL"
                 id="url"
                 name="url"
                 className='search-bar-text-field'
@@ -152,9 +152,9 @@ const Add = () => {
                 onBlur={handleBlur}
                 error={touched.url && Boolean(errors.url)}
                 helperText={touched.url && errors.url}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">https://</InputAdornment>,
-                }}
+                // InputProps={{
+                //   startAdornment: <InputAdornment position="start">https://</InputAdornment>,
+                // }}
               />
 
               <Button variant="contained" color="success" startIcon={<SaveIcon />} type="submit" style={{ backgroundColor: '#28B0CE', color: 'white' }}>SAVE</Button>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "955434871757",
+    "project_id": "social-wishlist",
+    "storage_bucket": "social-wishlist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955434871757:android:65e28ef7472c40567fb284",
+        "android_client_info": {
+          "package_name": "com.socialwishlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955434871757-lk2hs3f8m26iqsop1duq53g07dl91eiq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdOJ0cgXv-1G4dTuYtbsh7HA6BgdHOJBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955434871757-lk2hs3f8m26iqsop1duq53g07dl91eiq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

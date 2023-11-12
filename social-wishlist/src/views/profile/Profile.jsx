@@ -22,6 +22,7 @@ import { db } from "../../firebase";
 import IconButton from "../../components/IconButton/IconButton";
 import Friends from "../Friends/Friends";
 import SidePanel from "../../components/SidePanel/SidePanel";
+import { signOut } from "../../firebase/auth/capGoogleAuth";
 
 const Profile = () => {
 	let { user_id } = useParams();
@@ -31,10 +32,17 @@ const Profile = () => {
 
 	const navigate = useNavigate();
 	const handleSignOut = function () {
-		googleSignOut().then((res) => {
-			dispatch(userLogOut());
-			navigate("/login");
-		});
+		if (window.Capacitor.platform === "android") {
+			signOut().then((res) => {
+				dispatch(userLogOut());
+				navigate("/login");
+			});
+		} else {
+			googleSignOut().then((res) => {
+				dispatch(userLogOut());
+				navigate("/login");
+			});
+		}
 	};
 
 	//----------------------------
@@ -186,16 +194,16 @@ const Profile = () => {
 		} else {
 			return <h2>Cart is empty</h2>;
 		}
-	}
+	};
 
 	const handleCloseFriendsPanel = async (e) => {
 		// Only if we are in our profile
 		if (user.uid === user_id) {
-			const newUser = await userQueries.getUser(db, user.uid)
+			const newUser = await userQueries.getUser(db, user.uid);
 			dispatch(userRefresh(newUser));
 		}
 		setShowFriends(false);
-	}
+	};
 
 	//------
 
@@ -273,16 +281,13 @@ const Profile = () => {
 						)}
 					</div>
 					<div className="p-photos-show">
-						{activeTab === "wishes" && renderUserProducts() }
+						{activeTab === "wishes" && renderUserProducts()}
 						{activeTab === "cart" && renderUserCart()}
 					</div>
 				</div>
-			</div> 
+			</div>
 			<SidePanel active={showFriends} handleClose={handleCloseFriendsPanel}>
-				<Friends
-					user={userInfo}
-					showRequests={user.uid === user_id}
-				/>
+				<Friends user={userInfo} showRequests={user.uid === user_id} />
 			</SidePanel>
 		</>
 	);
