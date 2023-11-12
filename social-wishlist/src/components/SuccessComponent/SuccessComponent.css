@@ -1,0 +1,92 @@
+.main-success-screen {
+    animation-name: colorTransition;
+    animation-duration: 3s; /* Adjust duration as needed */
+    animation-fill-mode: forwards; /* Keeps the state at the end of the animation */
+
+    width: 100vw;
+    height: 100vh;
+    /* background-color: var(--success-color); */
+    display: flex;
+    flex-direction: column;
+}
+
+.main-success-screen .success-icon-div {
+    align-self: center;
+    display: flex;
+    background-color: white;
+    width: 22vw;
+    height: 10vh;
+    margin-top: 20vh;
+    margin-bottom: 4vh;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.main-success-screen .success-icon-div .success-icon{
+    color: var(--success-color);
+    height: 75%;
+    width: 75%;
+}
+
+.main-success-screen .success-text-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.main-success-screen .success-text-div .success-text{
+    font-weight: bold;
+    font-weight: 500;
+	font-family: inherit;
+}
+
+@keyframes colorTransition {
+    0% {
+      background: white;
+    }
+    100% {
+      background: var(--success-color)
+    }
+  }
+
+.main-success-screen .watch-button-div {
+    flex-direction: column;
+    display: flex;
+    height: 6vh;
+    width: 40vw;
+    justify-content: center;
+    align-self: center;
+    margin-top: 30vh;
+    border-radius: 15%;
+}
+.main-success-screen .watch-button-div .watch-button {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    font-size: 1em;
+    border: 1px solid transparent;
+    background-color: white;
+    padding: 0.6em 1.2em;
+	font-weight: 500;
+	font-family: inherit;
+	color: black;
+	cursor: pointer;
+	transition: border-color 0.25s;
+    font-weight: bold;
+    font-weight: 500;
+	font-family: inherit;
+    transition: border-color 0.25s, transform 0.3s, outline 0.3s;
+}
+
+.main-success-screen .watch-button-div .watch-button:hover {
+	border-color: var(--success-color);
+}
+.main-success-screen .watch-button-div .watch-button:focus,
+.main-success-screen .watch-button-div .watch-button:focus-visible {
+	outline: 8px solid var(--success-color);
+    transform: scale(1.05,1.05);
+    transition: transform 0.3s;
+}

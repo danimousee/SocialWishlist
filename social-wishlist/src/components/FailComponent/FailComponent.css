@@ -1,0 +1,52 @@
+.main-fail-screen {
+    animation-name: colorTransition;
+    animation-duration: 2s; /* Adjust duration as needed */
+    animation-fill-mode: forwards; /* Keeps the state at the end of the animation */
+
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-fail-screen .fail-icon-div {
+    align-self: center;
+    display: flex;
+    background-color: white;
+    width: 22vw;
+    height: 10vh;
+    margin-top: 20vh;
+    margin-bottom: 4vh;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.main-fail-screen .fail-icon-div .fail-icon{
+    color: var(--alert-color);
+    height: 75%;
+    width: 75%;
+}
+
+.main-fail-screen .fail-text-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.main-fail-screen .fail-text-div .fail-text{
+    font-weight: bold;
+    font-weight: 500;
+	font-family: inherit;
+}
+
+@keyframes colorTransition {
+    0% {
+      background: white;
+    }
+    100% {
+      background: var(--alert-color)
+    }
+  }
