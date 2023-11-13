@@ -40,29 +40,35 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
 
   useEffect(() => {
     if (isFriendsTab) {
-      setLoadingFriendsProds(true);
-      getFriends(user.uid).then((friends) => {
-        friends?.forEach((friend) => {
-          getProductsOfUser(friend.uid)
-            .then((products) => {
-              const mappedProducts = products.map((product) => ({
-                ...product,
-                photoURL: friend.photoURL,
-                wisherUid: friend.uid,
-              }));
-              setFriendsProducts((friendsProducts) =>
-                [...friendsProducts, ...mappedProducts].sort(function () {
-                  return 0.5 - Math.random();
-                })
-              );
+      if (Object.keys(user).length === 0) {
+        navigate("/login")
+      } else {
+        setLoadingFriendsProds(true);
+        console.log("entro");
+        console.log("what");
+        getFriends(user.uid).then((friends) => {
+          friends?.forEach((friend) => {
+            getProductsOfUser(friend.uid)
+              .then((products) => {
+                const mappedProducts = products.map((product) => ({
+                  ...product,
+                  photoURL: friend.photoURL,
+                  wisherUid: friend.uid,
+                }));
+                setFriendsProducts((friendsProducts) =>
+                  [...friendsProducts, ...mappedProducts].sort(function () {
+                    return 0.5 - Math.random();
+                  })
+                );
 
-              setLoadingFriendsProds(false);
-            })
-            .catch((error) => {
-              console.error("Error fetching friend products:", error);
-            });
+                setLoadingFriendsProds(false);
+              })
+              .catch((error) => {
+                console.error("Error fetching friend products:", error);
+              });
+          });
         });
-      });
+      }
     } else {
       if (products.length > 0 && Object.keys(user).length > 0) {
         getProductsOfUser(user.uid)
@@ -79,11 +85,15 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
             setLoadingForYouProds(false);
             console.error("Error fetching friend products:", error);
           });
+      } else if (products.length > 0) {
+        setForYouProducts(products);
+        setLoadingForYouProds(false);
       }
     }
   }, [isFriendsTab, products, user]);
 
   useEffect(() => {
+    console.log(friendsProducts);
     setFinalProducts(isFriendsTab ? friendsProducts : forYouProducts);
   }, [loading, loadingFriendsProds, loadingForYouProds]);
 
@@ -248,7 +258,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
           )}
         </div>
       ) : (
-        <H2>No se encontraron productos para tu busqueda</H2>
+        <H2>No hay productos disponiibles</H2>
       )}
     </>
   );
