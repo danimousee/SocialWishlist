@@ -44,8 +44,6 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
         navigate("/login")
       } else {
         setLoadingFriendsProds(true);
-        console.log("entro");
-        console.log("what");
         getFriends(user.uid).then((friends) => {
           friends?.forEach((friend) => {
             getProductsOfUser(friend.uid)
