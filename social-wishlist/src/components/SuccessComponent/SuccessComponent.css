@@ -1,5 +1,5 @@
 .main-success-screen {
-    animation-name: colorTransition;
+    animation-name: colorTransitionSuccess;
     animation-duration: 3s; /* Adjust duration as needed */
     animation-fill-mode: forwards; /* Keeps the state at the end of the animation */
 
@@ -43,7 +43,7 @@
 	font-family: inherit;
 }
 
-@keyframes colorTransition {
+@keyframes colorTransitionSuccess {
     0% {
       background: white;
     }

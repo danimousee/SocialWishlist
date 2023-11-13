@@ -1,5 +1,5 @@
 .main-fail-screen {
-    animation-name: colorTransition;
+    animation-name: colorTransitionFail;
     animation-duration: 2s; /* Adjust duration as needed */
     animation-fill-mode: forwards; /* Keeps the state at the end of the animation */
 
@@ -42,7 +42,7 @@
 	font-family: inherit;
 }
 
-@keyframes colorTransition {
+@keyframes colorTransitionFail {
     0% {
       background: white;
     }
