@@ -184,8 +184,11 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
 
       const hiddenSlide = document.getElementsByClassName("hidden-product");
       const currentSlide = document.getElementsByClassName("carousel-slider");
-      currentSlide[0].style.transform = "translate(500px,500px)";
-      hiddenSlide[0].style.transform = "translate(-700px,-700px)";
+
+      currentSlide[0].style.transform = "rotate(90deg)";
+      setTimeout(() => {
+        currentSlide[0].style.transform = "translate(1500px, 800px)";
+      }, 50);
 
       setTimeout(() => {
         currentSlide[0].style.transform = "translate(0)";
