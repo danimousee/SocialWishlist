@@ -24,7 +24,7 @@ import { addToCart } from "../../actions/user";
 const ProductsCarrousel = ({ isFriendsTab }) => {
   const { products, loading, page } = useSelector((state) => state.products);
   const { user, loggedIn } = useSelector((state) => state.user);
-  const [productsSlider, setProductsSlider] = useState();
+  const [errorMsg, setErrorMsg] = useState(null);
   const [loadingForYouProds, setLoadingForYouProds] = useState(true);
   const [loadingFriendsProds, setLoadingFriendsProds] = useState(false);
   const [friendsProducts, setFriendsProducts] = useState([]);
@@ -40,31 +40,39 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
 
   useEffect(() => {
     if (isFriendsTab) {
+      setLoadingFriendsProds(true);
       if (Object.keys(user).length === 0) {
         navigate("/login");
+        setLoadingFriendsProds(false);
       } else {
-        setLoadingFriendsProds(true);
         getFriends(user.uid).then((friends) => {
-          friends?.forEach((friend) => {
-            getProductsOfUser(friend.uid)
-              .then((products) => {
-                const mappedProducts = products.map((product) => ({
-                  ...product,
-                  photoURL: friend.photoURL,
-                  wisherUid: friend.uid,
-                }));
-                setFriendsProducts((friendsProducts) =>
-                  [...friendsProducts, ...mappedProducts].sort(function () {
-                    return 0.5 - Math.random();
-                  })
-                );
+          if (friends.length > 0) {
+            friends?.forEach((friend) => {
+              getProductsOfUser(friend.uid)
+                .then((products) => {
+                  const mappedProducts = products.map((product) => ({
+                    ...product,
+                    photoURL: friend.photoURL,
+                    wisherUid: friend.uid,
+                  }));
+                  setFriendsProducts((friendsProducts) =>
+                    [...friendsProducts, ...mappedProducts].sort(function () {
+                      return 0.5 - Math.random();
+                    })
+                  );
 
-                setLoadingFriendsProds(false);
-              })
-              .catch((error) => {
-                console.error("Error fetching friend products:", error);
-              });
-          });
+                  setLoadingFriendsProds(false);
+                })
+                .catch((error) => {
+                  setLoadingFriendsProds(false);
+                  console.error("Error fetching friend products:", error);
+                  setErrorMsg("Error procesando los datos")
+                });
+            });
+          } else {
+            setLoadingFriendsProds(false);
+            setErrorMsg("Aun no tenes amigos")
+          }
         });
       }
     } else {
@@ -72,18 +80,23 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
         getProductsOfUser(user.uid)
           .then((prods) => {
             const mappedProducts = prods.map((prod) => prod.id);
-            setForYouProducts(
-              products.filter((finalProd) =>
-                mappedProducts.includes(finalProd.id)
-              )
-            );
+
+            const forYouProds =
+              mappedProducts.length > 0
+                ? products.filter((finalProd) =>
+                    mappedProducts.includes(finalProd.id)
+                  )
+                : products;
+
+            setForYouProducts(forYouProds);
             setLoadingForYouProds(false);
           })
           .catch((error) => {
             setLoadingForYouProds(false);
             console.error("Error fetching friend products:", error);
+            setErrorMsg("Error procesando los datos")
           });
-      } else if (products.length > 0) {
+      } else if (products.length > 0 && Object.keys(user).length === 0) {
         setForYouProducts(products);
         setLoadingForYouProds(false);
       }
@@ -91,8 +104,9 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
   }, [isFriendsTab, products, user]);
 
   useEffect(() => {
-    console.log(friendsProducts);
-    setFinalProducts(isFriendsTab ? friendsProducts : forYouProducts);
+    if (!loading && !loadingFriendsProds && !loadingForYouProds) {
+      setFinalProducts(isFriendsTab ? friendsProducts : forYouProducts);
+    }
   }, [loading, loadingFriendsProds, loadingForYouProds]);
 
   const nextPage = () => {
@@ -262,7 +276,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
           )}
         </div>
       ) : (
-        <H2>No hay productos disponiibles</H2>
+        <H2>{errorMsg || "No hay productos disponiibles"}</H2>
       )}
     </>
   );
