@@ -11,12 +11,12 @@
  .hidden-product {
    position: absolute;
    transform: translate(700px,-700px);
-   transition: all 0.6s ease-in;
+   transition: all 1.5s ease-in;
 
 }
  
 .carousel-slider {
-    transition: all 0.3s ease-out;
+    transition: all 2s ease-out;
 }
 
 

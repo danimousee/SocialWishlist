@@ -41,7 +41,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
   useEffect(() => {
     if (isFriendsTab) {
       if (Object.keys(user).length === 0) {
-        navigate("/login")
+        navigate("/login");
       } else {
         setLoadingFriendsProds(true);
         getFriends(user.uid).then((friends) => {
@@ -120,8 +120,11 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
 
       const hiddenSlide = document.getElementsByClassName("hidden-product");
       const currentSlide = document.getElementsByClassName("carousel-slider");
-      currentSlide[0].style.transform = "translate(500px,500px)";
-      hiddenSlide[0].style.transform = "translate(-700px,-700px)";
+
+      currentSlide[0].style.transform = "rotate(90deg)";
+      setTimeout(() => {
+        currentSlide[0].style.transform = "translate(1500px, 800px)";
+      }, 50);
 
       setTimeout(() => {
         currentSlide[0].style.transform = "translate(0)";
@@ -138,8 +141,11 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
     if (loggedIn) {
       const hiddenSlide = document.getElementsByClassName("hidden-product");
       const currentSlide = document.getElementsByClassName("carousel-slider");
-      currentSlide[0].style.transform = "translate(-500px,500px)";
-      hiddenSlide[0].style.transform = "translate(-700px,-700px)";
+
+      currentSlide[0].style.transform = "rotate(-90deg)";
+      setTimeout(() => {
+        currentSlide[0].style.transform = "translate(-1500px, 800px)";
+      }, 50);
 
       setTimeout(() => {
         currentSlide[0].style.transform = "translate(0)";
