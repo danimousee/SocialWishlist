@@ -20,42 +20,52 @@ import { getUserInterests } from "../../firebase/queries/interests";
 
 
 const Interests = () => {
-	let { user_id } = useParams();
+    let { user_id } = useParams();
     const [count, setCount] = useState(0);
-	const dispatch = useDispatch();
-	const { user, loggedIn } = useSelector((state) => state.user);
-	const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { user, loggedIn } = useSelector((state) => state.user);
+    const navigate = useNavigate();
 
     const [selectedButtons, setSelectedButtons] = useState([]);
 
 
+    //Ejecuta una vez que la pantalla fue cargada
     useEffect(() => {
         if (user && user.uid) {
-          getUserInterests(user.uid)
-            .then((interests) => {
-              //console.log(interests);
-              setCount(interests.length)
-              interests.forEach((interest) => {
-                checkAndSelectButton(interests, interest.id, interest.id);
-              });
-            })
-            .catch((error) => {
-              console.error("Error fetching user interests:", error);
-            });
+
+            //obtiene los intereses del usuario loggeado
+            getUserInterests(user.uid)
+                .then((interests) => {
+                    //console.log(interests);
+
+                    //Actualiza la variable count con los intereses actuales
+                    setCount(interests.length)
+
+                    //para cada interes del usuario lo marca como seleccionado
+                    interests.forEach((interest) => {
+                        checkAndSelectButton(interests, interest.id, interest.id);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching user interests:", error);
+                });
         }
-      }, [user]);
-    
-      const checkAndSelectButton = (interests, interestId, buttonId) => {
+    }, [user]);
+
+    //funcion que marca el interes si lo tiene el usuario
+    const checkAndSelectButton = (interests, interestId, buttonId) => {
         const isInterestPresent = interests.some((interest) => interest.id === interestId);
         //console.log(isInterestPresent);
-    
+
+        //obtiene el button correspondiente por ID
         const interestButton = document.getElementById(buttonId);
         if (isInterestPresent) {
-          interestButton.classList.add("interests-button-selected");
-          setSelectedButtons([...selectedButtons, interestId]);
+            //cambia el estilo a seleccionado del boton
+            interestButton.classList.add("interests-button-selected");
+            setSelectedButtons([...selectedButtons, interestId]);
         }
-      };
-	
+    };
+
     const selectButton = (event) => {
         const clickedButton = event.target;
         const interestId = clickedButton.id;
@@ -70,9 +80,9 @@ const Interests = () => {
             clickedButton.classList.add('interests-button-selected');
             setCount(count + 1);
             handleAddToInterests(interestId);
-            
+
         }
-        
+
     }
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -119,15 +129,15 @@ const Interests = () => {
         }
     }
 
-	return (
-		<>
+    return (
+        <>
             <div className="interests-main">
                 <div className="div-nav">
                     <div className="div-back-icon">
-                        <ArrowBackIosNewRoundedIcon className="icon" onClick={onClickBack}/>
+                        <ArrowBackIosNewRoundedIcon className="icon" onClick={onClickBack} />
                     </div>
                     <div className="div-skip-icon">
-                       <CloseRoundedIcon className="icon" onClick={onClickSkip}></CloseRoundedIcon>
+                        <CloseRoundedIcon className="icon" onClick={onClickSkip}></CloseRoundedIcon>
                     </div>
                 </div>
                 <div className="title-topbox">
@@ -135,7 +145,7 @@ const Interests = () => {
                         <h1 className="title-topbox-title">What are you interested in?</h1>
                     </div>
                     <div className="div-description">
-                    <h2 className="title-topbox-description">Choose at least 3 interests</h2>
+                        <h2 className="title-topbox-description">Choose at least 3 interests</h2>
                     </div>
                 </div>
                 <div className="div-interests">
@@ -163,8 +173,8 @@ const Interests = () => {
                     <button className="save-info-button" onClick={onClickNext}>Next</button>
                 </div>
             </div>
-		</>
-	);
+        </>
+    );
 
 }
 
