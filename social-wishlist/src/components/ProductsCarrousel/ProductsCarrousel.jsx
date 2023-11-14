@@ -20,6 +20,7 @@ import { getFriends } from "../../firebase/queries/users";
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import { markProduct } from "../../firebase/queries/carts";
 import { addToCart } from "../../actions/user";
+import { getInterestProducts } from "../../firebase/queries/products";
 
 const ProductsCarrousel = ({ isFriendsTab }) => {
   const { products, loading, page } = useSelector((state) => state.products);
@@ -77,25 +78,42 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
       }
     } else {
       if (products.length > 0 && Object.keys(user).length > 0) {
-        getProductsOfUser(user.uid)
-          .then((prods) => {
-            const mappedProducts = prods.map((prod) => prod.id);
 
-            const forYouProds =
+        //codigo nuevo
+        getInterestProducts(user.uid).then((interestProducts) => {
+          const mappedProducts = products.map((prod) => prod.id);
+
+          const forYouProds =
               mappedProducts.length > 0
-                ? products.filter((finalProd) =>
+                ? interestProducts.filter((finalProd) =>
                     mappedProducts.includes(finalProd.id)
                   )
-                : products;
+                : interestProducts;
 
             setForYouProducts(forYouProds);
             setLoadingForYouProds(false);
-          })
-          .catch((error) => {
-            setLoadingForYouProds(false);
-            console.error("Error fetching friend products:", error);
-            setErrorMsg("Error procesando los datos")
-          });
+        });
+
+        //Codigo viejo
+        // getProductsOfUser(user.uid)
+        //   .then((prods) => {
+        //     const mappedProducts = prods.map((prod) => prod.id);
+
+        //     const forYouProds =
+        //       mappedProducts.length > 0
+        //         ? products.filter((finalProd) =>
+        //             mappedProducts.includes(finalProd.id)
+        //           )
+        //         : products;
+
+        //     setForYouProducts(forYouProds);
+        //     setLoadingForYouProds(false);
+        //   })
+        //   .catch((error) => {
+        //     setLoadingForYouProds(false);
+        //     console.error("Error fetching friend products:", error);
+        //     setErrorMsg("Error procesando los datos")
+        //   });
       } else if (products.length > 0 && Object.keys(user).length === 0) {
         setForYouProducts(products);
         setLoadingForYouProds(false);
