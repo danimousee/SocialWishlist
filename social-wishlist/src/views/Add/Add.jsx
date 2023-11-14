@@ -37,7 +37,7 @@ const initialValues = {
   images: "",
   url: "",
   provider: { name: "Mercado Libre", id: "MELI" },
-  category: { name: "Arte", id: "Arte" },
+  category: { name: "cars", id: "cars" },
 };
 
 const optionsProvider = [
@@ -48,16 +48,16 @@ const optionsProvider = [
 ];
 
 const optionsCategory = [
-  { name: "Cars", id: "Cars" },
-  { name: "Technology", id: "Technology" },
-  { name: "Travel", id: "Travel" },
-  { name: "Toys", id: "Toys" },
-  { name: "Sports", id: "Sports" },
-  { name: "Games", id: "Games" },
-  { name: "Clothes", id: "Clothes" },
-  { name: "Food", id: "Food" },
-  { name: "Beauty", id: "Beauty" },
-  { name: "Home", id: "Home" },
+  { name: "cars", id: "cars" },
+  { name: "technology", id: "technology" },
+  { name: "travel", id: "travel" },
+  { name: "toys", id: "toys" },
+  { name: "sports", id: "sports" },
+  { name: "games", id: "games" },
+  { name: "clothes", id: "clothes" },
+  { name: "food", id: "food" },
+  { name: "beauty", id: "beauty" },
+  { name: "home", id: "home" },
 ];
 
 const Add = () => {

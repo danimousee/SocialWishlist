@@ -1,4 +1,4 @@
-import { collection, doc, addDoc, getDoc, getDocs, deleteDoc, updateDoc, setDoc } from "firebase/firestore";
+import { collection, doc, addDoc, getDoc, getDocs, deleteDoc, updateDoc, setDoc, query, where } from "firebase/firestore";
 import { db } from "../index";
 import {
 	fetchProductsStart,
@@ -145,6 +145,35 @@ export async function getProductsOfUser(userId) {
 	});
 
 	return userProducts;
+}
+
+export async function getInterestProducts(userId) {
+	const interests = collection(db, `users/${userId}/interests`);
+	const interestsQuerySnapshot = await getDocs(interests);
+	
+	const productsRef =  collection(db, COLLECTION_NAME);
+
+	const ids = interestsQuerySnapshot.docs.map((doc) => doc.id);
+	const q = query(productsRef, where('category', 'in', ids));
+	// console.log(ids);
+	const productsQuerySnapshot = await getDocs(q);
+	// console.log(productsQuerySnapshot);
+
+	let interestProducts = productsQuerySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Obtiene productos normales
+    const normalQuery = query(productsRef, where('category', 'not-in', ids));
+    const normalProductsSnapshot = await getDocs(normalQuery);
+    let normalProducts = normalProductsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Combina ambos conjuntos de productos
+    let combinedProducts = [...interestProducts, ...normalProducts];
+
+    // Aquí puedes ajustar la lógica si necesitas limitar el número total de productos devueltos
+    // Por ejemplo, si hay un límite específico de productos que quieres devolver, puedes recortar el array combinado
+    // combinedProducts = combinedProducts.slice(0, totalProductLimit);
+	console.log('combinados',combinedProducts)
+    return combinedProducts;
 }
 
 export async function productExistsInUser(userId, productId) {
