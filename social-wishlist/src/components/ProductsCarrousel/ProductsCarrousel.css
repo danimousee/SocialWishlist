@@ -11,12 +11,12 @@
  .hidden-product {
    position: absolute;
    transform: translate(700px,-700px);
-   transition: all 1.5s ease-in;
+   transition: all 1s ease-in;
 
 }
  
 .carousel-slider {
-    transition: all 2s ease-out;
+    transition: all 0.7s ease-out;
 }
 
 
@@ -37,4 +37,15 @@
 .user_img {
     border-radius: 100%;
     height: 4rem;
+}
+
+.product-name {
+    margin: 0;
+    padding-top: 0.3rem;
+    padding-bottom: 0.5rem;
+    height: auto;
+}
+
+.button-group {
+    margin: 0;
 }

@@ -162,7 +162,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
         currentSlide[0].style.transform = "translate(0)";
         hiddenSlide[0].style.transform = "translate(-700px,-700px)";
         nextPage();
-      }, 300);
+      }, 125);
     } else {
       // show dialog to user to login.
       navigate("/login");
@@ -183,7 +183,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
         currentSlide[0].style.transform = "translate(0)";
         hiddenSlide[0].style.transform = "translate(-700px,-700px)";
         nextPage();
-      }, 300);
+      }, 125);
     } else {
       navigate("/login");
     }
@@ -212,7 +212,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
         currentSlide[0].style.transform = "translate(0)";
         hiddenSlide[0].style.transform = "translate(-700px,-700px)";
         nextPage();
-      }, 300);
+      }, 125);
     } else {
       // show dialog to user to login.
       navigate("/login");
@@ -234,16 +234,15 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
             key={i}
           >
             <Carousel showThumbs={false} showStatus={false}>
-              {product.images &&
+              {product && product.images &&
                 product.images.map((img, i) => (
-                  <>
+                  <div key={i}>
                     {isFriendsTab && (
-                      <div id={i} className="user_img_container">
+                      <div className="user_img_container">
                         <img className="user_img" src={product.photoURL} />
                       </div>
                     )}
                     <img
-                      key={i}
                       src={img}
                       style={{
                         objectFit: "cover",
@@ -252,10 +251,10 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
                         borderRadius: "14px",
                       }}
                     />
-                  </>
+                  </div>
                 ))}
             </Carousel>
-            <H2 className="product-name">{compressString(product.name, 80)}</H2>
+            <H2 className="product-name">{product && compressString(product.name, 80)}</H2>
           </Link>
         );
       });
