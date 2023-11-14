@@ -15,6 +15,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import { addInterestToUser } from "../../firebase/queries/interests";
 import { deleteInterestOfUser } from "../../firebase/queries/interests";
+import { getUserInterests } from "../../firebase/queries/interests";
 
 
 
@@ -24,6 +25,36 @@ const Interests = () => {
 	const dispatch = useDispatch();
 	const { user, loggedIn } = useSelector((state) => state.user);
 	const navigate = useNavigate();
+
+    const [selectedButtons, setSelectedButtons] = useState([]);
+
+
+    useEffect(() => {
+        if (user && user.uid) {
+          getUserInterests(user.uid)
+            .then((interests) => {
+              //console.log(interests);
+              setCount(interests.length)
+              interests.forEach((interest) => {
+                checkAndSelectButton(interests, interest.id, interest.id);
+              });
+            })
+            .catch((error) => {
+              console.error("Error fetching user interests:", error);
+            });
+        }
+      }, [user]);
+    
+      const checkAndSelectButton = (interests, interestId, buttonId) => {
+        const isInterestPresent = interests.some((interest) => interest.id === interestId);
+        //console.log(isInterestPresent);
+    
+        const interestButton = document.getElementById(buttonId);
+        if (isInterestPresent) {
+          interestButton.classList.add("interests-button-selected");
+          setSelectedButtons([...selectedButtons, interestId]);
+        }
+      };
 	
     const selectButton = (event) => {
         const clickedButton = event.target;

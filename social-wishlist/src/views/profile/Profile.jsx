@@ -234,6 +234,7 @@ const Profile = () => {
 					</div>
 					<div className="p-name">
 						<h3>{userInfo.displayName}</h3>
+						<a className="p-info" href="/interests" style={{ color: 'white' }}>My interests</a>
 					</div>
 
 					{itsMyProfile ? (
