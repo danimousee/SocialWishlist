@@ -205,6 +205,10 @@ const Profile = () => {
 		setShowFriends(false);
 	};
 
+	const goToInterests = () => {
+		navigate("/interests");
+	};
+
 	//------
 
 	const selectWishesTab = () => setActiveTab("wishes");
@@ -234,7 +238,11 @@ const Profile = () => {
 					</div>
 					<div className="p-name">
 						<h3>{userInfo.displayName}</h3>
-						<a className="p-info" href="/interests" style={{ color: 'white' }}>My interests</a>
+						{itsMyProfile && (
+							<button className="btn btn-secondary" onClick={goToInterests}>
+								My interests
+							</button>
+						)}
 					</div>
 
 					{itsMyProfile ? (

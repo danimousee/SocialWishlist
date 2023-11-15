@@ -104,7 +104,7 @@ const Interests = () => {
     }
 
     const onClickBack = () => {
-        navigate('/login');
+        navigate(-1);
     }
 
     //const { interests, loading, page } = useSelector((state) => state.interests);

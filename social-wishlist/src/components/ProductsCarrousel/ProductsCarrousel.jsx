@@ -21,6 +21,7 @@ import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import { markProduct } from "../../firebase/queries/carts";
 import { addToCart } from "../../actions/user";
 import { getInterestProducts } from "../../firebase/queries/products";
+import { getUserInterests } from "../../firebase/queries/interests";
 
 const ProductsCarrousel = ({ isFriendsTab }) => {
   const { products, loading, page } = useSelector((state) => state.products);
@@ -79,41 +80,45 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
     } else {
       if (products.length > 0 && Object.keys(user).length > 0) {
 
-        //codigo nuevo
-        getInterestProducts(user.uid).then((interestProducts) => {
-          const mappedProducts = products.map((prod) => prod.id);
-
-          const forYouProds =
+        userHasInterests().then((hasInterests) => {
+          if (hasInterests) {
+            getInterestProducts(user.uid).then((interestProducts) => {
+              const mappedProducts = products.map((prod) => prod.id);
+              
+              const forYouProds =
               mappedProducts.length > 0
-                ? interestProducts.filter((finalProd) =>
-                    mappedProducts.includes(finalProd.id)
-                  )
-                : interestProducts;
-
-            setForYouProducts(forYouProds);
-            setLoadingForYouProds(false);
+              ? interestProducts.filter((finalProd) =>
+              mappedProducts.includes(finalProd.id)
+              )
+              : interestProducts;
+              
+              setForYouProducts(forYouProds);
+              setLoadingForYouProds(false);
+            });
+          } else {
+            getProductsOfUser(user.uid)
+            .then((prods) => {
+              const mappedProducts = prods.map((prod) => prod.id);
+  
+              const forYouProds =
+                mappedProducts.length > 0
+                  ? products.filter((finalProd) =>
+                      mappedProducts.includes(finalProd.id)
+                    )
+                  : products;
+  
+              setForYouProducts(forYouProds);
+              setLoadingForYouProds(false);
+            })
+            .catch((error) => {
+              setLoadingForYouProds(false);
+              console.error("Error fetching friend products:", error);
+              setErrorMsg("Error procesando los datos")
+            });
+          }
         });
+        // Determinar si el usuario posee intereses
 
-        //Codigo viejo
-        // getProductsOfUser(user.uid)
-        //   .then((prods) => {
-        //     const mappedProducts = prods.map((prod) => prod.id);
-
-        //     const forYouProds =
-        //       mappedProducts.length > 0
-        //         ? products.filter((finalProd) =>
-        //             mappedProducts.includes(finalProd.id)
-        //           )
-        //         : products;
-
-        //     setForYouProducts(forYouProds);
-        //     setLoadingForYouProds(false);
-        //   })
-        //   .catch((error) => {
-        //     setLoadingForYouProds(false);
-        //     console.error("Error fetching friend products:", error);
-        //     setErrorMsg("Error procesando los datos")
-        //   });
       } else if (products.length > 0 && Object.keys(user).length === 0) {
         setForYouProducts(products);
         setLoadingForYouProds(false);
@@ -126,6 +131,15 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
       setFinalProducts(isFriendsTab ? friendsProducts : forYouProducts);
     }
   }, [loading, loadingFriendsProds, loadingForYouProds]);
+
+  const userHasInterests = async () => {
+    try {
+      const userInterests = await getUserInterests(user.uid);
+      return userInterests && userInterests.length > 0;
+    } catch (error) {
+      return false;
+    }
+  }
 
   const nextPage = () => {
     if (page === finalProducts.length - 1) {
@@ -236,7 +250,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
             <Carousel showThumbs={false} showStatus={false}>
               {product && product.images &&
                 product.images.map((img, i) => (
-                  <div key={i}>
+                  <div style={{height: "100%"}} key={i}>
                     {isFriendsTab && (
                       <div className="user_img_container">
                         <img className="user_img" src={product.photoURL} />
@@ -272,7 +286,7 @@ const ProductsCarrousel = ({ isFriendsTab }) => {
   return (
     <>
       {finalProducts.length > 0 ? (
-        <div>
+        <div className="content-box" style={{gap: "40px"}}>
           <div className="slider-container">{renderSlider()}</div>
           {isFriendsTab ? (
             <div

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./Home.css";
 import ProductsCarrousel from "../../components/ProductsCarrousel/ProductsCarrousel";
 import { Container } from "../../components/Styles.css";
+import "./Home.css"
 
 const Home = () => {
   const [tab, setTab] = useState("forYou");
@@ -9,7 +10,7 @@ const Home = () => {
 
   return (
     <Container>
-      <div className="content-box">
+      <div className="content-box home-container">
         <div className="button-group">
           <button
             className={`btn ${
