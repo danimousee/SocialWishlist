@@ -13,3 +13,5 @@ Correr los siguientes comandos en la terminal.
 1. cd social-wishlist
 2. npm run build-cap
 3. npx cap open android
+
+Despues de hacer cambios en el codigo fuente, ejecutar `npm run build-cap` para actualizar en android.
